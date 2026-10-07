@@ -154,6 +154,8 @@ test('DataCite and keyed ADS normalize only their own fields and URLs', async ()
   const data = await service.search({ q: 'evidence', source: 'datacite' });
   assert.equal(data.results[0].resourceType, 'Dataset');
   assert.equal(data.results[0].url, `https://doi.org/${DOI}`);
+  assert.equal(calls[0].url.searchParams.get('fields[dois]'), 'doi,titles,creators,publicationYear,descriptions,url,types');
+  assert.equal(calls[0].url.searchParams.get('page[size]'), '10');
   const ads = await service.search({ q: 'evidence', source: 'nasa_ads' });
   assert.equal(calls[1].init.headers.Authorization, 'Bearer fake-ads');
   assert.equal(ads.results[0].arxivId, '2401.12345');
@@ -272,4 +274,134 @@ test('queues survive credential changes and preserve provider request spacing', 
 test('all actual providers returning rate limits preserve HTTP 429 despite an unconfigured optional provider', async () => {
   const { service } = fixture({}, () => new Response('{}', { status: 429 }));
   await assert.rejects(service.search({ q: 'valid' }), failure => failure.status === 429 && failure.sourceStatus.filter(source => source.status === 'error').length === 3);
+});
+
+const unpaywall = {
+  doi: DOI, doi_url: `https://doi.org/${DOI}`, title, year: 2024, is_oa: true, oa_status: 'green',
+  z_authors: [{ given: 'Ada', family: 'Lovelace' }],
+  best_oa_location: { url: 'https://repository.example.org/paper', url_for_landing_page: 'https://repository.example.org/paper', url_for_pdf: null, license: 'cc-by', version: 'acceptedVersion', host_type: 'repository' },
+  oa_locations: [{ url: 'https://publisher.example.org/article.pdf', url_for_pdf: 'https://publisher.example.org/article.pdf', url_for_landing_page: 'https://publisher.example.org/article', license: 'cc-by', version: 'publishedVersion', host_type: 'publisher' }],
+};
+
+test('Unpaywall DOI lookup uses the configured email and returns normalized OA locations without proxying PDFs', async () => {
+  const contact = 'project@research.example.org';
+  const { service, calls } = fixture({ credentials: () => ({ UNPAYWALL_EMAIL: contact }) }, () => response(unpaywall));
+  const result = await service.search({ q: `https://doi.org/${DOI.toUpperCase()}`, source: 'unpaywall' });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url.origin, 'https://api.unpaywall.org');
+  assert.equal(decodeURIComponent(calls[0].url.pathname), '/v2/' + DOI);
+  assert.equal(calls[0].url.searchParams.get('email'), contact);
+  assert.equal(calls[0].init.redirect, 'error');
+  assert.equal(result.lookupStatus, 'open');
+  assert.equal(result.sourceStatus[0].lookupStatus, 'open');
+  assert.equal(result.hasMore, false);
+  assert.equal(result.results[0].openAccess, true);
+  assert.equal(result.results[0].openAccessSource, 'unpaywall');
+  assert.equal(result.results[0].oaStatus, 'green');
+  assert.equal(result.results[0].pdfUrl, 'https://publisher.example.org/article.pdf');
+  assert.deepEqual(result.results[0].authors, ['Ada Lovelace']);
+  assert.equal(result.results[0].oaLocations[0].version, 'acceptedVersion');
+  assert.equal(result.results[0].oaLocations[1].hostType, 'publisher');
+  assert.equal(result.results[0].canRead, false);
+  assert.doesNotMatch(JSON.stringify(result), /project@research\.example\.org/);
+  assert.equal((await service.search({ q: `https://doi.org/${DOI.toUpperCase()}`, source: 'unpaywall' })).cached, true);
+  assert.equal(calls.length, 1);
+});
+
+test('Unpaywall distinguishes a known closed article, absent DOI and upstream failure', async () => {
+  const options = { credentials: () => ({ UNPAYWALL_EMAIL: 'project@research.example.org' }) };
+  const closed = fixture(options, () => response({ ...unpaywall, is_oa: false, oa_status: 'closed' }));
+  const known = await closed.service.search({ q: DOI, source: 'unpaywall' });
+  assert.equal(known.lookupStatus, 'closed');
+  assert.equal(known.results.length, 1);
+  assert.equal(known.results[0].openAccess, false);
+  assert.equal(known.results[0].pdfUrl, null);
+  assert.deepEqual(known.results[0].oaLocations, []);
+  assert.match(known.note, /目前未发现开放获取位置/);
+  const missing = fixture(options, () => new Response('{"error":true}', { status: 404 }));
+  const absent = await missing.service.search({ q: DOI, source: 'unpaywall' });
+  assert.equal(absent.lookupStatus, 'not_found');
+  assert.equal(absent.results.length, 0);
+  assert.equal(absent.sourceStatus[0].status, 'ok');
+  assert.match(absent.note, /未收录.*不能据此判断/);
+  for (const status of [403, 429, 500]) {
+    const failed = fixture(options, () => new Response('{"error":"private-email@secret.example"}', { status }));
+    await assert.rejects(failed.service.search({ q: DOI, source: 'unpaywall' }), failure => {
+      assert.equal(failure.status, status === 429 ? 429 : 503);
+      assert.equal(failure.sourceStatus[0].status, 'error');
+      assert.doesNotMatch(JSON.stringify(failure), /private-email|secret\.example/);
+      return true;
+    });
+  }
+});
+
+test('Unpaywall is enabled only for DOI lookup, with credentials and author conditions respected', async () => {
+  const { service, calls } = fixture({ credentials: () => ({ UNPAYWALL_EMAIL: 'project@research.example.org' }) }, () => response(unpaywall));
+  for (const params of [{ q: 'machine learning' }, { author: 'Ada Lovelace' }]) {
+    await assert.rejects(service.search({ ...params, source: 'unpaywall' }), failure => failure.sourceStatus[0].status === 'skipped');
+  }
+  assert.equal(calls.length, 0);
+  assert.equal((await service.search({ q: DOI, source: 'unpaywall', page: 2 })).hasMore, false);
+  assert.equal(calls.length, 0);
+  const mismatch = await service.search({ q: DOI, author: 'Different Author', source: 'unpaywall' });
+  assert.equal(mismatch.results.length, 0);
+  assert.match(mismatch.note, /作者条件.*不匹配/);
+  const matched = await service.search({ q: DOI, author: 'lovelace', source: 'unpaywall' });
+  assert.equal(matched.results.length, 1);
+  const unconfigured = fixture({}, () => assert.fail('must not request without an email'));
+  await assert.rejects(unconfigured.service.search({ q: DOI, source: 'unpaywall' }), failure => failure.sourceStatus[0].status === 'unconfigured');
+  const disabled = fixture({ credentials: () => ({ UNPAYWALL_EMAIL: 'project@research.example.org' }), disabledSources: () => ['unpaywall'] }, () => assert.fail('must not request a disabled source'));
+  await assert.rejects(disabled.service.search({ q: DOI, source: 'unpaywall' }), failure => failure.sourceStatus[0].status === 'disabled');
+  assert.equal(PROVIDERS.find(item => item.id === 'unpaywall').supported, true);
+});
+
+test('DOI federation automatically includes Unpaywall and enriches the merged record; keyword searches do not call it', async () => {
+  const { service, calls } = fixture({ credentials: () => ({ UNPAYWALL_EMAIL: 'project@research.example.org' }) }, url => {
+    if (url.hostname === 'api.unpaywall.org') return response(unpaywall);
+    if (url.hostname === 'api.openalex.org') return response(openalex);
+    if (url.hostname === 'api.crossref.org') return response(crossref);
+    return response(url.pathname.includes('/DOI:') ? semantic.data[0] : semantic);
+  });
+  const result = await service.search({ q: DOI });
+  assert.equal(result.results.length, 1);
+  assert.equal(result.results[0].doi, DOI);
+  assert.equal(result.results[0].sources.at(-1).id, 'unpaywall');
+  assert.equal(result.results[0].pdfUrl, 'https://publisher.example.org/article.pdf');
+  assert.equal(result.results[0].openAccessSource, 'unpaywall');
+  assert.equal(result.results[0].oaLocations.length, 2);
+  assert.equal(result.sourceStatus.find(item => item.id === 'unpaywall').lookupStatus, 'open');
+  const previous = calls.filter(call => call.url.hostname === 'api.unpaywall.org').length;
+  const keywords = await service.search({ q: 'machine learning' });
+  assert.equal(calls.filter(call => call.url.hostname === 'api.unpaywall.org').length, previous);
+  assert.equal(keywords.sourceStatus.some(item => item.id === 'unpaywall'), false);
+});
+
+test('Unpaywall rejects mismatched records and strips unsafe or embargoed location URLs', async () => {
+  const options = { credentials: () => ({ UNPAYWALL_EMAIL: 'project@research.example.org' }) };
+  for (const patch of [{ doi: '10.1234/other' }, { is_oa: 'true' }, { title: '' }]) {
+    const invalid = fixture(options, () => response({ ...unpaywall, ...patch }));
+    await assert.rejects(invalid.service.search({ q: DOI, source: 'unpaywall' }), { status: 503 });
+  }
+  const { service } = fixture(options, () => response({ ...unpaywall,
+    best_oa_location: { url: 'javascript:alert(1)', url_for_pdf: 'file:///secret.pdf' },
+    oa_locations: [{ url: 'https://user:password@private.example/file.pdf', url_for_pdf: 'data:text/html,unsafe' }, unpaywall.oa_locations[0], unpaywall.oa_locations[0]],
+    oa_locations_embargoed: [{ url: 'https://embargoed.example/file.pdf', url_for_pdf: 'https://embargoed.example/file.pdf' }],
+  }));
+  const result = await service.search({ q: DOI, source: 'unpaywall' });
+  assert.equal(result.results[0].oaLocations.length, 1);
+  assert.doesNotMatch(JSON.stringify(result), /javascript:|file:|data:text|password|embargoed\.example/);
+});
+
+test('DataCite sparse fields omit oversized unrelated metadata while retaining the response size guard', async () => {
+  const { service, calls } = fixture({}, request => {
+    const sparse = request.searchParams.get('fields[dois]');
+    if (!sparse) return response({ data: [], ignoredXml: 'x'.repeat(3 * 1024 * 1024) });
+    return response({ data: [{ id: DOI, attributes: { titles: [{ title }], creators: [{ name: 'Ada' }], publicationYear: 2024, descriptions: [{ descriptionType: 'Abstract', description: 'Only needed fields' }], types: { resourceTypeGeneral: 'Dataset' } } }], meta: { total: 1 } });
+  });
+  const result = await service.search({ q: 'research dataset', source: 'datacite' });
+  assert.equal(result.results.length, 1);
+  assert.equal(result.results[0].abstract, 'Only needed fields');
+  assert.doesNotMatch(calls[0].url.searchParams.get('fields[dois]'), /xml|relatedIdentifiers|contributors|fundingReferences/);
+  const oversized = fixture({}, () => response({ data: [], excess: 'x'.repeat(2 * 1024 * 1024) }));
+  await assert.rejects(oversized.service.search({ q: 'research dataset', source: 'datacite' }), { status: 503 });
 });

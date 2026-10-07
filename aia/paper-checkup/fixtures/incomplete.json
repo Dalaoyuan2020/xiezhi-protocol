@@ -1,0 +1,8 @@
+{
+  "name": "指标对不上的论文 · 虚构案例",
+  "files": [
+    {"path":"PAPER.md","text":"# 指标对不上的论文（虚构教学案例）\n\n本材料完全虚构，只用于演示发现材料缺口和数字矛盾，不影射任何作者或已发表论文。它声称四条合成记录有百分之九十九的准确率，但附带输出只有三条正确。这种冲突应当进一步核查，而不能自动推断科研造假。\n\n[主张](logic/claims.md) · [结果](evidence/result.json)\n"},
+    {"path":"logic/claims.md","text":"# 主张清单\n\n## C1 · 未能对齐的准确率\n- Statement: accuracy=99% on four synthetic examples.\n- 证据：[结果](../evidence/result.json)\n- 补充实验：[缺失附件](../evidence/missing.csv)\n"},
+    {"path":"evidence/result.json","text":"{\"synthetic\":true,\"accuracy\":0.75,\"correct\":3,\"test_size\":4,\"predictions\":[{\"actual\":\"A\",\"predicted\":\"A\"},{\"actual\":\"B\",\"predicted\":\"B\"},{\"actual\":\"A\",\"predicted\":\"A\"},{\"actual\":\"B\",\"predicted\":\"A\"}]}\n"}
+  ]
+}

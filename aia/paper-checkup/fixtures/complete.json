@@ -1,0 +1,12 @@
+{
+  "name": "可追溯的小实验 · 虚构案例",
+  "files": [
+    {"path":"PAPER.md","text":"# 可追溯的小实验（虚构教学案例）\n\n本材料完全虚构，只用于演示论文结构体检，不代表已发表论文或真实科研发现。我们定义了一个四条记录的简单分类任务，固定输入、方法与统计口径，展示如何把主张连接到原始输出。\n\n[主张](logic/claims.md) · [实验](logic/experiments.md) · [实现](src/evaluate.py) · [环境](src/environment.md) · [探索](trace/exploration_tree.yaml) · [结果](evidence/result.json)\n\n## 局限\n四条合成记录没有统计代表性，不可推广到真实分类任务。这里只展示文件间的可追溯关系。\n"},
+    {"path":"logic/claims.md","text":"# 主张清单\n\n## C1 · 固定样本上的准确率\n- Statement: accuracy=75% on four synthetic examples.\n- 证据：[逐样本输出](../evidence/result.json)\n- 实验：[固定实验](experiments.md)\n- 可证伪条件：按同一逐样本记录重新计数不是 3/4，则该主张不成立。\n- 来源：user；所有数据为教学用途合成。\n"},
+    {"path":"logic/experiments.md","text":"# E1 · 固定合成记录\n\n评价对象是四条合成标签，统计 actual 与 predicted 相等的条数。使用 [实现](../src/evaluate.py)，环境见 [说明](../src/environment.md)，输出见 [证据](../evidence/result.json)。不进行训练。\n"},
+    {"path":"src/evaluate.py","text":"import json\nfrom pathlib import Path\nrows = json.loads(Path('evidence/result.json').read_text())['predictions']\nprint(sum(row['actual'] == row['predicted'] for row in rows) / len(rows))\n"},
+    {"path":"src/environment.md","text":"# 固定环境\nPython 3.12.7，无第三方依赖。\n命令：python src/evaluate.py\n硬件：CPU。无训练、无随机数、无超参数。文件读取路径以材料根目录为准。\n此体检服务不会运行此代码。\n"},
+    {"path":"trace/exploration_tree.yaml","text":"provenance: user\nnodes:\n  - id: E0\n    status: rejected\n    reason: 用两条合成记录不足以展示错误预测\n  - id: E1\n    parent: E0\n    status: completed\n    reason: 固定四条合成记录并保留一条预测错误\n"},
+    {"path":"evidence/result.json","text":"{\"synthetic\":true,\"accuracy\":0.75,\"correct\":3,\"test_size\":4,\"predictions\":[{\"actual\":\"A\",\"predicted\":\"A\"},{\"actual\":\"B\",\"predicted\":\"B\"},{\"actual\":\"A\",\"predicted\":\"A\"},{\"actual\":\"B\",\"predicted\":\"A\"}]}\n"}
+  ]
+}

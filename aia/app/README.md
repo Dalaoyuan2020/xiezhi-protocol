@@ -76,7 +76,11 @@ npm start
 
 管理页保存的覆盖值使用 AES-256-GCM 加密到数据目录的 `source-config.enc`，加密密钥独立保存在 `source-config.key`。这保护的是配置文件的单独泄漏，不是对服务器管理员隔离：部署账户仍能读取服务所需的解密密钥。备份和迁移需一起保留这两个文件及管理员口令文件，并限制数据目录访问权限。`.env` 中原有凭据继续在服务端生效；管理页不会改写 `.env` 或把凭据推到 GitHub。
 
-已实现查询适配：Sciverse、OpenAlex、Crossref、Semantic Scholar、Europe PMC、PubMed、arXiv、DataCite、NASA ADS。NASA ADS 需有效 `ADS_DEV_KEY`；Sciverse 需有效 Token；其他来源的密钥／联系邮箱依各服务要求配置。提供配置位置不代表凭据已经通过上游验证。CORE、OpenAIRE、Unpaywall、Springer、EPO、The Lens 暂为配置预留，页面明确标记未接入，不会假装参与查询。
+已实现查询适配：Sciverse、OpenAlex、Crossref、Semantic Scholar、Europe PMC、PubMed、arXiv、DataCite、NASA ADS、Unpaywall。NASA ADS 需有效 `ADS_DEV_KEY`；Sciverse 需有效 Token；Unpaywall 需真实联系邮箱 `UNPAYWALL_EMAIL`；其他来源的密钥／联系邮箱依各服务要求配置。提供配置位置不代表凭据已经通过上游验证。CORE、OpenAIRE、Springer、EPO、The Lens 暂为配置预留，页面明确标记未接入，不会假装参与查询。
+
+Unpaywall 在论文检索页按 **DOI** 查询开放获取状态与出版方、机构库的位置；例如选择 Unpaywall 后输入 `10.1038/nature12373`。联合检索遇到 DOI 会自动加入此源，关键词和仅作者查询不会把它当作全文搜索引擎。已收录但没有开放位置会返回书目信息并标注未发现开放获取；HTTP 404 表示该源未收录 DOI，不能等同于闭源；网络、限流和鉴权失败仍显示失败。仅提供来源报告的链接，不在服务端下载 PDF、不绕过访问权限；链接许可与版本以出版方或机构库为准。依据 [Unpaywall 官方 DOI API](https://unpaywall.org/api) 实现，联系邮箱只随服务端请求发送。
+
+DataCite 按其 [官方稀疏字段参数](https://support.datacite.org/docs/api-queries) 只请求 DOI、标题、作者、年份、摘要、入口与成果类型，避免大批无关元数据导致查询失败；单次上游响应的 2 MB 限制继续生效。
 
 这里管理文献与模型 API 配置，不接受钱包私钥或链上签名配置。公开文献检索只调用固定官方端点；两个评审模型槽可配置公网 HTTPS 接口，详见社区运行说明。
 

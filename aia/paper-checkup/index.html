@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>论文体检 · 廌鉴</title>
+  <link rel="stylesheet" href="/paper/paper.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script src="/paper/paper.js" defer></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body>
+  <header data-site-header></header>
+  <main>
+    <section class="intro" aria-labelledby="pageTitle">
+      <span class="eyebrow"><span class="red-dot"></span> RESEARCH, WITH RECEIPTS.</span>
+      <h1 id="pageTitle">让结论，<br class="mobile-break">找得到<span>证据。</span></h1>
+      <p>上传一篇论文，或一份 ARA 研究材料。<br>查看主张、方法、探索记录与原始结果，是否真正连接起来。</p>
+    </section>
+    <section class="upload-card" id="uploadSection" aria-label="上传论文">
+      <div class="upload-heading"><span class="section-label">01 / 从你的材料开始</span><span class="privacy-tag"><span aria-hidden="true">◈</span> 私有会话 · 原件检查后删除</span></div>
+      <div class="dropzone" id="dropzone">
+        <div class="paper-icon" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+        <h2 id="fileLabel">把论文放在这里</h2>
+        <p id="fileHelp">拖入文件，或点击选择。PDF / Markdown / TXT / ARA ZIP</p>
+        <input id="fileInput" type="file" accept=".pdf,.md,.txt,.zip" class="sr-only">
+        <button class="primary" id="chooseFile" type="button">选择文件 <span aria-hidden="true">↗</span></button>
+        <span class="file-limit">单文件 ≤ 12 MB · ZIP 解压后 ≤ 20 MB / 100 个文件</span>
+      </div>
+      <div class="upload-foot"><span>只有 PDF 也可以开始。缺少的材料，会逐项告诉你。</span><a href="https://github.com/ARA-Labs/Agent-Native-Research-Artifact#under-the-hood--the-artifact-anatomy" target="_blank" rel="noopener noreferrer">了解 ARA <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section class="examples" id="examplesSection" aria-label="试用虚构案例">
+      <div class="examples-title"><span class="section-label">手边没有论文？先亲自检查一份。</span><span>两份材料均为虚构教学案例</span></div>
+      <div class="example-grid">
+        <button type="button" class="example" data-sample="complete"><span class="example-icon good" aria-hidden="true">↗</span><span><strong>一个可追溯的小实验</strong><small>主张 75% → 四条原始记录 → 3 / 4</small></span><span class="example-arrow" aria-hidden="true">→</span></button>
+        <button type="button" class="example" data-sample="incomplete"><span class="example-icon warning" aria-hidden="true">≠</span><span><strong>一篇指标对不上的论文</strong><small>主张 99%，附件却记着 75%。检查它。</small></span><span class="example-arrow" aria-hidden="true">→</span></button>
+      </div>
+    </section>
+    <section id="progressSection" class="progress-card" hidden aria-label="体检进度">
+      <div class="progress-top"><span class="mini-spinner" aria-hidden="true"></span><h2 id="progressTitle">正在接收你的材料</h2><span id="progressDetail" role="status" aria-live="polite"></span></div>
+      <ol class="steps"><li id="step1">读取材料</li><li id="step2">核对结构</li><li id="step3">追踪证据</li><li id="step4">形成报告</li></ol>
+      <p>只读检查，不运行上传代码。复杂 PDF 可能需要约 20 秒。</p>
+    </section>
+    <p class="error" id="error" role="alert" hidden></p>
+    <section id="report" class="report" aria-label="论文体检报告" hidden>
+      <div class="report-heading"><span class="section-label">02 / 材料体检报告</span><div class="report-actions"><button type="button" id="another" class="text-button">再检一份</button><a id="downloadReport" class="download" href="#">下载报告 ↓</a></div></div>
+      <div class="report-summary">
+        <div class="summary-copy"><span class="report-kind" id="reportKind"></span><h2 id="reportHeadline"></h2><p id="reportTitle"></p><span id="reportScope">ARA 结构预检 · 非官方 Seal</span></div>
+        <div class="score-wrap"><div class="score-ring" id="scoreRing"><span id="scoreValue">0</span><span class="score-max">/ 100</span></div><span>材料可检查度</span></div>
+      </div>
+      <p class="meaning">分数表示材料能被检查的程度。目录齐全、指标一致，都不等于研究结论已经被证明。</p>
+      <p class="meaning" id="sampleSourceRow" hidden>亲手复核：<a id="sampleSource" class="sample-source" href="#">下载这份虚构案例的 ARA ZIP ↗</a>，修改材料后重新上传检查。</p>
+      <section class="report-section"><div class="section-heading"><h3>原始材料的 ARA 结构</h3><span id="structureSummary"></span></div><div class="structure-grid" id="structureGrid"></div><p class="subtle" id="generatedNotice" hidden></p></section>
+      <section class="report-section" id="findingsSection"><div class="section-heading"><h3>从这里继续完善</h3><span id="findingsSummary"></span></div><div id="findingsList" class="findings-list"></div></section>
+      <section class="report-section"><div class="section-heading"><h3>每一项，都有检查依据</h3><span>点击展开</span></div><div id="checkList" class="check-list"></div></section>
+      <details class="hash-section"><summary>文件指纹与检查边界 <span aria-hidden="true">＋</span></summary><div><p id="hashScope"></p><code id="sourceHash"></code><h4>原始文件清单</h4><div id="filesList"></div><h4>本次检查的边界</h4><ul id="limitations"></ul><p id="privacyNote" class="subtle"></p></div></details>
+    </section>
+    <footer><span>廌鉴 · 让学术有据可循</span><span>结构与证据检查，不是科研真假裁定。</span></footer>
+  </main>
+</body>
+</html>

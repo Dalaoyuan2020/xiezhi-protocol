@@ -14,7 +14,7 @@ export const PROVIDERS = Object.freeze([
   { id: 'nasa_ads', label: 'NASA ADS', envNames: ['ADS_DEV_KEY'], requiredEnvNames: ['ADS_DEV_KEY'], modes: ['metadata'], discipline: 'astronomy', supported: true },
   { id: 'core', label: 'CORE', envNames: ['CORE_API_KEY'], requiredEnvNames: ['CORE_API_KEY'], modes: [], discipline: 'general', supported: false },
   { id: 'openaire', label: 'OpenAIRE', envNames: ['OPENAIRE_TOKEN'], requiredEnvNames: [], modes: [], discipline: 'general', supported: false },
-  { id: 'unpaywall', label: 'Unpaywall', envNames: ['UNPAYWALL_EMAIL'], requiredEnvNames: ['UNPAYWALL_EMAIL'], modes: [], discipline: 'general', supported: false },
+  { id: 'unpaywall', label: 'Unpaywall', envNames: ['UNPAYWALL_EMAIL'], requiredEnvNames: ['UNPAYWALL_EMAIL'], modes: ['metadata'], discipline: 'general', supported: true },
   { id: 'springer', label: 'Springer Nature', envNames: ['SPRINGER_API_KEY'], requiredEnvNames: ['SPRINGER_API_KEY'], modes: [], discipline: 'general', supported: false },
   { id: 'epo', label: 'EPO OPS', envNames: ['EPO_OPS_KEY', 'EPO_OPS_SECRET'], requiredEnvNames: ['EPO_OPS_KEY', 'EPO_OPS_SECRET'], modes: [], discipline: 'patents', supported: false },
   { id: 'lens', label: 'The Lens', envNames: ['LENS_API_TOKEN'], requiredEnvNames: ['LENS_API_TOKEN'], modes: [], discipline: 'general', supported: false },
@@ -85,6 +85,13 @@ export function mergeLiteratureResults(items) {
     if (item.source === 'semantic_scholar') { if (item.abstract) { target.abstract = item.abstract; target.abstractSource = item.source; } if (item.citationCount != null) { target.citationCount = item.citationCount; target.citationCountSource = item.source; } }
     if (item.source === 'openalex') { target.institutions = item.institutions || []; target.openAccess = item.openAccess; if (item.pdfUrl) target.pdfUrl = item.pdfUrl; }
     if (item.source === 'crossref') { target.licenses = item.licenses || []; target.funders = item.funders || []; }
+    if (item.source === 'unpaywall') {
+      target.openAccess = item.openAccess; target.openAccessSource = 'unpaywall';
+      target.oaStatus = item.oaStatus; target.oaLocations = item.oaLocations;
+      // Keep an independently reported PDF if Unpaywall found no current OA location.
+      // Its absence is not evidence that another provider's location is invalid.
+      if (item.pdfUrl) target.pdfUrl = item.pdfUrl;
+    }
     if (item.canRead) { target.canRead = true; target.docId = item.docId; }
     for (const provenance of item.sources) if (!target.sources.some(existing => existing.id === provenance.id)) target.sources.push(provenance);
     for (const key of identityKeys(target)) if (!index.has(key)) index.set(key, target);
@@ -149,10 +156,11 @@ export function createLiterature({ credentials = () => process.env, disabledSour
     if (!provider.requiredEnvNames.every(key => context.secrets[key])) return 'unconfigured';
     return null;
   }
-  async function fetchData(base, params, { signal, headers = {}, atom = false } = {}) {
+  async function fetchData(base, params, { signal, headers = {}, atom = false, allowNotFound = false } = {}) {
     const target = new URL(base);
     for (const [key, value] of Object.entries(params || {})) if (value !== undefined && value !== '') target.searchParams.set(key, String(value));
     const response = await fetchImpl(target, { signal, redirect: 'error', headers: { Accept: atom ? 'application/atom+xml' : 'application/json', 'User-Agent': 'AIA-Literature/1.0', ...headers } });
+    if (allowNotFound && response.status === 404) { await response.body?.cancel(); return null; }
     if (!response.ok) { await response.body?.cancel(); throw error(response.status === 429 ? 429 : [401, 403].includes(response.status) ? 403 : 502, '数据源暂时不可用。'); }
     const maximum = 2 * 1024 * 1024;
     if (Number(response.headers.get('content-length')) > maximum) { await response.body?.cancel(); throw error(502, '数据源响应过大。'); }
@@ -216,8 +224,39 @@ export function createLiterature({ credentials = () => process.env, disabledSour
     }
     if (source === 'datacite') {
       const query = [exactDoi ? `doi:${quoted(exactDoi)}` : q ? `(${q})` : '', author ? `creators.name:${quoted(author)}` : ''].filter(Boolean).join(' AND ');
-      const data = await fetchData('https://api.datacite.org/dois', { query, 'page[number]': page, 'page[size]': PAGE_SIZE }, { signal });
+      const data = await fetchData('https://api.datacite.org/dois', { query, 'page[number]': page, 'page[size]': PAGE_SIZE,
+        'fields[dois]': 'doi,titles,creators,publicationYear,descriptions,url,types' }, { signal });
       return rows(source, list(data.data).map(record => { const item = record.attributes || {}; return { id: record.id, title: item.titles?.[0]?.title, authors: item.creators?.map(author => author.name || [author.givenName, author.familyName].filter(Boolean).join(' ')), year: item.publicationYear, doi: item.doi || record.id, abstract: item.descriptions?.find(description => description.descriptionType === 'Abstract')?.description, url: item.url, resourceType: item.types?.resourceTypeGeneral }; }), data.meta?.total, page, 'DataCite 包含数据集、软件和其他研究成果，并非全部是期刊论文。');
+    }
+    if (source === 'unpaywall') {
+      if (!exactDoi) throw Object.assign(error(400, 'Unpaywall 仅按 DOI 查开放获取位置，请输入完整 DOI。'), { sourceStatus: 'skipped' });
+      if (page !== 1) return { ...rows(source, [], 0, page, 'Unpaywall 按单个 DOI 查询，结果仅在第一页。'), lookupStatus: 'no_more' };
+      const data = await fetchData(`https://api.unpaywall.org/v2/${encodeURIComponent(exactDoi)}`,
+        { email: keys.UNPAYWALL_EMAIL }, { signal, allowNotFound: true });
+      if (data === null) return { ...rows(source, [], 0, page, 'Unpaywall 未收录此 DOI，不能据此判断论文是否开放获取。'), lookupStatus: 'not_found' };
+      if (doi(data.doi) !== exactDoi || typeof data.is_oa !== 'boolean') throw error(502, 'Unpaywall 返回的 DOI 或开放获取状态不完整。');
+      const locations = data.is_oa ? [data.best_oa_location, ...(Array.isArray(data.oa_locations) ? data.oa_locations.slice(0, 30) : [])]
+        .filter(location => location && typeof location === 'object').map(location => ({
+          url: url(location.url) || url(location.url_for_landing_page) || url(location.url_for_pdf),
+          pdfUrl: url(location.url_for_pdf), landingPageUrl: url(location.url_for_landing_page),
+          license: plain(location.license).slice(0, 120) || null,
+          version: ['submittedVersion', 'acceptedVersion', 'publishedVersion'].includes(location.version) ? location.version : null,
+          hostType: ['publisher', 'repository'].includes(location.host_type) ? location.host_type : null,
+        })).filter(location => location.url) : [];
+      const oaLocations = [...new Map(locations.map(location => [location.url, location])).values()].slice(0, 20);
+      const authors = (Array.isArray(data.z_authors) ? data.z_authors : []).slice(0, 100)
+        .filter(item => item && typeof item === 'object').map(item => plain(item.name || [item.given, item.family].filter(Boolean).join(' '))).filter(Boolean);
+      const wanted = author.normalize('NFKC').toLowerCase().split(/[\s,]+/).filter(Boolean);
+      const matchesAuthor = !wanted.length || authors.some(name => wanted.every(token => name.normalize('NFKC').toLowerCase().includes(token)));
+      const items = matchesAuthor ? [{ id: exactDoi, doi: exactDoi, title: data.title, year: data.year, authors,
+        url: url(data.doi_url) || `https://doi.org/${exactDoi}`, pdfUrl: oaLocations.find(location => location.pdfUrl)?.pdfUrl || null,
+        openAccess: data.is_oa, openAccessSource: 'unpaywall',
+        oaStatus: data.is_oa ? ['green', 'gold', 'hybrid', 'bronze'].includes(data.oa_status) ? data.oa_status : 'open' : 'closed', oaLocations,
+      }] : [];
+      const note = !matchesAuthor ? 'Unpaywall 查到该 DOI，但作者条件与其书目记录不匹配；请核对作者写法。'
+        : data.is_oa ? 'Unpaywall 提供开放获取位置；PDF 链接指向出版方或机构库，使用范围以其许可为准。'
+          : 'Unpaywall 已收录该 DOI，但目前未发现开放获取位置；这不表示论文不存在，也不代表其质量。';
+      return { ...rows(source, items, items.length, page, note), lookupStatus: data.is_oa ? 'open' : 'closed' };
     }
     if (source === 'nasa_ads') {
       const query = [exactDoi ? `doi:${quoted(exactDoi)}` : q ? `(${q})` : '', author ? `author:${quoted(author)}` : ''].filter(Boolean).join(' AND ');
@@ -287,9 +326,9 @@ export function createLiterature({ credentials = () => process.env, disabledSour
     if (mode === 'semantic' && (!q || page !== 1 || !['sciverse', 'all'].includes(source))) throw error(400, '语义检索仅支持 Sciverse 的第一组段落。');
     if (mode === 'semantic') source = 'sciverse';
     const context = current();
-    let selected = source === 'all' ? ['sciverse', 'openalex', 'crossref', 'semantic_scholar', ...(discipline === 'biomedical' ? ['europe_pmc', 'pubmed'] : []), ...(['stem', 'astronomy'].includes(discipline) ? ['arxiv'] : []), ...(discipline === 'astronomy' ? ['nasa_ads'] : []), ...(discipline === 'data' ? ['datacite'] : [])] : [source];
+    let selected = source === 'all' ? ['sciverse', 'openalex', 'crossref', 'semantic_scholar', ...(discipline === 'biomedical' ? ['europe_pmc', 'pubmed'] : []), ...(['stem', 'astronomy'].includes(discipline) ? ['arxiv'] : []), ...(discipline === 'astronomy' ? ['nasa_ads'] : []), ...(discipline === 'data' ? ['datacite'] : []), ...(doi(q) ? ['unpaywall'] : [])] : [source];
     const outcomes = await Promise.allSettled(selected.map(id => queryOne(context, id, { q, author, mode, page })));
-    const sourceStatus = outcomes.map((outcome, index) => ({ id: selected[index], label: label(selected[index]), status: outcome.status === 'fulfilled' ? 'ok' : outcome.reason?.sourceStatus || 'error', count: outcome.status === 'fulfilled' ? outcome.value.results.length : 0, ...(outcome.status === 'fulfilled' ? { total: outcome.value.total, cached: outcome.value.cached } : { error: outcome.reason?.status === 429 ? '查询频率受限，请稍后重试。' : outcome.reason?.sourceStatus === 'skipped' ? '该条件暂不支持，或需从第一页顺序查询。' : '此来源暂不可用，未返回替代数据。' }) }));
+    const sourceStatus = outcomes.map((outcome, index) => ({ id: selected[index], label: label(selected[index]), status: outcome.status === 'fulfilled' ? 'ok' : outcome.reason?.sourceStatus || 'error', count: outcome.status === 'fulfilled' ? outcome.value.results.length : 0, ...(outcome.status === 'fulfilled' ? { total: outcome.value.total, cached: outcome.value.cached, ...(outcome.value.lookupStatus ? { lookupStatus: outcome.value.lookupStatus } : {}) } : { error: outcome.reason?.status === 429 ? '查询频率受限，请稍后重试。' : outcome.reason?.sourceStatus === 'skipped' ? '该条件暂不支持，或需从第一页顺序查询。' : '此来源暂不可用，未返回替代数据。' }) }));
     const completed = outcomes.flatMap((outcome, index) => outcome.status === 'fulfilled' ? [{ id: selected[index], data: outcome.value }] : []);
     if (!completed.length) {
       const failures = outcomes.filter(outcome => outcome.status === 'rejected' && !outcome.reason?.sourceStatus);
@@ -302,6 +341,7 @@ export function createLiterature({ credentials = () => process.env, disabledSour
     for (let n = 0; n < PAGE_SIZE; n++) for (const entry of completed) if (entry.data.results[n]) interleaved.push(entry.data.results[n]);
     const results = mode === 'semantic' ? completed[0].data.results : mergeLiteratureResults(interleaved);
     return { source, mode, page, pageSize: source === 'all' ? results.length : PAGE_SIZE, discipline, fetchedAt: new Date(now()).toISOString(), cached: completed.every(entry => entry.data.cached), results,
+      ...(source === 'unpaywall' ? { lookupStatus: completed[0].data.lookupStatus } : {}),
       total: source === 'all' ? results.length : completed[0].data.total, totalIsExact: source !== 'all' && completed[0].data.totalIsExact !== false, hasMore: completed.some(entry => entry.data.hasMore), partial: completed.length !== selected.length, sourceStatus,
       note: [source === 'all' ? '本页合并多个来源并去重；数量不是全库唯一论文总数。不同来源的覆盖范围和排序不同。' : '', '姓名匹配可能包含同名者，请核对论文归属。', ...completed.map(entry => entry.data.note || '')].filter(Boolean).join(' ') };
   }

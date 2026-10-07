@@ -6,7 +6,7 @@
   const authorInput = $('papers-author');
   const dialog = $('papers-reader');
   const sourceSelect = $('papers-source-select');
-  const sources = { all: '多源联合检索', sciverse: 'Sciverse', openalex: 'OpenAlex', crossref: 'Crossref', semantic_scholar: 'Semantic Scholar', europe_pmc: 'Europe PMC', pubmed: 'PubMed', arxiv: 'arXiv', datacite: 'DataCite', nasa_ads: 'NASA ADS' };
+  const sources = { all: '多源联合检索', sciverse: 'Sciverse', openalex: 'OpenAlex', crossref: 'Crossref', semantic_scholar: 'Semantic Scholar', europe_pmc: 'Europe PMC', pubmed: 'PubMed', arxiv: 'arXiv', datacite: 'DataCite', nasa_ads: 'NASA ADS', unpaywall: 'Unpaywall' };
   let metadataSource = 'all';
   let responseSource = 'all';
   let searchController;
@@ -40,7 +40,7 @@
   function safeUrl(value) {
     try {
       const url = new URL(value);
-      return url.protocol === 'https:' && !url.username && !url.password ? url.href : null;
+      return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : null;
     } catch { return null; }
   }
   function externalLink(label, href) {
@@ -59,22 +59,24 @@
   function mode() { return document.querySelector('input[name="mode"]:checked').value; }
   function updateModeHelp() {
     const semantic = mode() === 'semantic';
-    const label = semantic ? '用一句话描述研究问题' : '论文标题、关键词或 DOI';
+    if (semantic && !sourceSelect.disabled) { metadataSource = sourceSelect.value; sourceSelect.value = 'sciverse'; }
+    if (!semantic && sourceSelect.disabled) sourceSelect.value = metadataSource;
+    const doiOnly = !semantic && sourceSelect.value === 'unpaywall';
+    const label = semantic ? '用一句话描述研究问题' : doiOnly ? '输入 DOI 查开放全文' : '论文标题、关键词或 DOI';
     queryInput.placeholder = label;
     $('papers-query-label').textContent = label;
     $('papers-mode-help').textContent = semantic
       ? '描述你想研究的问题，按语义相关性寻找原文片段。'
-      : '用论文标题、关键词或 DOI 查找；也可以仅按作者查询。';
+      : doiOnly ? '粘贴完整 DOI 或 doi.org 链接，查找出版方与机构库的开放全文。Unpaywall 不支持关键词或姓名检索。' : '用论文标题、关键词或 DOI 查找；也可以仅按作者查询。';
     $('papers-author-help').textContent = semantic
       ? '作者姓名作为相关性线索，并非严格筛选；同名结果仍需核对。'
-      : '作者姓名只用于检索线索；同名结果仍需结合单位与论文核对。';
-    if (semantic && !sourceSelect.disabled) { metadataSource = sourceSelect.value; sourceSelect.value = 'sciverse'; }
-    if (!semantic && sourceSelect.disabled) sourceSelect.value = metadataSource;
+      : doiOnly ? 'DOI 已对应具体文献，此来源不使用作者筛选；已填写姓名会保留，切换来源后可继续使用。' : '作者姓名只用于检索线索；同名结果仍需结合单位与论文核对。';
+    authorInput.disabled = doiOnly;
     sourceSelect.disabled = semantic;
     $('papers-discipline').disabled = semantic || sourceSelect.value !== 'all';
     $('papers-scope-help').textContent = semantic
       ? '语义检索由 Sciverse 提供，返回相关的原文片段。'
-      : sourceSelect.value === 'all' ? '联合检索会按研究领域选择来源；每条文献保留其出处。' : '当前只查询所选来源；可切换为全部来源扩大检索范围。';
+      : doiOnly ? '只查询这个 DOI 的开放获取位置；链接由你主动打开，页面不会自动下载全文。' : sourceSelect.value === 'all' ? '联合检索会按研究领域选择来源；输入 DOI 时也查询开放全文位置。每条文献保留其出处。' : '当前只查询所选来源；可切换为全部来源扩大检索范围。';
   }
   async function request(path, controller) {
     let response;
@@ -129,6 +131,12 @@
       provenance.append(url ? externalLink(label + ' ↗', url) : el('span', 'papers-source-chip', label));
     }
     card.append(provenance);
+    const unpaywall = paper.openAccessSource === 'unpaywall' || paper.source === 'unpaywall';
+    if (unpaywall && typeof paper.openAccess === 'boolean') {
+      card.append(el('p', 'papers-card-abstract', paper.openAccess
+        ? 'Unpaywall 已找到开放获取位置' + (paper.oaStatus ? ' · ' + paper.oaStatus : '') + '；使用范围以来源许可为准。'
+        : 'Unpaywall 已收录此 DOI，目前未发现开放获取位置。这不是检索失败，也不说明论文质量。'));
+    }
     const authors = Array.isArray(paper.authors) ? paper.authors.filter(value => typeof value === 'string') : [];
     card.append(el('p', 'papers-card-authors', authors.length ? authors.slice(0, 8).join(' · ') + (authors.length > 8 ? ` 等 ${authors.length} 位作者` : '') : '作者信息未提供'));
     if (authors.length > 8) {
@@ -154,11 +162,28 @@
       button.addEventListener('click', () => openReader(paper, button));
       actions.append(button);
     } else if (safeUrl(paper.pdfUrl)) actions.append(externalLink('开放获取原文 ↗', safeUrl(paper.pdfUrl)));
-    else actions.append(el('span', '', '此页暂无可读原文片段'));
+    else actions.append(el('span', '', unpaywall && paper.openAccess === false ? '暂无开放全文链接，可前往来源核对' : '此页暂无可读原文片段'));
     let source = safeUrl(paper.url);
     if (!source && /^10\.\d{4,9}\/\S+$/i.test(paper.doi || '')) source = 'https://doi.org/' + encodeURIComponent(paper.doi);
     if (source) actions.append(externalLink('查看来源 ↗', source));
     card.append(actions);
+    const locations = Array.isArray(paper.oaLocations) ? paper.oaLocations.filter(item => item && [item.url, item.landingPageUrl, item.pdfUrl].some(safeUrl)).slice(0, 20) : [];
+    if (locations.length) {
+      const details = el('details');
+      details.append(el('summary', '', '开放全文位置与许可 · ' + locations.length + ' 处'));
+      const list = el('ul');
+      for (const location of locations) {
+        const item = el('li');
+        const host = { publisher: '出版方', repository: '机构库' }[location.hostType] || '开放来源';
+        const version = { submittedVersion: '投稿稿', acceptedVersion: '录用稿', publishedVersion: '发表版' }[location.version];
+        item.append(externalLink(host + '页面 ↗', [location.landingPageUrl, location.url, location.pdfUrl].map(safeUrl).find(Boolean)));
+        if (safeUrl(location.pdfUrl)) item.append(document.createTextNode(' · '), externalLink('打开 PDF ↗', safeUrl(location.pdfUrl)));
+        item.append(el('p', 'papers-card-abstract', [version, location.license ? '许可：' + location.license : '许可未提供，请到来源页面核对'].filter(Boolean).join(' · ')));
+        list.append(item);
+      }
+      details.append(list);
+      card.append(details);
+    }
     return card;
   }
   function cancelSearch() {
@@ -193,6 +218,10 @@
       item.dataset.state = ok ? 'ok' : 'unavailable';
       item.append(el('strong', '', sources[entry.id] || entry.label || '学术来源'));
       item.append(document.createTextNode(ok ? ` · ${Number.isSafeInteger(entry.count) ? entry.count + ' 条' : '已返回'}` : entry.status === 'skipped' ? ' · 暂不支持此条件' : ' · 本次暂不可用'));
+      if (ok && entry.id === 'unpaywall') {
+        const status = { open: '找到开放获取位置', closed: '已收录，暂无开放全文', not_found: '未收录此 DOI' }[entry.lookupStatus];
+        if (status) item.append(document.createTextNode(' · ' + status));
+      }
       container.append(item);
     }
     container.hidden = !container.childElementCount;
@@ -200,8 +229,14 @@
   async function search({ page = 1, focus = true } = {}) {
     cancelSearch();
     const query = queryInput.value.trim().replace(/\s+/g, ' ');
-    const author = authorInput.value.trim();
     const selectedMode = mode();
+    const selectedSource = selectedMode === 'semantic' ? 'sciverse' : sourceSelect.value;
+    const author = selectedSource === 'unpaywall' ? '' : authorInput.value.trim();
+    if (selectedSource === 'unpaywall' && !/^10\.\d{4,9}\/\S+$/i.test(query.replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '').trim())) {
+      $('papers-status').textContent = 'Unpaywall 需要完整 DOI 或 doi.org 链接；检索关键词或作者，请切换到联合检索。';
+      queryInput.focus();
+      return;
+    }
     if ((!query && !author) || (selectedMode === 'semantic' && !query)) {
       $('papers-status').textContent = selectedMode === 'semantic' ? '先描述一个研究问题，再进行语义检索。' : '请输入标题、关键词、DOI 或作者姓名。';
       queryInput.focus();
@@ -212,7 +247,6 @@
       ((query && query.length < 2) || query.length > 400 ? queryInput : authorInput).focus();
       return;
     }
-    const selectedSource = selectedMode === 'semantic' ? 'sciverse' : sourceSelect.value;
     currentSearch = { q: query, author, mode: selectedMode, source: selectedSource, page: selectedMode === 'semantic' ? 1 : page };
     const parameters = new URLSearchParams({ q: query, author, mode: selectedMode, source: selectedSource, discipline: $('papers-discipline').value, page: String(currentSearch.page) });
     const locationUrl = new URL(location.href);
@@ -271,7 +305,8 @@
       $('papers-prev').disabled = currentSearch.page === 1;
       $('papers-next').disabled = !nextPageAvailable;
       if (!data.results.length) showEmpty(data.partial ? '已返回的来源中暂未找到文献' : '暂未找到相关文献', data.partial ? '部分来源尚未返回，不能据此判断文献不存在。请重试或切换来源。' : selectedMode === 'semantic' ? '试着具体描述研究对象、方法或问题，也可以切换为结构化检索。' : '可以缩短关键词、换用英文标题，或去掉作者条件再试。未检索到不代表文献不存在。', Boolean(data.partial));
-      $('papers-status').textContent = `已返回 ${data.results.length} ${selectedMode === 'semantic' ? '条相关结果' : '篇文献'}。`;
+      if (selectedSource === 'unpaywall' && data.lookupStatus === 'not_found') showEmpty('Unpaywall 尚未收录这个 DOI', '可检查 DOI 是否完整，或切换到 Crossref、OpenAlex 查询书目信息。未收录不等于论文不存在或无法开放获取。');
+      $('papers-status').textContent = selectedSource === 'unpaywall' && data.lookupStatus === 'not_found' ? '查询已完成，Unpaywall 尚未收录此 DOI。' : `已返回 ${data.results.length} ${selectedMode === 'semantic' ? '条相关结果' : '篇文献'}。`;
       $('papers-service-state').textContent = data.partial ? '文献服务 · 部分来源已返回' : '文献服务 · 本次查询已完成';
       $('papers-service-note').hidden = true;
       $('papers-service-retry').hidden = true;

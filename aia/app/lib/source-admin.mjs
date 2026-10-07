@@ -29,7 +29,7 @@ export const SOURCE_ADMIN_PROVIDERS = Object.freeze([
   source('core', 'CORE', false, ['CORE_API_KEY'], '预留开放文献数据源；保存配置不会启用未实现的接口。', 'https://core.ac.uk/services/api'),
   source('nasa_ads', 'NASA ADS', true, ['ADS_DEV_KEY'], '天文与物理学文献元数据，需配置 API 凭据。', 'https://ui.adsabs.harvard.edu/help/api/'),
   source('openaire', 'OpenAIRE', false, ['OPENAIRE_TOKEN'], '预留开放科研成果数据源。', 'https://graph.openaire.eu/develop/api.html'),
-  source('unpaywall', 'Unpaywall', false, ['UNPAYWALL_EMAIL'], '预留 DOI 开放获取位置查询。', 'https://unpaywall.org/products/api'),
+  source('unpaywall', 'Unpaywall', true, ['UNPAYWALL_EMAIL'], '按 DOI 查询开放获取状态与出版方、机构库的合法全文位置；不支持关键词搜索。', 'https://unpaywall.org/api'),
   source('springer', 'Springer Nature', false, ['SPRINGER_API_KEY'], '预留出版元数据接口，读取权限取决于账号。', 'https://dev.springernature.com/'),
   source('epo', 'EPO OPS', false, ['EPO_OPS_KEY', 'EPO_OPS_SECRET'], '预留专利接口。', 'https://developers.epo.org/'),
   source('lens', 'The Lens', false, ['LENS_API_TOKEN'], '预留学术与专利数据源。', 'https://docs.api.lens.org/'),
