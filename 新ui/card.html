@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>体检卡 · 灋廌覈鑒 Xiezhi</title>
+  <meta name="theme-color" content="#070e15">
+  <script>
+    // Team handoff: card.html?id=OpenAlexAuthorID. The preview hosts both components.
+    const incoming = new URLSearchParams(location.search);
+    const target = new URL('checkup.html', location.href);
+    const caseId = incoming.get('id') || incoming.get('case');
+    if (caseId) target.searchParams.set('case', caseId);
+    const network = incoming.get('network');
+    if (network === 'mainnet' || network === 'testnet') target.searchParams.set('network', network);
+    location.replace(target.href);
+  </script>
+</head>
+<body><p>正在打开体检卡。<a href="checkup.html">进入学术体检</a></p></body>
+</html>

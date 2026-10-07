@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="description" content="检索研究主题、论文标题与 DOI，查看摘要及可获取的原文片段。">
+  <title>文献检索 · 灋廌覈鑒 Xiezhi</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23a32727'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23fffdf8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style-guanya.css">
+  <link rel="stylesheet" href="guanya-components.css">
+  <link rel="stylesheet" href="papers.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="papers.js"></script>
+  <script defer src="network-nav.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="guanya-page papers-page">
+  <a class="guanya-skip" href="#main">跳到文献检索</a>
+  <header data-site-header></header>
+  <main id="main" class="papers-main">
+    <section class="papers-intro" aria-labelledby="papers-title">
+      <p class="papers-eyebrow">从线索，回到文献</p>
+      <h1 id="papers-title">让研究问题，<br class="papers-mobile-break">找到出处。</h1>
+      <p>搜索论文与研究主题，读摘要，再展开可获取的原文片段。</p>
+    </section>
+    <section class="papers-search-panel" aria-label="文献查询">
+      <form id="papers-form" novalidate>
+        <fieldset class="papers-modes">
+          <legend class="papers-sr">检索方式</legend>
+          <label><input type="radio" name="mode" value="metadata" checked><span>结构化检索</span></label>
+          <label><input type="radio" name="mode" value="semantic"><span>语义检索</span></label>
+        </fieldset>
+        <p id="papers-mode-help" class="papers-hint">用论文标题、关键词或 DOI 查找；也可以仅按作者查询。</p>
+        <label id="papers-query-label" class="papers-sr" for="papers-query">论文标题、关键词或 DOI</label>
+        <div class="papers-query-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <input id="papers-query" name="q" type="search" placeholder="论文标题、关键词或 DOI" maxlength="400" autocomplete="off" aria-describedby="papers-mode-help">
+          <button id="papers-submit" type="submit" aria-label="搜索文献"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        </div>
+        <div class="papers-author-field"><label for="papers-author">作者 <span>选填</span></label><input id="papers-author" name="author" type="search" placeholder="如 Kaiming He" maxlength="160" autocomplete="off" aria-describedby="papers-author-help"></div>
+        <p id="papers-author-help" class="papers-hint">作者姓名只用于检索线索；同名结果仍需结合单位与论文核对。</p>
+        <div class="papers-search-options">
+          <label for="papers-source-select">检索来源<select id="papers-source-select" name="source"><option value="all">联合检索（按领域）</option><option value="sciverse">Sciverse</option><option value="openalex">OpenAlex</option><option value="crossref">Crossref</option><option value="semantic_scholar">Semantic Scholar</option><option value="europe_pmc">Europe PMC</option><option value="pubmed">PubMed</option><option value="arxiv">arXiv</option><option value="datacite">DataCite</option><option value="nasa_ads">NASA ADS</option></select></label>
+          <label for="papers-discipline">研究领域<select id="papers-discipline" name="discipline"><option value="general">综合</option><option value="biomedical">生命科学与医学</option><option value="stem">理工科</option><option value="astronomy">天文学</option><option value="data">数据集与软件</option></select></label>
+        </div>
+        <p id="papers-scope-help" class="papers-hint">联合检索会按研究领域选择来源；每条文献保留其出处。</p>
+      </form>
+      <div class="papers-service"><span id="papers-service-state">正在检查文献服务…</span><button id="papers-service-retry" type="button" hidden>重新检查</button></div>
+      <p id="papers-service-note" class="papers-notice" hidden></p>
+    </section>
+    <p id="papers-status" class="papers-status" role="status" aria-live="polite"></p>
+    <section id="papers-results" class="papers-results" aria-labelledby="papers-results-title" hidden>
+      <div class="papers-section-head"><h2 id="papers-results-title" tabindex="-1">检索结果</h2><span id="papers-result-count"></span></div>
+      <p id="papers-source" class="papers-hint"></p>
+      <p id="papers-result-note" class="papers-notice" hidden></p>
+      <div id="papers-source-status" class="papers-source-status" aria-label="本次各来源的查询情况" hidden></div>
+      <div id="papers-list" class="papers-list"></div>
+      <div id="papers-empty" class="papers-empty" hidden><span aria-hidden="true">⌕</span><h3 id="papers-empty-title"></h3><p id="papers-empty-detail"></p><button id="papers-search-retry" type="button" class="papers-secondary" hidden>重新查询</button></div>
+      <nav id="papers-pagination" class="papers-pagination" aria-label="结果分页" hidden><button id="papers-prev" type="button" class="papers-secondary">← 上一页</button><span id="papers-page-number"></span><button id="papers-next" type="button" class="papers-secondary">下一页 →</button></nav>
+    </section>
+    <section id="papers-start" class="papers-start" aria-label="查询提示"><span aria-hidden="true">01 / 查找</span><p>已经知道论文名称，用结构化检索。<br>只有一个研究问题，试试语义检索。</p></section>
+  </main>
+  <footer class="papers-footer"><span>灋廌覈鑒 · 文献检索</span><p>汇集多个学术来源；收录、摘要及原文可用性以各来源返回为准。</p></footer>
+  <dialog id="papers-reader" class="papers-reader" aria-labelledby="papers-reader-title">
+    <div class="papers-reader-header"><div><p class="papers-eyebrow">原文片段</p><h2 id="papers-reader-title"></h2></div><button id="papers-reader-close" class="papers-icon-button" type="button" aria-label="关闭原文片段">×</button></div>
+    <div class="papers-reader-body"><p id="papers-reader-status" class="papers-hint" role="status" aria-live="polite"></p><div id="papers-reader-text" class="papers-reader-text" tabindex="0" aria-label="原文片段内容"></div><section id="papers-resources" class="papers-resources" aria-label="片段中的图表" hidden><h3>相关图表</h3><ul id="papers-resource-list"></ul></section><button id="papers-reader-retry" type="button" class="papers-secondary" hidden>重新加载片段</button></div>
+    <nav class="papers-reader-nav" aria-label="原文片段分页"><button id="papers-reader-prev" type="button" class="papers-secondary" disabled>← 上一段</button><span id="papers-reader-position"></span><button id="papers-reader-next" type="button" class="papers-secondary" disabled>下一段 →</button></nav>
+  </dialog>
+  <noscript><p class="papers-noscript">文献检索需要启用 JavaScript。<a href="index.html">返回首页</a></p></noscript>
+</body>
+</html>

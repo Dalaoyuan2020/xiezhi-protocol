@@ -1,23 +1,21 @@
-# 獬豸协议 · Xiezhi Protocol
+# 灋廌覈鑒 · 獬豸协议 · Xiezhi Protocol
 
-**学术信誉层：一个行为上链，一个评分。**
-*An academic reputation layer on BOT Chain: one action on-chain, one score.*
+**学术信誉链 + 知行社 · AIA Commons。** 獬豸协议以学术信誉链为底层，在知行社中实现 AIA（注意力 · 想法 · 行动），用**廌点**记录每一份可验证的贡献。
+*An academic reputation chain on BOT Chain, with a community (AIA Commons) where verified contributions are recorded as non-transferable Zhi Points.*
 
-> 獬豸是中国神话里专辨是非的判官神兽，「法」字的古写里就有它。
+> 獬豸是中国神话里专辨是非的独角神兽，「法」的古字「灋」里就有它。
 
-## 为什么
+| 先看这些 | |
+|---|---|
+| 📄 白皮书 | [《AIA 社区白皮书》PDF](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf) |
+| 🎬 视频 1 · 核心协议（85 秒） | [media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4) |
+| 🎬 视频 2 · AIA 社区（2 分 18 秒） | [media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4) |
+| 📋 提交材料 | [SUBMISSION.md](SUBMISSION.md) |
+| ⛓ BOT Chain 主网 | ActionRegistry [`0xA085…10eD`](https://scan.botchain.ai/address/0xA0853161002Af018225419324560FCE9CD9b10eD) · PointsLedger [`0x28B2…D60A`](https://scan.botchain.ai/address/0x28B2af15386C0D65D5427d5b81bEe485D4edD60A) |
 
-ORCID 给了学者一张名片，但名片不说明你靠不靠谱。AI 让论文产量暴涨：ICLR 2026 有效投稿 19,525 篇，ICLR 2027 截止前登记摘要超过 6 万篇；ICLR 2026 有 101 人各投 20 篇以上。大会和 arXiv 只能一刀切限篇数，但篇数可以分摊给别人挂名，**信誉分摊不了**。
+**运行**：`npm ci && npm start`（http://127.0.0.1:8890/ui/ 搜索首页 · /workspace/ 知行社）；`./start-demo.sh`（本地模拟链 + 认领盖章页 http://127.0.0.1:8892/live/）。Node ≥ 24.13，Python 3。可运行代码在 `aia/`、`xiezhi-ui/`；下方 `ui/`、`chain/`、`product/` 为比赛第一天的静态版本，保留作记录。
 
-獬豸协议围绕科研里最稀缺的三样东西（AIA）记账：
-
-| | 痛点 | 链上记什么 |
-|---|---|---|
-| **Attention 注意力** | 水文和一稿多投消耗审稿人注意力 | 期刊登记「投稿」与「结案」→ 同一稿件两家同时在审即提示疑似一稿多投 |
-| **Idea 想法** | 论文归属被数据库搞错 | 公开档案的评分快照指纹 + 本人认领 |
-| **Act 行动** | 复现、核对、审稿做了没人记账 | 复现、审稿与核对记录 |
-
-链上**只存指纹和分数**，不存论文、稿件或个人信息。规则公开，任何人都能复算；任何期刊、任何应用都能接入。不发币。
+## 早期静态版本（10-06）
 
 ## 现在能看什么
 

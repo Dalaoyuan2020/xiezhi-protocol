@@ -1,0 +1,678 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-07T17:31:51.599Z",
+  "source": "OpenAlex public metadata",
+  "notice": "由已取得的公开记录制作；时间依据逐条列出。只核对快照中的作者编号，不证明作者真实身份。未生成 Bastet 或任何竞赛任务。",
+  "snapshots": [
+    {
+      "snapshotHash": "86ebfd3cfd70c7944f3b2d61e59f3fe76c386378cdebc3460dbad3a7a4c12e0c",
+      "sourceUrl": "https://api.openalex.org/works/W7154392954",
+      "sourceSha256": "0cfa7ad20c85300e2330278aeeb4bff6df03547eac8c3c2658aeafd5c829b3ed",
+      "capturedAt": "2026-10-07T13:27:38.092Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W7154392954",
+        "title": "Research and analysis on the obstacle-crossing mechanism of spiral pipeline robots",
+        "doi": "https://doi.org/10.1145/3796731.3796892",
+        "publicationYear": 2025,
+        "authors": [
+          {
+            "id": "A5126633175",
+            "name": "Shihao Li"
+          },
+          {
+            "id": "A5101284139",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5133577731",
+            "name": "Zhenghong Kang"
+          },
+          {
+            "id": "A5126602136",
+            "name": "Zhiyuan Lv"
+          },
+          {
+            "id": "A5122832709",
+            "name": "Zhihuan Wang"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "f1f136f9c2ca3576bc3c92ddf880eef363edd7c5242546a70166fa5b05c7a3c2",
+      "sourceUrl": "https://api.openalex.org/works/W2969480053",
+      "sourceSha256": "c3a42a551087cfd8a38fb0f5d5c507dfeee983b4e5a2e428d49effe0e9b93567",
+      "capturedAt": "2026-10-07T13:27:39.137Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W2969480053",
+        "title": "A Multi-Mode Rehabilitation Robot With Magnetorheological Actuators Based on Human Motion Intention Estimation",
+        "doi": "https://doi.org/10.1109/tnsre.2019.2937000",
+        "publicationYear": 2019,
+        "authors": [
+          {
+            "id": "A5007706005",
+            "name": "Jiajun Xu"
+          },
+          {
+            "id": "A5100642147",
+            "name": "Youfu Li"
+          },
+          {
+            "id": "A5072119017",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5100756576",
+            "name": "Peng Chen"
+          },
+          {
+            "id": "A5046559124",
+            "name": "Shouqi Chen"
+          },
+          {
+            "id": "A5053381821",
+            "name": "Jinfu Liu"
+          },
+          {
+            "id": "A5027446431",
+            "name": "Chanchan Xu"
+          },
+          {
+            "id": "A5103905520",
+            "name": "Gaoxin Cheng"
+          },
+          {
+            "id": "A5103129556",
+            "name": "Hong Xu"
+          },
+          {
+            "id": "A5100356104",
+            "name": "Yang Liu"
+          },
+          {
+            "id": "A5100762327",
+            "name": "Jian Chen"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "a69c53ed7e1bae618cedb08452f1c6a46ca9b144af74eb8d8c6d5964a2963c0d",
+      "sourceUrl": "https://api.openalex.org/works/W7125929627",
+      "sourceSha256": "0cfa7ad20c85300e2330278aeeb4bff6df03547eac8c3c2658aeafd5c829b3ed",
+      "capturedAt": "2026-10-07T13:27:38.092Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W7125929627",
+        "title": "Collision Detection for Vacuum Wafer Transfer Robot",
+        "doi": "https://doi.org/10.1007/s12204-026-2899-8",
+        "publicationYear": 2026,
+        "authors": [
+          {
+            "id": "A5124140118",
+            "name": "Xingyu Fang"
+          },
+          {
+            "id": "A5089960629",
+            "name": "Xianming Wei"
+          },
+          {
+            "id": "A5111836558",
+            "name": "Jason Sun"
+          },
+          {
+            "id": "A5101284139",
+            "name": "Linsen Xu"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "d4072e67703b67e5727c90f06e8ff371490073857ae907503b8504e48c19a07a",
+      "sourceUrl": "https://api.openalex.org/works/W7131131191",
+      "sourceSha256": "0cfa7ad20c85300e2330278aeeb4bff6df03547eac8c3c2658aeafd5c829b3ed",
+      "capturedAt": "2026-10-07T13:27:38.092Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W7131131191",
+        "title": "Design and Study of Three-Dimensional Pipeline Defect Detection Robot",
+        "doi": "https://doi.org/10.1109/robio66223.2025.11378318",
+        "publicationYear": 2025,
+        "authors": [
+          {
+            "id": "A5126633175",
+            "name": "Shihao Li"
+          },
+          {
+            "id": "A5101284139",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5133577731",
+            "name": "Zhenghong Kang"
+          },
+          {
+            "id": "A5126602136",
+            "name": "Zhiyuan Lv"
+          },
+          {
+            "id": "A5122832709",
+            "name": "Zhihuan Wang"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "ee2842e0d2331bf87f4c061fea48f27dc845d83eada402a7516482eff8ddd14e",
+      "sourceUrl": "https://api.openalex.org/works/W4213322091",
+      "sourceSha256": "c3a42a551087cfd8a38fb0f5d5c507dfeee983b4e5a2e428d49effe0e9b93567",
+      "capturedAt": "2026-10-07T13:27:39.137Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W4213322091",
+        "title": "A convolution-transformer dual branch network for head-pose and occlusion facial expression recognition",
+        "doi": "https://doi.org/10.1007/s00371-022-02413-5",
+        "publicationYear": 2022,
+        "authors": [
+          {
+            "id": "A5088817762",
+            "name": "Xingcan Liang"
+          },
+          {
+            "id": "A5072119017",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5046772656",
+            "name": "Wenxiang Zhang"
+          },
+          {
+            "id": "A5100456118",
+            "name": "Yan Zhang"
+          },
+          {
+            "id": "A5053381821",
+            "name": "Jinfu Liu"
+          },
+          {
+            "id": "A5061645546",
+            "name": "Zhipeng Liu"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "7de6345a718abfcd561684e0dc9ec76dbb2f36458b92a2b5b232d495a9cb7b5b",
+      "sourceUrl": "https://api.openalex.org/works/W7122550093",
+      "sourceSha256": "0cfa7ad20c85300e2330278aeeb4bff6df03547eac8c3c2658aeafd5c829b3ed",
+      "capturedAt": "2026-10-07T13:27:38.092Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W7122550093",
+        "title": "Biomimetic linear tunable stiffness robot: Design, structural optimization and stiffness enhancement",
+        "doi": "https://doi.org/10.1007/s11431-025-3092-5",
+        "publicationYear": 2026,
+        "authors": [
+          {
+            "id": "A5122832709",
+            "name": "Zhihuan Wang"
+          },
+          {
+            "id": "A5101284139",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5122782080",
+            "name": "Mingming Wang"
+          },
+          {
+            "id": "A5122767670",
+            "name": "Wen Yan"
+          },
+          {
+            "id": "A5100393616",
+            "name": "Zhihua Zhang"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "be042abb2cd620cd8a95820138782777ca1494619793d31f2214b68135568a92",
+      "sourceUrl": "https://api.openalex.org/works/W3040691659",
+      "sourceSha256": "c3a42a551087cfd8a38fb0f5d5c507dfeee983b4e5a2e428d49effe0e9b93567",
+      "capturedAt": "2026-10-07T13:27:39.137Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W3040691659",
+        "title": "A Multi-Channel Reinforcement Learning Framework for Robotic Mirror Therapy",
+        "doi": "https://doi.org/10.1109/lra.2020.3007408",
+        "publicationYear": 2020,
+        "authors": [
+          {
+            "id": "A5007706005",
+            "name": "Jiajun Xu"
+          },
+          {
+            "id": "A5072119017",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5100642147",
+            "name": "Youfu Li"
+          },
+          {
+            "id": "A5103905520",
+            "name": "Gaoxin Cheng"
+          },
+          {
+            "id": "A5073757951",
+            "name": "Jia Dong Shi"
+          },
+          {
+            "id": "A5053381821",
+            "name": "Jinfu Liu"
+          },
+          {
+            "id": "A5046559124",
+            "name": "Shouqi Chen"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "7d6ef05d67d6fe8b29c78978c6af71e93b5f0fa9db0988476798a76e5f3e388f",
+      "sourceUrl": "https://api.openalex.org/works/W2999103112",
+      "sourceSha256": "c3a42a551087cfd8a38fb0f5d5c507dfeee983b4e5a2e428d49effe0e9b93567",
+      "capturedAt": "2026-10-07T13:27:39.137Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W2999103112",
+        "title": "Development of a Bio-inspired Wall-Climbing Robot Composed of Spine Wheels, Adhesive Belts and Eddy Suction Cup",
+        "doi": "https://doi.org/10.1017/s026357471900184x",
+        "publicationYear": 2020,
+        "authors": [
+          {
+            "id": "A5053381821",
+            "name": "Jinfu Liu"
+          },
+          {
+            "id": "A5072119017",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5046559124",
+            "name": "Shouqi Chen"
+          },
+          {
+            "id": "A5103129556",
+            "name": "Hong Xu"
+          },
+          {
+            "id": "A5103905520",
+            "name": "Gaoxin Cheng"
+          },
+          {
+            "id": "A5007706005",
+            "name": "Jiajun Xu"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "96c683c84a99c8b9a8104e571b2c360965389ae731df3bfb57f91d6eb46e35a5",
+      "sourceUrl": "https://api.openalex.org/works/W7134182348",
+      "sourceSha256": "0cfa7ad20c85300e2330278aeeb4bff6df03547eac8c3c2658aeafd5c829b3ed",
+      "capturedAt": "2026-10-07T13:27:38.092Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W7134182348",
+        "title": "Research on Emotion-Aware Upper Limb Rehabilitation Robot Driven by POR-CTLFNet",
+        "doi": "https://doi.org/10.1109/isrimt67769.2025.11413033",
+        "publicationYear": 2025,
+        "authors": [
+          {
+            "id": "A5087626572",
+            "name": "Xiang Sui"
+          },
+          {
+            "id": "A5101284139",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5125614136",
+            "name": "Xingcan Liang"
+          },
+          {
+            "id": "A5122782080",
+            "name": "Mingming Wang"
+          }
+        ]
+      }
+    },
+    {
+      "snapshotHash": "07c7a181b30d4844a459dce34c208354a5c414966f3a9efefced76916132ac14",
+      "sourceUrl": "https://api.openalex.org/works/W3029719910",
+      "sourceSha256": "c3a42a551087cfd8a38fb0f5d5c507dfeee983b4e5a2e428d49effe0e9b93567",
+      "capturedAt": "2026-10-07T13:27:39.137Z",
+      "timestampBasis": "local-cache-mtime (not publisher update time)",
+      "snapshot": {
+        "workId": "W3029719910",
+        "title": "Analysis and optimization of the wall-climbing robot with an adsorption system and adhesive belts",
+        "doi": "https://doi.org/10.1177/1729881420926409",
+        "publicationYear": 2020,
+        "authors": [
+          {
+            "id": "A5053381821",
+            "name": "Jinfu Liu"
+          },
+          {
+            "id": "A5072119017",
+            "name": "Linsen Xu"
+          },
+          {
+            "id": "A5007706005",
+            "name": "Jiajun Xu"
+          },
+          {
+            "id": "A5100349477",
+            "name": "Lei Liu"
+          },
+          {
+            "id": "A5103905520",
+            "name": "Gaoxin Cheng"
+          },
+          {
+            "id": "A5046559124",
+            "name": "Shouqi Chen"
+          },
+          {
+            "id": "A5103129556",
+            "name": "Hong Xu"
+          },
+          {
+            "id": "A5073757951",
+            "name": "Jia Dong Shi"
+          },
+          {
+            "id": "A5088817762",
+            "name": "Xingcan Liang"
+          }
+        ]
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "subject": {
+        "authorId": "A5126602136",
+        "workId": "W7154392954"
+      },
+      "title": "核对作者列表：Zhiyuan Lv · W7154392954",
+      "prompt": "请核对所附 OpenAlex 快照：《Research and analysis on the obstacle-crossing mechanism of spiral pipeline robots》的作者列表是否包含 Zhiyuan Lv（A5126602136）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:38.092Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W7154392954",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "86ebfd3cfd70c7944f3b2d61e59f3fe76c386378cdebc3460dbad3a7a4c12e0c",
+          "excerpt": "{\n  \"workId\": \"W7154392954\",\n  \"title\": \"Research and analysis on the obstacle-crossing mechanism of spiral pipeline robots\",\n  \"doi\": \"https://doi.org/10.1145/3796731.3796892\",\n  \"publicationYear\": 2025,\n  \"authors\": [\n    {\n      \"id\": \"A5126633175\",\n      \"name\": \"Shihao Li\"\n    },\n    {\n      \"id\": \"A5101284139\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5133577731\",\n      \"name\": \"Zhenghong Kang\"\n    },\n    {\n      \"id\": \"A5126602136\",\n      \"name\": \"Zhiyuan Lv\"\n    },\n    {\n      \"id\": \"A5122832709\",\n      \"name\": \"Zhihuan Wang\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5126602136",
+          "label": "待核对作者 A5126602136",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "86ebfd3cfd70c7944f3b2d61e59f3fe76c386378cdebc3460dbad3a7a4c12e0c",
+          "excerpt": "待核对的公开作者编号：A5126602136；显示姓名：Zhiyuan Lv。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5072119017",
+        "workId": "W2969480053"
+      },
+      "title": "核对作者列表：Linsen Xu · W2969480053",
+      "prompt": "请核对所附 OpenAlex 快照：《A Multi-Mode Rehabilitation Robot With Magnetorheological Actuators Based on Human Motion Intention Estimation》的作者列表是否包含 Linsen Xu（A5072119017）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:39.137Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W2969480053",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "f1f136f9c2ca3576bc3c92ddf880eef363edd7c5242546a70166fa5b05c7a3c2",
+          "excerpt": "{\n  \"workId\": \"W2969480053\",\n  \"title\": \"A Multi-Mode Rehabilitation Robot With Magnetorheological Actuators Based on Human Motion Intention Estimation\",\n  \"doi\": \"https://doi.org/10.1109/tnsre.2019.2937000\",\n  \"publicationYear\": 2019,\n  \"authors\": [\n    {\n      \"id\": \"A5007706005\",\n      \"name\": \"Jiajun Xu\"\n    },\n    {\n      \"id\": \"A5100642147\",\n      \"name\": \"Youfu Li\"\n    },\n    {\n      \"id\": \"A5072119017\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5100756576\",\n      \"name\": \"Peng Chen\"\n    },\n    {\n      \"id\": \"A5046559124\",\n      \"name\": \"Shouqi Chen\"\n    },\n    {\n      \"id\": \"A5053381821\",\n      \"name\": \"Jinfu Liu\"\n    },\n    {\n      \"id\": \"A5027446431\",\n      \"name\": \"Chanchan Xu\"\n    },\n    {\n      \"id\": \"A5103905520\",\n      \"name\": \"Gaoxin Cheng\"\n    },\n    {\n      \"id\": \"A5103129556\",\n      \"name\": \"Hong Xu\"\n    },\n    {\n      \"id\": \"A5100356104\",\n      \"name\": \"Yang Liu\"\n    },\n    {\n      \"id\": \"A5100762327\",\n      \"name\": \"Jian Chen\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5072119017",
+          "label": "待核对作者 A5072119017",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "f1f136f9c2ca3576bc3c92ddf880eef363edd7c5242546a70166fa5b05c7a3c2",
+          "excerpt": "待核对的公开作者编号：A5072119017；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5101284139",
+        "workId": "W7125929627"
+      },
+      "title": "核对作者列表：Linsen Xu · W7125929627",
+      "prompt": "请核对所附 OpenAlex 快照：《Collision Detection for Vacuum Wafer Transfer Robot》的作者列表是否包含 Linsen Xu（A5101284139）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:38.092Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W7125929627",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "a69c53ed7e1bae618cedb08452f1c6a46ca9b144af74eb8d8c6d5964a2963c0d",
+          "excerpt": "{\n  \"workId\": \"W7125929627\",\n  \"title\": \"Collision Detection for Vacuum Wafer Transfer Robot\",\n  \"doi\": \"https://doi.org/10.1007/s12204-026-2899-8\",\n  \"publicationYear\": 2026,\n  \"authors\": [\n    {\n      \"id\": \"A5124140118\",\n      \"name\": \"Xingyu Fang\"\n    },\n    {\n      \"id\": \"A5089960629\",\n      \"name\": \"Xianming Wei\"\n    },\n    {\n      \"id\": \"A5111836558\",\n      \"name\": \"Jason Sun\"\n    },\n    {\n      \"id\": \"A5101284139\",\n      \"name\": \"Linsen Xu\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5101284139",
+          "label": "待核对作者 A5101284139",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "a69c53ed7e1bae618cedb08452f1c6a46ca9b144af74eb8d8c6d5964a2963c0d",
+          "excerpt": "待核对的公开作者编号：A5101284139；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5126602136",
+        "workId": "W7131131191"
+      },
+      "title": "核对作者列表：Zhiyuan Lv · W7131131191",
+      "prompt": "请核对所附 OpenAlex 快照：《Design and Study of Three-Dimensional Pipeline Defect Detection Robot》的作者列表是否包含 Zhiyuan Lv（A5126602136）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:38.092Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W7131131191",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "d4072e67703b67e5727c90f06e8ff371490073857ae907503b8504e48c19a07a",
+          "excerpt": "{\n  \"workId\": \"W7131131191\",\n  \"title\": \"Design and Study of Three-Dimensional Pipeline Defect Detection Robot\",\n  \"doi\": \"https://doi.org/10.1109/robio66223.2025.11378318\",\n  \"publicationYear\": 2025,\n  \"authors\": [\n    {\n      \"id\": \"A5126633175\",\n      \"name\": \"Shihao Li\"\n    },\n    {\n      \"id\": \"A5101284139\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5133577731\",\n      \"name\": \"Zhenghong Kang\"\n    },\n    {\n      \"id\": \"A5126602136\",\n      \"name\": \"Zhiyuan Lv\"\n    },\n    {\n      \"id\": \"A5122832709\",\n      \"name\": \"Zhihuan Wang\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5126602136",
+          "label": "待核对作者 A5126602136",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "d4072e67703b67e5727c90f06e8ff371490073857ae907503b8504e48c19a07a",
+          "excerpt": "待核对的公开作者编号：A5126602136；显示姓名：Zhiyuan Lv。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5126602136",
+        "workId": "W4213322091"
+      },
+      "title": "核对作者列表：Zhiyuan Lv · W4213322091",
+      "prompt": "请核对所附 OpenAlex 快照：《A convolution-transformer dual branch network for head-pose and occlusion facial expression recognition》的作者列表是否包含 Zhiyuan Lv（A5126602136）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:39.137Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W4213322091",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "ee2842e0d2331bf87f4c061fea48f27dc845d83eada402a7516482eff8ddd14e",
+          "excerpt": "{\n  \"workId\": \"W4213322091\",\n  \"title\": \"A convolution-transformer dual branch network for head-pose and occlusion facial expression recognition\",\n  \"doi\": \"https://doi.org/10.1007/s00371-022-02413-5\",\n  \"publicationYear\": 2022,\n  \"authors\": [\n    {\n      \"id\": \"A5088817762\",\n      \"name\": \"Xingcan Liang\"\n    },\n    {\n      \"id\": \"A5072119017\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5046772656\",\n      \"name\": \"Wenxiang Zhang\"\n    },\n    {\n      \"id\": \"A5100456118\",\n      \"name\": \"Yan Zhang\"\n    },\n    {\n      \"id\": \"A5053381821\",\n      \"name\": \"Jinfu Liu\"\n    },\n    {\n      \"id\": \"A5061645546\",\n      \"name\": \"Zhipeng Liu\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5126602136",
+          "label": "待核对作者 A5126602136",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "ee2842e0d2331bf87f4c061fea48f27dc845d83eada402a7516482eff8ddd14e",
+          "excerpt": "待核对的公开作者编号：A5126602136；显示姓名：Zhiyuan Lv。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5101284139",
+        "workId": "W7122550093"
+      },
+      "title": "核对作者列表：Linsen Xu · W7122550093",
+      "prompt": "请核对所附 OpenAlex 快照：《Biomimetic linear tunable stiffness robot: Design, structural optimization and stiffness enhancement》的作者列表是否包含 Linsen Xu（A5101284139）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:38.092Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W7122550093",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "7de6345a718abfcd561684e0dc9ec76dbb2f36458b92a2b5b232d495a9cb7b5b",
+          "excerpt": "{\n  \"workId\": \"W7122550093\",\n  \"title\": \"Biomimetic linear tunable stiffness robot: Design, structural optimization and stiffness enhancement\",\n  \"doi\": \"https://doi.org/10.1007/s11431-025-3092-5\",\n  \"publicationYear\": 2026,\n  \"authors\": [\n    {\n      \"id\": \"A5122832709\",\n      \"name\": \"Zhihuan Wang\"\n    },\n    {\n      \"id\": \"A5101284139\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5122782080\",\n      \"name\": \"Mingming Wang\"\n    },\n    {\n      \"id\": \"A5122767670\",\n      \"name\": \"Wen Yan\"\n    },\n    {\n      \"id\": \"A5100393616\",\n      \"name\": \"Zhihua Zhang\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5101284139",
+          "label": "待核对作者 A5101284139",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "7de6345a718abfcd561684e0dc9ec76dbb2f36458b92a2b5b232d495a9cb7b5b",
+          "excerpt": "待核对的公开作者编号：A5101284139；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5072119017",
+        "workId": "W3040691659"
+      },
+      "title": "核对作者列表：Linsen Xu · W3040691659",
+      "prompt": "请核对所附 OpenAlex 快照：《A Multi-Channel Reinforcement Learning Framework for Robotic Mirror Therapy》的作者列表是否包含 Linsen Xu（A5072119017）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:39.137Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W3040691659",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "be042abb2cd620cd8a95820138782777ca1494619793d31f2214b68135568a92",
+          "excerpt": "{\n  \"workId\": \"W3040691659\",\n  \"title\": \"A Multi-Channel Reinforcement Learning Framework for Robotic Mirror Therapy\",\n  \"doi\": \"https://doi.org/10.1109/lra.2020.3007408\",\n  \"publicationYear\": 2020,\n  \"authors\": [\n    {\n      \"id\": \"A5007706005\",\n      \"name\": \"Jiajun Xu\"\n    },\n    {\n      \"id\": \"A5072119017\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5100642147\",\n      \"name\": \"Youfu Li\"\n    },\n    {\n      \"id\": \"A5103905520\",\n      \"name\": \"Gaoxin Cheng\"\n    },\n    {\n      \"id\": \"A5073757951\",\n      \"name\": \"Jia Dong Shi\"\n    },\n    {\n      \"id\": \"A5053381821\",\n      \"name\": \"Jinfu Liu\"\n    },\n    {\n      \"id\": \"A5046559124\",\n      \"name\": \"Shouqi Chen\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5072119017",
+          "label": "待核对作者 A5072119017",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "be042abb2cd620cd8a95820138782777ca1494619793d31f2214b68135568a92",
+          "excerpt": "待核对的公开作者编号：A5072119017；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5072119017",
+        "workId": "W2999103112"
+      },
+      "title": "核对作者列表：Linsen Xu · W2999103112",
+      "prompt": "请核对所附 OpenAlex 快照：《Development of a Bio-inspired Wall-Climbing Robot Composed of Spine Wheels, Adhesive Belts and Eddy Suction Cup》的作者列表是否包含 Linsen Xu（A5072119017）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:39.137Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W2999103112",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "7d6ef05d67d6fe8b29c78978c6af71e93b5f0fa9db0988476798a76e5f3e388f",
+          "excerpt": "{\n  \"workId\": \"W2999103112\",\n  \"title\": \"Development of a Bio-inspired Wall-Climbing Robot Composed of Spine Wheels, Adhesive Belts and Eddy Suction Cup\",\n  \"doi\": \"https://doi.org/10.1017/s026357471900184x\",\n  \"publicationYear\": 2020,\n  \"authors\": [\n    {\n      \"id\": \"A5053381821\",\n      \"name\": \"Jinfu Liu\"\n    },\n    {\n      \"id\": \"A5072119017\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5046559124\",\n      \"name\": \"Shouqi Chen\"\n    },\n    {\n      \"id\": \"A5103129556\",\n      \"name\": \"Hong Xu\"\n    },\n    {\n      \"id\": \"A5103905520\",\n      \"name\": \"Gaoxin Cheng\"\n    },\n    {\n      \"id\": \"A5007706005\",\n      \"name\": \"Jiajun Xu\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5072119017",
+          "label": "待核对作者 A5072119017",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "7d6ef05d67d6fe8b29c78978c6af71e93b5f0fa9db0988476798a76e5f3e388f",
+          "excerpt": "待核对的公开作者编号：A5072119017；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5101284139",
+        "workId": "W7134182348"
+      },
+      "title": "核对作者列表：Linsen Xu · W7134182348",
+      "prompt": "请核对所附 OpenAlex 快照：《Research on Emotion-Aware Upper Limb Rehabilitation Robot Driven by POR-CTLFNet》的作者列表是否包含 Linsen Xu（A5101284139）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:38.092Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W7134182348",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "96c683c84a99c8b9a8104e571b2c360965389ae731df3bfb57f91d6eb46e35a5",
+          "excerpt": "{\n  \"workId\": \"W7134182348\",\n  \"title\": \"Research on Emotion-Aware Upper Limb Rehabilitation Robot Driven by POR-CTLFNet\",\n  \"doi\": \"https://doi.org/10.1109/isrimt67769.2025.11413033\",\n  \"publicationYear\": 2025,\n  \"authors\": [\n    {\n      \"id\": \"A5087626572\",\n      \"name\": \"Xiang Sui\"\n    },\n    {\n      \"id\": \"A5101284139\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5125614136\",\n      \"name\": \"Xingcan Liang\"\n    },\n    {\n      \"id\": \"A5122782080\",\n      \"name\": \"Mingming Wang\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5101284139",
+          "label": "待核对作者 A5101284139",
+          "retrievedAt": "2026-10-07T13:27:38.092Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "96c683c84a99c8b9a8104e571b2c360965389ae731df3bfb57f91d6eb46e35a5",
+          "excerpt": "待核对的公开作者编号：A5101284139；显示姓名：Linsen Xu。姓名不能代替编号或身份证明。"
+        }
+      ]
+    },
+    {
+      "subject": {
+        "authorId": "A5126602136",
+        "workId": "W3029719910"
+      },
+      "title": "核对作者列表：Zhiyuan Lv · W3029719910",
+      "prompt": "请核对所附 OpenAlex 快照：《Analysis and optimization of the wall-climbing robot with an adsorption system and adhesive belts》的作者列表是否包含 Zhiyuan Lv（A5126602136）？请指出作者编号、记录日期等依据。只核对公开记录，不认定真实署名归属；材料不足可选不确定。",
+      "createdAt": "2026-10-07T13:27:39.137Z",
+      "evidence": [
+        {
+          "url": "https://api.openalex.org/works/W3029719910",
+          "label": "OpenAlex 论文记录快照",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "07c7a181b30d4844a459dce34c208354a5c414966f3a9efefced76916132ac14",
+          "excerpt": "{\n  \"workId\": \"W3029719910\",\n  \"title\": \"Analysis and optimization of the wall-climbing robot with an adsorption system and adhesive belts\",\n  \"doi\": \"https://doi.org/10.1177/1729881420926409\",\n  \"publicationYear\": 2020,\n  \"authors\": [\n    {\n      \"id\": \"A5053381821\",\n      \"name\": \"Jinfu Liu\"\n    },\n    {\n      \"id\": \"A5072119017\",\n      \"name\": \"Linsen Xu\"\n    },\n    {\n      \"id\": \"A5007706005\",\n      \"name\": \"Jiajun Xu\"\n    },\n    {\n      \"id\": \"A5100349477\",\n      \"name\": \"Lei Liu\"\n    },\n    {\n      \"id\": \"A5103905520\",\n      \"name\": \"Gaoxin Cheng\"\n    },\n    {\n      \"id\": \"A5046559124\",\n      \"name\": \"Shouqi Chen\"\n    },\n    {\n      \"id\": \"A5103129556\",\n      \"name\": \"Hong Xu\"\n    },\n    {\n      \"id\": \"A5073757951\",\n      \"name\": \"Jia Dong Shi\"\n    },\n    {\n      \"id\": \"A5088817762\",\n      \"name\": \"Xingcan Liang\"\n    }\n  ]\n}"
+        },
+        {
+          "url": "https://api.openalex.org/authors/A5126602136",
+          "label": "待核对作者 A5126602136",
+          "retrievedAt": "2026-10-07T13:27:39.137Z",
+          "timestampBasis": "local-cache-mtime (not publisher update time)",
+          "snapshotHash": "07c7a181b30d4844a459dce34c208354a5c414966f3a9efefced76916132ac14",
+          "excerpt": "待核对的公开作者编号：A5126602136；显示姓名：Zhiyuan Lv。姓名不能代替编号或身份证明。"
+        }
+      ]
+    }
+  ]
+}

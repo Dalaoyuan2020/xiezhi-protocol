@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#efe6d5">
+  <meta name="description" content="在学术工作台联合检索论文、核对来源，阅读可获取的原文与图表。">
+  <title>文献检索 · 灋廌覈鑒 Xiezhi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="workbench.css">
+  <link rel="stylesheet" href="papers.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="page-registry.js"></script>
+  <script defer src="workbench.js"></script>
+  <script defer src="papers.js"></script>
+  <script defer src="network-nav.js"></script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23a53528'/%3E%3Cpath d='M5 5h22v22H5zM16 5v22M5 16h22' fill='none' stroke='%23f4eee1' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="wb-page papers-page" data-section="papers" data-page-title="文献检索">
+  <a class="skip" href="#main">跳到文献检索</a>
+  <header data-site-header></header>
+  <div id="wb-sidebar-slot"></div>
+  <div id="wb-topbar-slot"></div>
+  <button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+  <div class="wb-content" id="wb-content">
+    <div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+    <main class="wb-main" id="main">
+      <header class="wb-page-heading papers-heading">
+        <div><p class="wb-eyebrow">公共工具 / 文献检索</p><h1>查阅文献，回到证据</h1><p class="papers-heading-note">联合查找论文与研究成果，核对出处，再展开可读取的原文。</p></div>
+        <a class="wb-button-secondary" href="index.html">查找学者档案 ↗</a>
+      </header>
+      <div class="papers-workspace">
+        <section class="wb-panel papers-search-panel" aria-labelledby="papers-search-heading">
+          <div class="papers-panel-heading"><span class="papers-section-number" aria-hidden="true">01</span><h2 id="papers-search-heading">检索条件</h2></div>
+          <form id="papers-form" novalidate>
+            <fieldset class="papers-modes">
+              <legend class="sr-only">检索方式</legend>
+              <label><input type="radio" name="mode" value="metadata" checked><span>论文检索</span></label>
+              <label><input type="radio" name="mode" value="semantic"><span>语义检索</span></label>
+            </fieldset>
+            <p id="papers-mode-help" class="papers-hint">用论文标题、关键词或 DOI 查找；也可以仅按作者查询。</p>
+            <div class="wb-field"><label id="papers-query-label" for="papers-query">论文标题、关键词或 DOI</label><textarea id="papers-query" name="q" rows="3" maxlength="400" placeholder="论文标题、关键词或 DOI" autocomplete="off" aria-describedby="papers-mode-help"></textarea></div>
+            <div class="wb-field papers-author-field"><label for="papers-author">作者姓名 <span>选填</span></label><input id="papers-author" name="author" type="search" placeholder="如 Andrej Karpathy" maxlength="160" autocomplete="off" aria-describedby="papers-author-help"><small id="papers-author-help">作者姓名只用于检索线索；同名结果仍需结合单位与论文核对。</small></div>
+            <button id="papers-submit" class="wb-button papers-submit" type="submit"><span>检索文献</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+            <p class="papers-keyboard-hint">Ctrl / ⌘ + Enter 快速检索</p>
+            <div class="papers-search-options">
+              <div class="wb-field"><label for="papers-source-select">检索来源</label><select id="papers-source-select" name="source"><option value="all">联合检索（按领域）</option><option value="sciverse">Sciverse</option><option value="openalex">OpenAlex</option><option value="crossref">Crossref</option><option value="semantic_scholar">Semantic Scholar</option><option value="europe_pmc">Europe PMC</option><option value="pubmed">PubMed</option><option value="arxiv">arXiv</option><option value="datacite">DataCite</option><option value="nasa_ads">NASA ADS</option></select></div>
+              <div class="wb-field"><label for="papers-discipline">研究领域</label><select id="papers-discipline" name="discipline"><option value="general">综合</option><option value="biomedical">生命科学与医学</option><option value="stem">理工科</option><option value="astronomy">天文学</option><option value="data">数据集与软件</option></select></div>
+            </div>
+            <p id="papers-scope-help" class="papers-hint">联合检索会按研究领域选择来源；每条文献保留其出处。</p>
+          </form>
+          <div class="papers-service"><span id="papers-service-state">正在检查文献服务…</span><button id="papers-service-retry" type="button" class="papers-text-button" hidden>重新检查</button></div>
+          <p id="papers-service-note" class="papers-notice" hidden></p>
+        </section>
+        <div class="papers-reading-column">
+          <p id="papers-status" class="wb-status papers-status" role="status" aria-live="polite"></p>
+          <section id="papers-results" class="papers-results" aria-labelledby="papers-results-title" hidden>
+            <div class="papers-section-head"><div class="papers-panel-heading"><span class="papers-section-number" aria-hidden="true">02</span><h2 id="papers-results-title" tabindex="-1">检索结果</h2></div><span id="papers-result-count"></span></div>
+            <p id="papers-source" class="papers-hint"></p>
+            <p id="papers-result-note" class="papers-notice" hidden></p>
+            <div id="papers-source-status" class="papers-source-status" aria-label="本次各来源的查询情况" hidden></div>
+            <div id="papers-list" class="papers-list"></div>
+            <div id="papers-empty" class="wb-panel papers-empty" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h21l7 7v25H10zM30 8v9h8M17 25h14M17 31h9"/></svg><h3 id="papers-empty-title"></h3><p id="papers-empty-detail"></p><button id="papers-search-retry" type="button" class="wb-button-secondary" hidden>重新查询</button></div>
+            <nav id="papers-pagination" class="papers-pagination" aria-label="结果分页" hidden><button id="papers-prev" type="button" class="wb-button-secondary">← 上一页</button><span id="papers-page-number"></span><button id="papers-next" type="button" class="wb-button-secondary">下一页 →</button></nav>
+          </section>
+          <section id="papers-start" class="wb-panel papers-start" aria-labelledby="papers-start-title">
+            <div class="papers-start-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M10 12h18l4 4 4-4h18v39H37l-5 4-5-4H10zM32 16v39M16 23h9M16 30h9M39 23h9M39 30h9M16 38h9M39 38h9"/></svg></div>
+            <p class="wb-eyebrow">研究从一条线索开始</p>
+            <h2 id="papers-start-title">把问题带进来，把出处带回去</h2>
+            <p>已有题目或作者，用论文检索。<br>想知道某个研究问题的答案，试试语义检索。</p>
+            <div class="papers-start-steps"><div><span>检索</span><p>多个来源并行查找，合并重复记录</p></div><div><span>核对</span><p>保留作者、年份与每一条来源</p></div><div><span>阅读</span><p>查看可获取的原文片段与图表</p></div></div>
+            <p class="papers-start-boundary">收录和可访问性以各来源为准；相关性不等于研究质量。</p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="wb-footer"><p>灋廌覈鑒 · 文献工作台</p><p>检索与阅读不会提交评审，也不会产生链上交易。</p></footer>
+  </div>
+  <dialog id="papers-reader" class="papers-reader" aria-labelledby="papers-reader-title">
+    <div class="papers-reader-header"><div><p class="wb-eyebrow">原文阅读 / Sciverse</p><h2 id="papers-reader-title"></h2></div><button id="papers-reader-close" class="papers-icon-button" type="button" aria-label="关闭原文片段">×</button></div>
+    <div class="papers-reader-body"><p id="papers-reader-status" class="papers-hint" role="status" aria-live="polite"></p><div id="papers-reader-text" class="papers-reader-text" tabindex="0" aria-label="原文片段内容"></div><section id="papers-resources" class="papers-resources" aria-label="片段中的图表" hidden><h3>相关图表</h3><ul id="papers-resource-list"></ul></section><button id="papers-reader-retry" type="button" class="wb-button-secondary" hidden>重新加载片段</button></div>
+    <nav class="papers-reader-nav" aria-label="原文片段分页"><button id="papers-reader-prev" type="button" class="wb-button-secondary" disabled>← 上一段</button><span id="papers-reader-position"></span><button id="papers-reader-next" type="button" class="wb-button-secondary" disabled>下一段 →</button></nav>
+  </dialog>
+  <noscript><p class="papers-noscript">文献检索需要启用 JavaScript。<a href="index.html">返回读者工作台</a></p></noscript>
+</body>
+</html>

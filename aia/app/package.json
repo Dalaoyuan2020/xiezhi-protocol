@@ -1,0 +1,21 @@
+{
+  "name": "@aia/product",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Account-based research, peer review and independently accepted contributions",
+  "engines": {
+    "node": ">=24.13.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@aia/research-core": "0.1.0",
+    "ethers": "6.17.0",
+    "ganache": "7.9.2",
+    "nodemailer": "10.0.16",
+    "pinyin-pro": "3.29.4"
+  }
+}

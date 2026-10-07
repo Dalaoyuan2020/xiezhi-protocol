@@ -1,0 +1,17 @@
+/* Shared visual tokens for screens 01–04. Component styles live in separate files. */
+:root {
+  color-scheme: dark;
+  --sc-bg: #070e15;
+  --sc-panel: #101d28;
+  --sc-panel-raised: #152634;
+  --sc-text: #ecf8fa;
+  --sc-muted: #9ab4c3;
+  --sc-cyan: #58e7f0;
+  --sc-green: #b5ff76;
+  --sc-amber: #ffc56e;
+  --sc-red: #ff8b99;
+  --sc-line: #29424f;
+  --sc-font-sans: Inter, "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  --sc-font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --sc-radius: 20px;
+}

@@ -1,0 +1,47 @@
+{
+  "note": "演示用可信期刊名单：机构页只采信这些地址登记的行为",
+  "platform": "0xE7c719eBf64D2AA5dF3b00CF31A864811b3e242b",
+  "journals": [
+    {
+      "key": "journalA",
+      "name": "演示期刊甲",
+      "address": "0x5f8Fd243b28ac3CFfA5bC7f6206a89e33f95564c",
+      "org": "0x484354318b3e98c6683f7beca9bb1ec3bbd4d5dfa5e92bda280357e50cc99627"
+    },
+    {
+      "key": "journalB",
+      "name": "演示期刊乙",
+      "address": "0x68bB103e12906db5Ed9D65E6c0273a3887d3AFe1",
+      "org": "0x9c25eae55bb1785a9f300974028f338039c6fba5ef739e86fadaac2a5cb4811e"
+    }
+  ],
+  "manuscript": "0x0f623e8331763e63144e27379bab3f11cdb0de90c397e772253dcb0dc013d902",
+  "demoAuthor": "DEMO-MULTI",
+  "log": [
+    {
+      "label": "评分 Zhiyuan Lv 70",
+      "tx": "0xe88454487ee6e72b4e82de0c710808f8668c273db5503b1ee94c49f42573dd13",
+      "block": 25995557
+    },
+    {
+      "label": "评分 Andrej Karpathy 78",
+      "tx": "0x1d6119ca5aecbdff1aeeb4b53508010797b92fceb9980273b5fa066885551ed9",
+      "block": 25995568
+    },
+    {
+      "label": "评分 Kaiming He 83",
+      "tx": "0xed028b7995b27baca333f5222f965109a0331d032203f0d140f1a7733b469ed7",
+      "block": 25995577
+    },
+    {
+      "label": "演示期刊甲 登记投稿",
+      "tx": "0x532137f7133159bde7d52f2ba16c81d14a3cc7e7a9fdd03ec854cffe81b6f29e",
+      "block": 25995587
+    },
+    {
+      "label": "演示期刊乙 登记投稿",
+      "tx": "0x834a3f00b753e03f9d679cd8250eb0f0d892590a8a0f30c15131e55195e925f6",
+      "block": 25995591
+    }
+  ]
+}

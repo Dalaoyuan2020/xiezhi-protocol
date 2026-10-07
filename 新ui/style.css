@@ -1,0 +1,94 @@
+/* Shared workbench palette. Legacy component tokens are aliases, not a second theme. */
+:root {
+  color-scheme: light;
+  --wb-paper: #f4eee1;
+  --wb-surface: #fffaf0;
+  --wb-surface-raised: #f7f0e3;
+  --wb-surface-inset: #eee5d5;
+  --wb-editor-paper: #fffdf7;
+  --wb-support-paper: #f5efe3;
+  --wb-ink: #302b25;
+  --wb-muted: #6d6254;
+  --wb-subtle: #766753;
+  --wb-line: #d8cbb8;
+  --wb-line-strong: #a38b68;
+  --wb-accent: #a53528;
+  --wb-accent-hover: #86271e;
+  --wb-accent-soft: #f3e0d7;
+  --wb-accent-line: #c7927e;
+  --wb-on-accent: #fff8eb;
+  --wb-success: #44634a;
+  --wb-success-soft: #e7eddf;
+  --wb-success-line: #9bab89;
+  --wb-warning: #805c21;
+  --wb-warning-soft: #f3e9ce;
+  --wb-warning-line: #c5ab74;
+  --wb-danger: #a33335;
+  --wb-danger-soft: #f4dfdc;
+  --wb-danger-line: #cb9189;
+  --wb-copper: #80613a;
+  --wb-scope: #6b5437;
+  --wb-scope-soft: #f0e9dc;
+  --wb-scope-line: #c9b89b;
+  --wb-wood: #32251c;
+  --wb-wood-deep: #241b15;
+  --wb-wood-light: #483629;
+  --wb-wood-ink: #f0e2c7;
+  --wb-wood-muted: #c6b28f;
+  --wb-shadow-color: #50372017;
+  --wb-backdrop: #241b1570;
+  --wb-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --wb-font-serif: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+  --wb-font-mono: "SFMono-Regular", "Cascadia Code", Consolas, monospace;
+  --wb-radius: 8px;
+  --wb-sidebar-width: 240px;
+  --wb-topbar-height: 67px;
+  --wb-topbar-min-height: 67px;
+  --sc-dim-1: #a53528;
+  --sc-dim-2: #80613a;
+  --sc-dim-3: #44634a;
+  --sc-dim-4: #75606c;
+  --sc-dim-5: #805c21;
+  --sc-bg: var(--wb-paper);
+  --sc-panel: var(--wb-surface);
+  --sc-panel-raised: var(--wb-surface-raised);
+  --sc-text: var(--wb-ink);
+  --sc-muted: var(--wb-muted);
+  --sc-cyan: var(--wb-accent);
+  --sc-green: var(--wb-success);
+  --sc-amber: var(--wb-warning);
+  --sc-red: var(--wb-danger);
+  --sc-line: var(--wb-line);
+  --sc-font-sans: var(--wb-font-sans);
+  --sc-font-mono: var(--wb-font-mono);
+  --sc-radius: var(--wb-radius);
+}
+
+body.wb-page {
+  margin: 0;
+  min-width: 320px;
+  color: var(--wb-ink);
+  background: var(--wb-paper);
+  font: 15px/1.75 var(--wb-font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+.wb-page *, .wb-page *::before, .wb-page *::after { box-sizing: border-box; }
+.wb-page [hidden] { display: none !important; }
+.wb-page a { color: var(--wb-accent); text-underline-offset: 4px; }
+.wb-page :is(button, input, select, textarea) { font: inherit; }
+.wb-page :is(button, a, input, select, textarea) { touch-action: manipulation; }
+.wb-page :is(input, select, textarea) { font-size: 16px; }
+.wb-page button { cursor: pointer; }
+.wb-page button:disabled { cursor: not-allowed; opacity: .55; }
+.wb-page :focus-visible { outline: 3px solid var(--wb-copper); outline-offset: 4px; }
+.wb-page ::selection { color: var(--wb-ink); background: var(--wb-warning-soft); }
+.wb-page :is(code, .mono) { font-family: var(--wb-font-mono); overflow-wrap: anywhere; }
+.wb-page :is(img, svg, video) { max-width: 100%; }
+.wb-page :is(h1, h2, h3, h4) { text-wrap: balance; }
+.wb-page :is(p, li, dd) { overflow-wrap: anywhere; }
+.wb-page .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.wb-page :is(.skip, .ss-skip, .sc-skip) { position: fixed; top: -100px; left: 16px; z-index: 100; padding: 10px 16px; border: 1px solid var(--wb-line-strong); border-radius: 4px; background: var(--wb-surface); }
+.wb-page :is(.skip, .ss-skip, .sc-skip):focus { top: 12px; }
+@media (max-width: 900px) { :root { --wb-topbar-height: 66px; --wb-topbar-min-height: 66px; } }
+@media (max-width: 520px) { :root { --wb-topbar-height: 64px; --wb-topbar-min-height: 64px; } }

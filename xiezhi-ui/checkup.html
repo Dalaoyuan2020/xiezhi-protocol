@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="description" content="学术体检：五维评分证据、可核验快照收据和本人认领演示。">
+  <title>灋廌覈鑒 · Xiezhi｜学术体检</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c41e3a'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23f5f0e8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style-guanya.css">
+  <link rel="stylesheet" href="checkup-page.css">
+  <link rel="stylesheet" href="checkup-card.css">
+  <link rel="stylesheet" href="checkup-receipt.css">
+  <link rel="stylesheet" href="checkup-chain.css">
+  <link rel="stylesheet" href="checkup-actions.css">
+  <link rel="stylesheet" href="checkup-points.css">
+  <link rel="stylesheet" href="guanya-components.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="checkup-core.js"></script>
+  <script defer src="checkup-card.js"></script>
+  <script defer src="checkup-receipt.js"></script>
+  <script defer src="checkup-chain.js"></script>
+  <script defer src="points-rules.js"></script>
+  <script defer src="checkup-points-core.js"></script>
+  <script defer src="checkup-points.js"></script>
+  <script defer src="checkup-actions.js"></script>
+  <script defer src="checkup.js"></script>
+  <script defer src="network-nav.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="guanya-page">
+  <a class="guanya-skip" href="#checkup-main" style="position: absolute; left: -9999px; z-index: 999;">跳到体检内容</a>
+  <header data-site-header data-projection-control="sc-present"></header>
+  <div class="xz-page-tools" aria-label="档案数据与网络状态"><span id="sc-chain-mode" role="status"><span>正在检查部署 · 快照演示</span></span><a id="sc-network-choice" href="checkup.html?network=testnet">查看测试网 968 ↗</a></div>
+  <main id="checkup-main" class="guanya-main" style="max-width: 1400px; margin: 0 auto; padding: var(--space-xl) var(--space-lg);">
+    <nav aria-label="演示路线" style="display: flex; gap: var(--space-md); margin-bottom: var(--space-xl); padding: var(--space-md); background: var(--guanya-bg-paper); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <a href="index.html" style="flex: 1; padding: var(--space-md); text-align: center; text-decoration: none; color: var(--guanya-text-secondary); border-radius: var(--radius-md); transition: all 0.2s ease;"><span style="display: block; font-weight: 700; color: var(--guanya-text-primary);">01</span> 搜索与辨认</a>
+      <button type="button" data-journey="card" aria-current="step" style="flex: 1; padding: var(--space-md); text-align: center; background: var(--guanya-red-seal); color: var(--guanya-bg-paper); border: none; border-radius: var(--radius-md); cursor: pointer; font-family: inherit;"><span style="display: block; font-weight: 700;">02</span> 体检卡</button>
+      <button type="button" data-journey="receipt" style="flex: 1; padding: var(--space-md); text-align: center; background: transparent; color: var(--guanya-text-secondary); border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); cursor: pointer; font-family: inherit;"><span style="display: block; font-weight: 700;">03</span> 查看收据</button>
+      <a href="org.html" id="sc-journey-org" style="flex: 1; padding: var(--space-md); text-align: center; text-decoration: none; color: var(--guanya-text-secondary); border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); transition: all 0.2s ease;"><span style="display: block; font-weight: 700; color: var(--guanya-text-primary);">04</span> 机构查询 <b aria-hidden="true">↗</b></a>
+    </nav>
+    <section aria-labelledby="sc-title" style="margin-bottom: var(--space-2xl); text-align: center;">
+      <div style="display: inline-block; margin-bottom: var(--space-lg);"><p style="color: var(--guanya-text-muted); font-size: 0.875rem; margin-bottom: var(--space-xs);">学术档案体检</p><h1 id="sc-title" class="guanya-title">一份档案，<span style="color: var(--guanya-red-seal);">看见分数的来路。</span></h1><p class="guanya-subtitle">公开记录生成画像，每个维度都有可以追查的依据。</p></div>
+      <div aria-hidden="true" style="display: inline-flex; align-items: center; gap: var(--space-md); padding: var(--space-md) var(--space-lg); background: var(--guanya-bg-elevated); border: 2px solid var(--guanya-gold-accent); border-radius: var(--radius-lg);"><span style="font-family: var(--font-serif-cn); color: var(--guanya-text-secondary); font-size: 0.875rem;">证据透明</span><strong style="font-family: var(--font-serif-cn); font-size: 1.5rem; color: var(--guanya-text-primary);">5<span style="font-size: 1rem; color: var(--guanya-text-secondary);">维证据</span> / 100<span style="font-size: 1rem; color: var(--guanya-text-secondary);">分</span></strong></div>
+    </section>
+    <section aria-labelledby="case-title" style="margin-bottom: var(--space-2xl);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-lg); padding-bottom: var(--space-md); border-bottom: 2px solid var(--guanya-gold-accent);"><h2 id="case-title" style="font-family: var(--font-serif-cn); font-size: 1.5rem; color: var(--guanya-text-primary);">案例速览<span style="display: block; font-size: 0.875rem; color: var(--guanya-text-secondary); font-weight: normal; margin-top: 0.25rem;">点击切换档案</span></h2><span id="sc-snapshot-date" style="color: var(--guanya-text-muted); font-size: 0.875rem;">正在读取数据快照…</span></div>
+      <div id="sc-cases" role="group" aria-label="四个演示案例" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-md);"></div>
+    </section>
+    <section id="sc-load-state" role="status" style="text-align: center; padding: var(--space-2xl);"><span aria-hidden="true" style="display: inline-block; width: 40px; height: 40px; border: 3px solid var(--guanya-border-medium); border-top-color: var(--guanya-red-seal); border-radius: 50%; animation: spin 1s linear infinite;"></span><p style="margin-top: var(--space-md); color: var(--guanya-text-secondary);">正在读取仓库中的案例数据…</p></section>
+    <button id="sc-retry-data" class="guanya-button" type="button" hidden style="margin: 0 auto; display: block;">重新加载案例</button>
+    <p id="sc-route-notice" role="status" hidden style="text-align: center; padding: var(--space-md); background: var(--guanya-bg-elevated); border-radius: var(--radius-md); color: var(--guanya-text-secondary);"></p>
+    <section id="sc-candidate" hidden aria-labelledby="sc-candidate-name"></section>
+    <section id="sc-file-fallback" hidden aria-labelledby="sc-file-heading" style="text-align: center; padding: var(--space-2xl); background: var(--guanya-bg-paper); border: 2px dashed var(--guanya-border-medium); border-radius: var(--radius-lg);">
+      <h2 id="sc-file-heading" style="font-family: var(--font-serif-cn); font-size: 1.25rem; margin-bottom: var(--space-md);">选择仓库中的案例文件</h2>
+      <p style="color: var(--guanya-text-secondary); margin-bottom: var(--space-lg);">可以手动选择 <code style="padding: 0.125rem 0.375rem; background: var(--guanya-bg-elevated); border-radius: var(--radius-sm); font-family: var(--font-mono);">aia/product/mock_cases.json</code> 继续，文件只在当前浏览器中读取。双击打开页面时需用此方式加载相邻文件。</p>
+      <label class="guanya-button" style="cursor: pointer;">选择 mock_cases.json<input id="sc-data-file" type="file" accept=".json,application/json" style="position: absolute; width: 1px; height: 1px; overflow: hidden;"></label>
+    </section>
+    <section id="sc-workspace" hidden>
+      <div role="tablist" aria-label="体检流程" style="display: flex; gap: var(--space-md); margin-bottom: var(--space-lg); border-bottom: 2px solid var(--guanya-border-light);">
+        <button type="button" id="sc-tab-card" role="tab" aria-selected="true" aria-controls="sc-card-panel" style="flex: 1; padding: var(--space-md); background: transparent; border: none; border-bottom: 3px solid var(--guanya-red-seal); color: var(--guanya-text-primary); font-family: var(--font-serif-cn); font-size: 1rem; cursor: pointer; transition: all 0.2s ease;"><span style="display: inline-block; margin-right: var(--space-xs); font-weight: 700; color: var(--guanya-red-seal);">02</span>体检卡 <small style="font-size: 0.75rem; color: var(--guanya-text-muted); margin-left: var(--space-xs);">CHECKUP</small></button>
+        <button type="button" id="sc-tab-receipt" role="tab" aria-selected="false" aria-controls="sc-receipt-panel" tabindex="-1" style="flex: 1; padding: var(--space-md); background: transparent; border: none; border-bottom: 3px solid transparent; color: var(--guanya-text-secondary); font-family: var(--font-serif-cn); font-size: 1rem; cursor: pointer; transition: all 0.2s ease;"><span style="display: inline-block; margin-right: var(--space-xs); font-weight: 700;">03</span>评分收据 <small style="font-size: 0.75rem; color: var(--guanya-text-muted); margin-left: var(--space-xs);">RECEIPT</small></button>
+        <p id="sc-record-label" style="margin-left: auto; padding: var(--space-md); color: var(--guanya-text-muted); font-size: 0.875rem;"></p>
+      </div>
+      <section id="sc-card-panel" role="tabpanel" aria-labelledby="sc-tab-card" tabindex="0"><p class="sc-version-note">本卡是 checkup-v0 公开证据快照（0–100 分）。主网已登记的 checkup-v2 使用 350–950 分量尺；请在「评分收据」中按规则版本核对，两者不能直接比较。</p><div id="sc-card-root"></div><div id="sc-points-root"></div><div id="sc-actions-root"></div></section>
+      <section id="sc-receipt-panel" role="tabpanel" aria-labelledby="sc-tab-receipt" tabindex="0" hidden>
+        <div id="sc-chain-root"></div>
+        <details id="sc-local-receipt" open style="margin-top: var(--space-lg); padding: var(--space-lg); background: var(--guanya-bg-paper); border: 2px solid var(--guanya-gold-accent); border-radius: var(--radius-lg);"><summary style="font-family: var(--font-serif-cn); font-size: 1.125rem; font-weight: 700; color: var(--guanya-text-primary); cursor: pointer; margin-bottom: var(--space-md);">本地快照与本人认领 <span style="font-size: 0.875rem; color: var(--guanya-text-muted); font-weight: normal;">演示 · 不广播交易</span></summary><div id="sc-receipt-root"></div></details>
+        <p style="margin-top: var(--space-md); padding: var(--space-md); background: var(--guanya-bg-elevated); border-radius: var(--radius-md); color: var(--guanya-text-secondary); font-size: 0.875rem; text-align: center;">切换档案会保留当前页的演示记录。离开或刷新前，可导出收据保存。</p>
+        <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: var(--guanya-bg-paper); border: 2px solid var(--guanya-gold-accent); border-radius: var(--radius-lg); display: flex; gap: var(--space-lg); align-items: center;"><div style="flex: 1;"><strong style="font-family: var(--font-serif-cn); font-size: 1.125rem; color: var(--guanya-text-primary); display: block; margin-bottom: var(--space-sm);">同一笔记录，两个应用都读得到。</strong><p style="color: var(--guanya-text-secondary);">在机构查询台查看这位学者的链上行为，或演示稿件的在审与结案。</p></div><div style="display: flex; flex-direction: column; gap: var(--space-sm);"><a id="sc-subject-org" href="org.html?mode=chain" style="padding: var(--space-sm) var(--space-lg); background: transparent; border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); color: var(--guanya-text-primary); text-decoration: none; text-align: center; white-space: nowrap; transition: all 0.2s ease;">查看同一档案 ↗</a><a href="org.html" style="padding: var(--space-sm) var(--space-lg); background: var(--guanya-red-seal); color: var(--guanya-bg-paper); border-radius: var(--radius-md); text-decoration: none; text-align: center; font-weight: 500; white-space: nowrap; transition: all 0.2s ease;">下一步 · 机构查询 →</a></div></div>
+      </section>
+    </section>
+    <div id="sc-announcer" style="position: absolute; width: 1px; height: 1px; overflow: hidden;" aria-live="polite" aria-atomic="true"></div>
+  </main>
+  <footer class="guanya-footer" style="margin-top: var(--space-2xl); padding: var(--space-lg); background: var(--guanya-bg-elevated); border-top: 1px solid var(--guanya-border-light); text-align: center;"><span style="color: var(--guanya-text-secondary); font-size: 0.875rem; display: block; margin-bottom: var(--space-xs);"><i aria-hidden="true" style="font-style: normal;">⚖</i> 公开记录 · 公开规则</span><p style="color: var(--guanya-text-muted); font-size: 0.875rem; margin-bottom: var(--space-xs);">仓库快照演示 · v0 启发式规则 · 认领不修改 OpenAlex 原记录</p><a href="../product/checkup.py" target="_blank" rel="noopener" style="color: var(--guanya-red-seal); text-decoration: none; font-size: 0.875rem;">查看评分脚本 ↗</a></footer>
+  <noscript><p style="margin: var(--space-lg); padding: var(--space-lg); background: var(--guanya-bg-paper); border-radius: var(--radius-md); text-align: center;">需要开启 JavaScript 才能查看评分证据和收据。</p></noscript>
+</body>
+</html>

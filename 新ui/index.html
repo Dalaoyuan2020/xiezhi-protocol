@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="description" content="灋廌覈鑒 · Xiezhi，学术信誉链。先辨认同名学者，再查看可追查的评分与链上收据。">
+  <title>灋廌覈鑒 · Xiezhi｜学术信誉链</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b8292f'/%3E%3Cpath d='M5 5h22v22H5zM16 5v22M5 16h22' fill='none' stroke='%23f4f1ea' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="search.css">
+  <link rel="stylesheet" href="workbench.css">
+  <link rel="stylesheet" href="/ui/entry.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="page-registry.js"></script>
+  <script defer src="workbench.js"></script>
+  <script defer src="reader-context.js"></script>
+  <script defer src="search-core.js"></script>
+  <script defer src="search.js"></script>
+  <script defer src="network-nav.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="ss-page wb-page" data-section="reader" data-page-title="读者工作台">
+  <a class="ss-skip" href="#ss-query">跳到学者搜索</a>
+  <header data-site-header></header>
+  <div id="wb-sidebar-slot"></div>
+  <div id="wb-topbar-slot"></div>
+  <button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+  <div class="wb-content" id="wb-content">
+  <div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+  <main class="ss-main wb-main" id="reader-main">
+    <div class="wb-toolbar"><span class="wb-boundary wb-boundary--scope">公开记录查询 · 身份未经本平台认证</span><button type="button" class="ss-present wb-button-secondary" id="ss-present" aria-pressed="false">投影模式</button></div>
+    <section class="ss-hero wb-panel" aria-labelledby="ss-title">
+      <div class="wb-page-heading"><p class="wb-eyebrow">读者 / 查阅与核实</p><h1 id="ss-title">从一份档案，查清每一条依据。</h1><p class="ss-lead">输入姓名或 ORCID，先辨认研究者，再查看评分、来源和核查边界。</p></div>
+      <nav class="checkup-entry" aria-label="选择体检对象"><a href="/workbench/" aria-current="page">查学者</a><a href="/paper/">查论文<span>ARA</span></a></nav>
+      <form class="ss-search" id="ss-form" role="search" aria-label="搜索 OpenAlex 公开学术档案">
+        <div class="gy-search-field">
+          <label class="ss-sr" for="ss-query">输入 ORCID、中文名或拼音</label>
+          <svg class="ss-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+          <input id="ss-query" type="search" name="q" placeholder="输入 ORCID、中文名或拼音" autocomplete="off" spellcheck="false" maxlength="160" aria-describedby="ss-search-help gy-input-help">
+          <div class="gy-input-tools" aria-label="其他输入方式">
+            <button class="gy-input-tool" type="button" disabled aria-label="语音输入暂未开放" title="语音输入暂未开放"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg><span>暂未开放</span></button>
+            <button class="gy-input-tool" type="button" disabled aria-label="图片搜索暂未开放" title="图片搜索暂未开放"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>暂未开放</span></button>
+          </div>
+        </div>
+        <button type="submit" id="ss-submit">搜索档案 <span aria-hidden="true">→</span></button>
+      </form>
+      <p id="ss-search-help" class="ss-help">按姓名、ORCID 或 OpenAlex 作者编号查询；中文姓名会同时尝试拼音写法。</p>
+      <p id="gy-input-help" class="gy-input-help">语音与图片输入暂未开放，请输入文字查询。</p>
+      <a class="checkup-demo-entry" href="/workbench/live/?demo=claim-xu"><span class="checkup-demo-tag">互动案例</span><span>徐林森 · 体验认领、邮箱验证与盖章 ↗</span><small>模拟材料 · 本地测试链</small></a>
+      <p id="ss-status" class="ss-status wb-status" role="status" aria-live="polite" data-kind="neutral"></p>
+      <button id="ss-retry" class="ss-retry" type="button" hidden>重新查询</button>
+      <div class="ss-examples" aria-label="点击体验搜索"><span>试一试</span><button type="button" data-query="Zhiyuan Lyu">Zhiyuan Lyu <span>↗</span></button><button type="button" data-query="吕志远">吕志远 <span>↗</span></button><button type="button" data-query="0009-0008-5473-5367">示例作者 ORCID <span>↗</span></button></div>
+    </section>
+    <section class="ss-results" id="ss-results" aria-labelledby="ss-results-title" hidden>
+      <div class="ss-section-heading"><div><p class="ss-eyebrow">01 / DISAMBIGUATION</p><h2 id="ss-results-title" tabindex="-1">请先选对这位研究者</h2></div><span id="ss-result-count"></span></div>
+      <p id="ss-result-note" class="ss-result-note"></p>
+      <section id="ss-institution-guide" class="ss-institution-guide" aria-labelledby="ss-institution-title" hidden>
+        <h3 id="ss-institution-title">补充学术单位，缩小范围 <span>选填</span></h3>
+        <form id="ss-institution-form" class="ss-institution-form" role="search" aria-label="按学术单位缩小候选范围">
+          <label for="ss-institution" class="ss-sr">学术单位、中英文名或简称</label>
+          <input id="ss-institution" type="search" name="institution" maxlength="160" placeholder="如 河海大学 / Hohai / MIT" aria-describedby="ss-institution-status" autocomplete="off">
+          <button type="submit">缩小范围</button>
+          <button type="button" id="ss-institution-skip">不填，查看全部</button>
+        </form>
+        <p id="ss-institution-status" role="status" aria-live="polite">支持中英文名或简称；不填也能查看候选。</p>
+      </section>
+      <div id="ss-result-list" class="ss-result-list"></div>
+      <div id="ss-empty" class="ss-empty" hidden><span aria-hidden="true">⌕</span><h3 id="ss-empty-title">暂未检索到候选档案</h3><p id="ss-empty-detail">可以尝试 ORCID、英文名或其他拼音写法。未检索到资料不代表没有研究成果。</p><a id="ss-external-search" href="https://openalex.org/" target="_blank" rel="noopener noreferrer">在 OpenAlex 继续搜索 ↗</a></div>
+    </section>
+    <details class="ss-cases ss-case-details" id="ss-case-details" aria-labelledby="ss-cases-title" open>
+      <summary><h2 class="ss-section-heading" id="ss-cases-title"><span><span class="ss-eyebrow">TAKE A CLOSER LOOK</span><span class="ss-cases-summary-title">示例档案，看见分数背后</span></span><span><span class="ss-cases-closed-label">展开案例</span><span class="ss-cases-open-label">收起案例</span></span></h2></summary>
+      <div class="ss-case-grid">
+        <a class="ss-case ss-case-self" href="index.html?q=Zhiyuan%20Lyu"><span class="ss-case-top"><span class="ss-avatar">ZL</span><span class="ss-case-tag">身份消歧示例</span></span><h3>吕志远 <small>Zhiyuan Lv</small></h3><p>同名之下，论文去了谁的档案？</p><span class="ss-case-bottom">先辨认同名档案<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case" href="checkup.html?case=A5009290031"><span class="ss-case-top"><span class="ss-avatar">AK</span><span class="ss-case-tag">公开人物 · 案例快照</span></span><h3>Andrej Karpathy</h3><p>被看见的影响力，怎样追查证据？</p><span class="ss-case-bottom">影响力与开放程度<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case" href="checkup.html?case=A5100700361"><span class="ss-case-top"><span class="ss-avatar">KH</span><span class="ss-case-tag">公开人物 · 案例快照</span></span><h3>何恺明 <small>Kaiming He</small></h3><p>高分从哪里来，能逐项解释吗？</p><span class="ss-case-bottom">五维评分与证据<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case ss-case-fiction" href="checkup.html?case=SYNTHETIC"><span class="ss-case-top"><span class="ss-avatar">DEMO</span><span class="ss-case-tag">完全虚构</span></span><h3>虚构「灌水号」</h3><p>论文很多，就等于值得信任吗？</p><span class="ss-case-bottom">异常模式与核查任务<span aria-hidden="true">↗</span></span></a>
+      </div>
+    </details>
+    <section class="ss-principle" aria-label="产品原则"><span aria-hidden="true">01 → 02 → 03</span><p>身份先认清<span> / </span>分数能追查<span> / </span>规则钉上链</p><a href="org.html">进入机构查询台 <span aria-hidden="true">→</span></a></section>
+  </main>
+  <footer class="ss-footer"><span><i aria-hidden="true"></i> OPEN RECORDS · OPEN RULES</span><p id="ss-source-note">OpenAlex 全库查询 · 公开档案不等于身份认证</p><span>评分仅供核查参考</span></footer>
+  <noscript><p class="ss-noscript">搜索需要 JavaScript；也可以直接使用上面的四个案例链接。</p></noscript>
+  </div>
+</body>
+</html>

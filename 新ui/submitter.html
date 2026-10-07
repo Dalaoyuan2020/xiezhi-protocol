@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>投稿人工作台 · 灋廌覈鑒 Xiezhi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="workbench.css">
+  <link rel="stylesheet" href="/ui/site-header.css">
+  <link rel="stylesheet" href="role-workspace.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script src="page-registry.js" defer></script>
+  <script src="workbench.js" defer></script>
+  <script src="role-drafts-core.js" defer></script>
+  <script src="role-drafts.js" defer></script>
+  <script src="network-nav.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b8292f'/%3E%3Cpath d='M5 5h22v22H5zM16 5v22M5 16h22' fill='none' stroke='%23f4f1ea' stroke-width='1.5'/%3E%3C/svg%3E"></head>
+<body class="wb-page role-page" data-section="submitter" data-page-title="投稿人工作台">
+  <a class="skip" href="#main">跳到工作区</a>
+  <header data-site-header></header>
+  <div id="wb-sidebar-slot"></div>
+  <div id="wb-topbar-slot"></div>
+  <button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+  <div class="wb-content">
+    <div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+    <main class="wb-main" id="main">
+      <header class="wb-page-heading">
+        <p class="wb-eyebrow">SUBMITTER / 本地材料准备</p>
+        <h1>从稿件信息，<br>整理到材料清单。</h1>
+        <p>先写清研究与作者信息，再核对材料缺项。手动保留草稿，导出便于后续核对的文本清单。</p>
+      </header>
+      <p id="sb-boundary" class="wb-boundary"><strong>这是本地准备页，没有投稿后端。</strong>「投稿人」只是工作视角，不是身份认证或操作授权。不会上传稿件、附件或发送投稿；保存仅写入当前浏览器 localStorage，导出也不代表投稿成功。</p>
+      <section class="draft-toolbar" id="sb-draft-toolbar" aria-label="本地草稿操作与状态"><div class="draft-toolbar-row"><button class="wb-button" id="sb-save" type="button">保存草稿</button><button class="wb-button-secondary draft-more" id="sb-more" type="button" aria-expanded="false" aria-controls="sb-more-actions">更多操作</button><div class="draft-more-actions" id="sb-more-actions" data-open="false" role="group" aria-label="恢复、检查、导入与导出"><button class="wb-button-secondary" id="sb-restore" type="button">恢复草稿</button><button class="wb-button-secondary" id="sb-check" type="button">检查缺项</button><button class="wb-button-secondary" id="sb-new" type="button">开始新稿</button><button class="wb-button-secondary" id="sb-import" type="button">导入 JSON</button><button class="wb-button-secondary" id="sb-export" type="button">当前编辑 JSON</button><button class="wb-button-secondary" id="sb-export-md" type="button">当前编辑 Markdown</button><button class="wb-button-secondary" id="sb-export-saved" type="button">已保存稿 JSON</button><button class="wb-button-secondary" id="sb-export-saved-md" type="button">已保存稿 Markdown</button></div></div><p id="sb-status" class="wb-status draft-state" role="status" aria-live="polite" data-kind="info">尚未编辑。填写内容后请手动保存或导出。</p></section>
+      <input id="sb-import-file" type="file" accept=".json,application/json" hidden aria-label="选择本地草稿 JSON；只在浏览器读取，不上传">
+      <section class="draft-entry wb-panel wb-panel--support" id="sb-entry" aria-labelledby="sb-entry-heading" hidden><h2 id="sb-entry-heading">浏览器中有一份旧稿</h2><p id="sb-entry-summary"></p><div class="wb-toolbar"><button id="sb-entry-continue" class="wb-button-secondary" type="button">继续旧稿</button><button id="sb-entry-new" class="wb-button-secondary" type="button">开始新稿</button></div><p class="draft-help">进入页面不会自动载入。新稿只清空编辑区，保留旧稿和原文备份。</p></section>
+      <section id="sb-save-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="sb-save-heading" hidden><h2 id="sb-save-heading">确认覆盖已保存稿</h2><p id="sb-save-summary"></p><p>请核对当前原稿摘要。确认后先保存一份原文备份，再覆盖；备份失败会停止保存。可先导出当前编辑。</p><div class="wb-toolbar"><button id="sb-save-apply" class="wb-button-secondary" type="button">保留原文备份并覆盖</button><button id="sb-save-cancel" class="wb-button-secondary" type="button">取消覆盖</button></div></section>
+      <section id="sb-restore-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="sb-restore-heading" hidden><h2 id="sb-restore-heading">替换当前编辑内容？</h2><p id="sb-restore-summary"></p><p>当前编辑未保存。恢复只替换编辑区；请先导出需要保留的内容。确认时会重新读取并核对来源。</p><div class="wb-toolbar"><button id="sb-restore-apply" class="wb-button-secondary" type="button">替换为已保存草稿</button><button id="sb-restore-cancel" class="wb-button-secondary" type="button">继续当前编辑</button></div></section>
+      <section id="sb-new-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="sb-new-heading" hidden><h2 id="sb-new-heading">开始新稿？</h2><p>当前未保存文字将从编辑区清空。需要保留时请先导出；浏览器中的已保存稿不会删除。</p><div class="wb-toolbar"><button id="sb-new-apply" class="wb-button-secondary" type="button">仅清空编辑区</button><button id="sb-new-cancel" class="wb-button-secondary" type="button">继续当前编辑</button></div></section>
+      <section id="sb-import-preview" class="draft-confirm wb-panel wb-panel--support" aria-labelledby="sb-import-heading" hidden><h2 id="sb-import-heading">核对 JSON 导入预览</h2><p id="sb-import-summary"></p><div id="sb-import-fields" class="draft-import-fields"></div><p>确认只替换当前编辑区，仍需手动保存。支持本页 v1 内部草稿和本页导出的 JSON，文件上限 256 KiB。请先导出需要保留的当前编辑。</p><div class="wb-toolbar"><button id="sb-import-apply" class="wb-button-secondary" type="button">确认导入到编辑区</button><button id="sb-import-cancel" class="wb-button-secondary" type="button">取消导入</button></div></section>
+      <nav class="draft-section-nav" aria-label="准备信息快速定位"><a href="#sb-group-basic">基本信息</a><a href="#sb-group-authors-group">作者</a><a href="#sb-group-research">研究材料</a><a href="#sb-group-declarations">声明</a></nav>
+      <div class="draft-submit-grid"><section class="wb-panel draft-editor" aria-labelledby="sb-draft-heading"><p class="wb-eyebrow">LOCAL DRAFT / 稿件与材料</p><h2 id="sb-draft-heading">填写准备信息</h2><p class="draft-help">带「必填」的字段仅用于本页检查。请按实际情况填写，目标期刊要求仍需自行核对。</p><form id="sb-form" novalidate data-unsaved="false">
+            <fieldset class="draft-field-group" id="sb-group-basic"><legend>01 基本信息</legend>
+              <div class="wb-field"><label for="sb-title">稿件题目（必填）</label><input id="sb-title" name="title" type="text" maxlength="240" required placeholder="填写当前版本的完整题目" aria-describedby="sb-title-error"><small id="sb-title-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-targetJournal">拟投期刊或渠道（可选）</label><input id="sb-targetJournal" name="targetJournal" type="text" maxlength="240" placeholder="用于自己的准备记录，不会发送至该期刊" aria-describedby="sb-targetJournal-error"><small id="sb-targetJournal-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-keywords">关键词（可选）</label><input id="sb-keywords" name="keywords" type="text" maxlength="500" placeholder="以分号分隔，按目标期刊要求核对" aria-describedby="sb-keywords-error"><small id="sb-keywords-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-abstract">摘要（必填）</label><textarea id="sb-abstract" name="abstract" rows="5" maxlength="12000" required placeholder="研究目的、方法、结果与结论；说明当前证据范围。" aria-describedby="sb-abstract-error"></textarea><small id="sb-abstract-error" class="draft-field-error" hidden></small></div>
+            </fieldset>
+            <fieldset class="draft-field-group" id="sb-group-authors-group"><legend>02 作者信息</legend>
+              <div class="wb-field"><label for="sb-authors">作者与单位（必填）</label><textarea id="sb-authors" name="authors" rows="3" maxlength="4000" required placeholder="每行一位作者：姓名；单位；贡献或通讯作者说明（可选）" aria-describedby="sb-authors-error"></textarea><small id="sb-authors-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-orcid">联系人 ORCID（可选）</label><input id="sb-orcid" name="orcid" type="text" maxlength="64" autocomplete="off" spellcheck="false" placeholder="0000-0000-0000-0000 或 https://orcid.org/…" aria-describedby="sb-orcid-help sb-orcid-error"><small id="sb-orcid-help">仅检查格式与校验位，不验证 ORCID 归属或作者身份；留空也可保存和导出。</small><small id="sb-orcid-error" class="draft-field-error" hidden></small></div>
+            </fieldset>
+            <fieldset class="draft-field-group" id="sb-group-research"><legend>03 研究材料</legend>
+              <div class="wb-field"><label for="sb-methods">方法或材料说明（必填）</label><textarea id="sb-methods" name="methods" rows="5" maxlength="16000" required placeholder="概括设计、样本或材料、分析方法，以及复核所需的原始记录。" aria-describedby="sb-methods-error"></textarea><small id="sb-methods-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-attachments">附件清单（必填，仅填写文字）</label><textarea id="sb-attachments" name="attachments" rows="4" maxlength="12000" required placeholder="每行一项，例如：manuscript-v2.pdf；正文；版本 2&#10;figures.zip；图件；版本 1&#10;暂无附件；请核对目标期刊是否要求补充材料" aria-describedby="sb-attachments-help sb-attachments-error"></textarea><small id="sb-attachments-help">最多 40 项，每项 240 字符。只记录文件名、用途与版本说明，不选择或上传文件；确无附件可写「暂无附件」。</small><small id="sb-attachments-error" class="draft-field-error" hidden></small></div>
+            </fieldset>
+            <fieldset class="draft-field-group" id="sb-group-declarations"><legend>04 声明</legend>
+              <div class="wb-field"><label for="sb-ethics">伦理或数据来源声明（必填）</label><textarea id="sb-ethics" name="ethics" rows="4" maxlength="8000" required placeholder="按实际情况记录审批编号、知情同意、数据来源与使用许可；不适用时说明理由。" aria-describedby="sb-ethics-error"></textarea><small id="sb-ethics-error" class="draft-field-error" hidden></small></div>
+              <div class="wb-field"><label for="sb-dataAvailability">数据与代码可用性说明（可选）</label><textarea id="sb-dataAvailability" name="dataAvailability" rows="3" maxlength="8000" placeholder="写明可用位置、访问条件或不能公开的原因；文本中的链接不会被自动访问。" aria-describedby="sb-dataAvailability-error"></textarea><small id="sb-dataAvailability-error" class="draft-field-error" hidden></small></div>
+            </fieldset>
+          </form></section>
+        <aside class="wb-panel wb-panel--support draft-preparation" aria-labelledby="sb-preparation-heading"><p class="wb-eyebrow">PREPARATION / 本页检查</p><h2 id="sb-preparation-heading">材料准备进度</h2><p class="draft-count"><strong id="sb-required-count">0 / 6</strong><span>本页必填项已填写</span></p><ul id="sb-live-check-list" class="draft-live-list"></ul>
+          <section id="sb-check-result" class="draft-check wb-boundary" aria-labelledby="sb-check-heading" aria-live="polite" hidden><h3 id="sb-check-heading">缺项检查</h3><p id="sb-check-summary"></p><ul id="sb-check-list"></ul></section>
+          <p class="wb-boundary wb-boundary--scope">只识别本页文字缺项、ORCID 格式和附件清单长度，不认证身份、不读取附件，也不确认研究或期刊要求已满足。</p><h3>准备后自行核对</h3><ol><li>核对目标期刊的篇幅、格式、作者顺序及声明。</li><li>检查方法、结果、原始记录与使用许可的对应关系。</li><li>手动保存并导出，保留独立备份。</li><li>前往期刊正式渠道，自行核对提交回执。</li></ol><p class="draft-help">附件始终只是文字清单，不选择或上传文件。JSON 导入仅用于本地草稿往返。</p></aside>
+      </div>
+      <section class="draft-storage wb-panel wb-panel--quiet" aria-labelledby="sb-storage-heading"><h2 id="sb-storage-heading">浏览器草稿与原文备份</h2><p id="sb-storage-status">正在检查当前浏览器的本地草稿…</p><div class="wb-toolbar"><button id="sb-export-original" class="wb-button-secondary" type="button">下载保存原文</button><button id="sb-restore-backup" class="wb-button-secondary" type="button">恢复原文备份</button><button id="sb-export-backup" class="wb-button-secondary" type="button">下载备份原文</button></div><p class="draft-help">同一浏览器与站点地址保留一份手动草稿和上次覆盖前的一份原文备份。没有自动保存或跨设备同步；清理站点数据可能使草稿丢失。损坏原文也可下载保留。需要 Web Locks 才可安全保存，无法加锁时仍可编辑与导出。</p><noscript><p class="wb-boundary">请启用 JavaScript 以使用本地保存、恢复、检查和导出。</p></noscript></section>
+    </main>
+  </div>
+</body>
+</html>

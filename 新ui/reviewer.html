@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>审稿人工作台 · 灋廌覈鑒 Xiezhi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="workbench.css">
+  <link rel="stylesheet" href="/ui/site-header.css">
+  <link rel="stylesheet" href="role-workspace.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script src="page-registry.js" defer></script>
+  <script src="workbench.js" defer></script>
+  <script src="role-drafts-core.js" defer></script>
+  <script src="role-drafts.js" defer></script>
+  <script src="network-nav.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b8292f'/%3E%3Cpath d='M5 5h22v22H5zM16 5v22M5 16h22' fill='none' stroke='%23f4f1ea' stroke-width='1.5'/%3E%3C/svg%3E"></head>
+<body class="wb-page role-page" data-section="reviewer" data-page-title="审稿人工作台">
+  <a class="skip" href="#main">跳到工作区</a>
+  <header data-site-header></header>
+  <div id="wb-sidebar-slot"></div>
+  <div id="wb-topbar-slot"></div>
+  <button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+  <div class="wb-content">
+    <div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+    <main class="wb-main" id="main">
+      <header class="wb-page-heading">
+        <p class="wb-eyebrow">REVIEWER / 本地评议练习</p>
+        <h1>把判断写清楚，<br>把依据留在草稿里。</h1>
+        <p>阅读完整的虚构示例材料，记录研究理解、证据缺口与修改建议。保存和导出由你手动操作。</p>
+      </header>
+      <p class="wb-boundary" id="rv-boundary"><strong>本页没有真实审稿任务。</strong>「审稿人」只是工作视角，不是身份认证或授权。示例人物与数值全部虚构；评议仅保存在当前浏览器 localStorage，不发送给作者或期刊，也不提交链上记录。</p>
+      <section class="draft-toolbar" id="rv-draft-toolbar" aria-label="本地草稿操作与状态"><div class="draft-toolbar-row"><button class="wb-button" id="rv-save" type="button">保存草稿</button><button class="wb-button-secondary draft-more" id="rv-more" type="button" aria-expanded="false" aria-controls="rv-more-actions">更多操作</button><div class="draft-more-actions" id="rv-more-actions" data-open="false" role="group" aria-label="恢复、检查、导入与导出"><button class="wb-button-secondary" id="rv-restore" type="button">恢复草稿</button><button class="wb-button-secondary" id="rv-check" type="button">检查缺项</button><button class="wb-button-secondary" id="rv-new" type="button">开始新稿</button><button class="wb-button-secondary" id="rv-import" type="button">导入 JSON</button><button class="wb-button-secondary" id="rv-export" type="button">当前编辑 JSON</button><button class="wb-button-secondary" id="rv-export-md" type="button">当前编辑 Markdown</button><button class="wb-button-secondary" id="rv-export-saved" type="button">已保存稿 JSON</button><button class="wb-button-secondary" id="rv-export-saved-md" type="button">已保存稿 Markdown</button></div></div><p id="rv-status" class="wb-status draft-state" role="status" aria-live="polite" data-kind="info">尚未编辑。填写内容后请手动保存或导出。</p></section>
+      <input id="rv-import-file" type="file" accept=".json,application/json" hidden aria-label="选择本地草稿 JSON；只在浏览器读取，不上传">
+      <section class="draft-entry wb-panel wb-panel--support" id="rv-entry" aria-labelledby="rv-entry-heading" hidden><h2 id="rv-entry-heading">浏览器中有一份旧稿</h2><p id="rv-entry-summary"></p><div class="wb-toolbar"><button id="rv-entry-continue" class="wb-button-secondary" type="button">继续旧稿</button><button id="rv-entry-new" class="wb-button-secondary" type="button">开始新稿</button></div><p class="draft-help">进入页面不会自动载入。新稿只清空编辑区，保留旧稿和原文备份。</p></section>
+      <section id="rv-save-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="rv-save-heading" hidden><h2 id="rv-save-heading">确认覆盖已保存稿</h2><p id="rv-save-summary"></p><p>请核对当前原稿摘要。确认后先保存一份原文备份，再覆盖；备份失败会停止保存。可先导出当前编辑。</p><div class="wb-toolbar"><button id="rv-save-apply" class="wb-button-secondary" type="button">保留原文备份并覆盖</button><button id="rv-save-cancel" class="wb-button-secondary" type="button">取消覆盖</button></div></section>
+      <section id="rv-restore-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="rv-restore-heading" hidden><h2 id="rv-restore-heading">替换当前编辑内容？</h2><p id="rv-restore-summary"></p><p>当前编辑未保存。恢复只替换编辑区；请先导出需要保留的内容。确认时会重新读取并核对来源。</p><div class="wb-toolbar"><button id="rv-restore-apply" class="wb-button-secondary" type="button">替换为已保存草稿</button><button id="rv-restore-cancel" class="wb-button-secondary" type="button">继续当前编辑</button></div></section>
+      <section id="rv-new-confirm" class="draft-confirm wb-boundary wb-boundary--warning" aria-labelledby="rv-new-heading" hidden><h2 id="rv-new-heading">开始新稿？</h2><p>当前未保存文字将从编辑区清空。需要保留时请先导出；浏览器中的已保存稿不会删除。</p><div class="wb-toolbar"><button id="rv-new-apply" class="wb-button-secondary" type="button">仅清空编辑区</button><button id="rv-new-cancel" class="wb-button-secondary" type="button">继续当前编辑</button></div></section>
+      <section id="rv-import-preview" class="draft-confirm wb-panel wb-panel--support" aria-labelledby="rv-import-heading" hidden><h2 id="rv-import-heading">核对 JSON 导入预览</h2><p id="rv-import-summary"></p><div id="rv-import-fields" class="draft-import-fields"></div><p>确认只替换当前编辑区，仍需手动保存。支持本页 v1 内部草稿和本页导出的 JSON，文件上限 256 KiB。请先导出需要保留的当前编辑。</p><div class="wb-toolbar"><button id="rv-import-apply" class="wb-button-secondary" type="button">确认导入到编辑区</button><button id="rv-import-cancel" class="wb-button-secondary" type="button">取消导入</button></div></section>
+      <nav class="draft-section-nav" aria-label="评议工作区快速定位"><a href="#rv-material">阅读材料</a><a href="#rv-draft-heading">编辑评议</a><a href="#rv-concerns">证据依据</a><a href="#rv-storage-heading">草稿与备份</a></nav>
+      <div class="draft-review-grid">
+        <article class="wb-panel wb-prose draft-pane draft-material" id="rv-material" aria-labelledby="rv-material-title">
+          <p class="wb-eyebrow">FICTIONAL MATERIAL / 虚构示例材料</p>
+          <h2 id="rv-material-title">校园共享自习座位信息对等待时间的影响：一项虚构试点研究</h2>
+          <p><strong>示例编号：</strong>FICTIONAL-REVIEW-001<br><strong>示例作者：</strong>示例作者甲、示例作者乙（均为虚构人物）</p>
+          <p class="wb-boundary">以下材料为评议练习编写。没有真实作者委托、编辑分配、原始数据或论文上传；数字不构成研究证据。</p>
+          <div class="draft-paragraph-head"><h3><span class="draft-paragraph-number">P01</span> 摘要</h3><button id="rv-cite-p01" class="wb-button-secondary draft-cite" type="button">引用 P01</button></div>
+          <p id="rv-sample-abstract" tabindex="-1">本示例讨论共享座位信息是否可能缩短自习室的等待时间。研究设计假设在同一校园的两个自习室招募 24 名志愿者，以四周观察比较启用座位信息前后的自报等待时间。示例结果呈现下降趋势，但不支持因果结论。文中全部人物、场景和数值为教学演示编写，不对应真实研究。</p>
+          <div class="draft-paragraph-head"><h3><span class="draft-paragraph-number">P02</span> 方法与材料</h3><button id="rv-cite-p02" class="wb-button-secondary draft-cite" type="button">引用 P02</button></div>
+          <p id="rv-sample-methods" tabindex="-1">虚构设计：第 1–2 周不提供座位信息，第 3–4 周在入口显示人工每 30 分钟更新的空位数。24 名志愿者每周记录两次到达时间、入座时间和当时是否查看信息。计划以每位参与者的周平均等待时间作为分析单位，配对比较前后变化；未安排随机分组，也未控制考试周、天气或自习室容量。示例未提供原始记录、统计代码或伦理批准文件。</p>
+          <div class="draft-paragraph-head"><h3><span class="draft-paragraph-number">P03</span> 结果</h3><button id="rv-cite-p03" class="wb-button-secondary draft-cite" type="button">引用 P03</button></div>
+          <p id="rv-sample-results" tabindex="-1">虚构结果：24 名志愿者中 20 人完成全部四周记录。完成者的平均等待时间在前两周为 12.4 分钟，在后两周为 8.7 分钟；差值为 3.7 分钟。示例只给出总体平均值，未提供方差、置信区间、缺失记录分布或预先设定的分析计划。数字只用于练习如何发现证据缺口。</p>
+          <div class="draft-paragraph-head"><h3><span class="draft-paragraph-number">P04</span> 局限</h3><button id="rv-cite-p04" class="wb-button-secondary draft-cite" type="button">引用 P04</button></div>
+          <p id="rv-sample-limitations" tabindex="-1">样本为便利抽样且规模较小；前后比较可能混入时间趋势；4 人未完成记录，缺失原因未知；自报等待时间可能存在测量误差；无法区分信息展示与座位供给变化的影响。缺乏原始数据时，无法验证数值或复算结论。应先明确这些限制，再形成评议建议。</p>
+          <h3>评议提示</h3>
+          <ul>
+            <li>结论是否超出了前后观察设计能够支持的范围？</li>
+            <li>缺失数据、测量方式和统计不确定性需要怎样补充？</li>
+            <li>哪些问题可由当前文本回答，哪些需要原始材料？</li>
+          </ul>
+        </article>
+        <section class="wb-panel draft-pane draft-editor" aria-labelledby="rv-draft-heading"><p class="wb-eyebrow">LOCAL DRAFT / 评议草稿</p><h2 id="rv-draft-heading" tabindex="-1">记录你的评议</h2><p class="draft-help">本页必填 <strong id="rv-required-count">0 / 5</strong>。不完整草稿可保存、导出。引用按钮把固定段落写入「证据依据」，草稿建议不会形成编辑决定。</p><form id="rv-form" novalidate data-unsaved="false">
+            <div class="wb-field"><label for="rv-summary">研究理解与总体评价（必填）</label><textarea id="rv-summary" name="summary" rows="4" maxlength="8000" required placeholder="概括研究问题、设计和当前证据能够支持的结论。" aria-describedby="rv-summary-error"></textarea><small id="rv-summary-error" class="draft-field-error" hidden></small></div>
+            <div class="wb-field"><label for="rv-strengths">主要优点（必填）</label><textarea id="rv-strengths" name="strengths" rows="3" maxlength="8000" required placeholder="说明哪些做法或问题值得肯定，并给出依据。" aria-describedby="rv-strengths-error"></textarea><small id="rv-strengths-error" class="draft-field-error" hidden></small></div>
+            <div class="wb-field"><label for="rv-concerns">主要问题与证据依据（必填）</label><textarea id="rv-concerns" name="concerns" rows="5" maxlength="12000" required placeholder="逐项记录问题，区分可确认的文本缺口和需要进一步核实的疑问。" aria-describedby="rv-concerns-error"></textarea><small id="rv-concerns-error" class="draft-field-error" hidden></small></div>
+            <nav id="rv-references" class="draft-reference-links" aria-label="已引用材料段落"></nav>
+            <div class="wb-field"><label for="rv-questions">给作者的问题或修改建议（可选）</label><textarea id="rv-questions" name="questions" rows="3" maxlength="8000" placeholder="提出具体、可回应的补充材料或修改要求。" aria-describedby="rv-questions-error"></textarea><small id="rv-questions-error" class="draft-field-error" hidden></small></div>
+            <div class="wb-field"><label for="rv-recommendation">草稿建议（必填，仅用于练习）</label><select id="rv-recommendation" name="recommendation" required aria-describedby="rv-recommendation-error"><option value="">请选择草稿建议</option><option value="major-revision">大修后再评估</option><option value="minor-revision">小修后再评估</option><option value="accept">建议接收</option><option value="reject">建议不接收</option><option value="unable-to-assess">材料不足，暂无法判断</option></select><small id="rv-recommendation-error" class="draft-field-error" hidden></small></div>
+            <div class="wb-field"><label for="rv-conflictStatement">利益冲突与评议范围说明（必填）</label><textarea id="rv-conflictStatement" name="conflictStatement" rows="3" maxlength="4000" required placeholder="例如：仅评议本页虚构材料；未审查原始数据。利益冲突情况按实际说明。" aria-describedby="rv-conflictStatement-error"></textarea><small id="rv-conflictStatement-error" class="draft-field-error" hidden></small></div>
+            <div class="wb-field"><label for="rv-notes">个人工作备注（可选）</label><textarea id="rv-notes" name="notes" rows="3" maxlength="8000" placeholder="本地备注也会包含在导出中，请自行核对内容。" aria-describedby="rv-notes-error"></textarea><small id="rv-notes-error" class="draft-field-error" hidden></small></div>
+          </form>
+          <section id="rv-check-result" class="draft-check wb-boundary" aria-labelledby="rv-check-heading" aria-live="polite" hidden><h3 id="rv-check-heading">缺项检查</h3><p id="rv-check-summary"></p><ul id="rv-check-list"></ul></section>
+        </section>
+      </div>
+      <section class="draft-storage wb-panel wb-panel--quiet" aria-labelledby="rv-storage-heading"><h2 id="rv-storage-heading">浏览器草稿与原文备份</h2><p id="rv-storage-status">正在检查当前浏览器的本地草稿…</p><div class="wb-toolbar"><button id="rv-export-original" class="wb-button-secondary" type="button">下载保存原文</button><button id="rv-restore-backup" class="wb-button-secondary" type="button">恢复原文备份</button><button id="rv-export-backup" class="wb-button-secondary" type="button">下载备份原文</button></div><p class="draft-help">同一浏览器与站点地址保留一份手动草稿和上次覆盖前的一份原文备份。没有自动保存或跨设备同步；清理站点数据可能使草稿丢失。损坏原文也可下载保留。需要 Web Locks 才可安全保存，无法加锁时仍可编辑与导出。</p><noscript><p class="wb-boundary">请启用 JavaScript 以使用本地保存、恢复、检查和导出。</p></noscript></section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+/* The colorful search homepage's paper-and-gold header, shared by every entry. */
+:root { --xz-header-height: 82px; }
+.xz-site-header {
+  --xz-paper: oklch(98% .005 65);
+  --xz-ink: oklch(20% .02 40);
+  --xz-muted: oklch(46% .018 50);
+  --xz-gold: oklch(68% .08 70);
+  --xz-red: oklch(42% .19 25);
+  --xz-line: oklch(85% .01 55);
+  --xz-elevated: oklch(94% .015 55);
+  position: sticky; top: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: nowrap; gap: 24px; width: 100%; min-height: var(--xz-header-height);
+  margin: 0; padding: 15px 36px; box-sizing: border-box;
+  border: 0; border-bottom: 2px solid var(--xz-gold);
+  background: var(--xz-paper); color: var(--xz-ink);
+  box-shadow: 0 1px 3px oklch(20% .01 40 / .08);
+  font: 14px/1.6 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: normal; color-scheme: light;
+}
+.xz-site-header *, .xz-site-header *::before, .xz-site-header *::after { box-sizing: border-box; }
+.xz-site-header .xz-site-brand { display: flex; flex-direction: column; flex: 0 0 auto; gap: 2px; margin: 0; padding: 0; color: var(--xz-ink); text-decoration: none; }
+.xz-site-header .xz-site-brand > span { font: 700 23px/1.25 "Noto Serif SC", "STSong", "SimSun", serif; letter-spacing: normal; white-space: nowrap; }
+.xz-site-header .xz-site-brand > small { margin: 0; padding: 0; color: var(--xz-muted); font: 12px/1.5 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: normal; }
+.xz-site-header .xz-site-apps { position: relative; flex: 0 0 auto; margin-left: auto; }
+.xz-site-header #menu-toggle { display: grid; place-items: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 2px solid var(--xz-gold); border-radius: 8px; background: var(--xz-paper); color: var(--xz-ink); cursor: pointer; transition: background .18s ease, box-shadow .18s ease; }
+.xz-site-header #menu-toggle > svg { width: 20px; height: 20px; margin: 0; fill: currentColor; stroke: none; }
+.xz-site-header #menu-toggle:hover, .xz-site-header #menu-toggle[aria-expanded="true"] { background: var(--xz-elevated); box-shadow: 0 0 0 4px oklch(68% .08 70 / .12); }
+.xz-site-header #menu-panel { position: absolute; right: 0; top: calc(100% + 12px); z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(268px, calc(100vw - 32px)); max-height: min(540px, calc(100dvh - var(--xz-header-height) - 28px)); margin: 0; padding: 14px; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--xz-line); border-radius: 22px; background: var(--xz-paper); color: var(--xz-ink); box-shadow: 0 18px 48px oklch(20% .02 40 / .16); }
+.xz-site-header #menu-panel[hidden] { display: none !important; }
+.xz-site-header .guanya-app-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 100%; min-width: 0; min-height: 0; aspect-ratio: 1; margin: 0; padding: 10px; border: 1px solid transparent; border-radius: 16px; background: transparent; color: var(--xz-ink); text-decoration: none; font: 13px/1.35 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: normal; text-align: center; white-space: normal; cursor: pointer; transition: background .18s ease, border-color .18s ease; }
+.xz-site-header .guanya-app-tile:hover { background: var(--xz-elevated); }
+.xz-site-header .guanya-app-tile[aria-current="page"], .xz-site-header .guanya-app-tile[aria-pressed="true"] { background: oklch(42% .19 25 / .07); border-color: oklch(42% .19 25 / .14); color: var(--xz-red); }
+.xz-site-header .guanya-app-icon { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border: 0; border-radius: 13px; color: var(--xz-red); background: var(--xz-elevated); font-style: normal; }
+.xz-site-header .guanya-app-icon svg { width: 27px; height: 27px; margin: 0; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.xz-site-header :is(a,button):focus-visible { outline: 2px solid var(--xz-red); outline-offset: 3px; }
+
+/* Operational controls belong to the page, rather than changing the navigation. */
+.xz-page-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; max-width: 1400px; margin: 0 auto; padding: 14px 32px; color: #73665b; font: 13px/1.6 "PingFang SC", "Microsoft YaHei", sans-serif; }
+.xz-page-tools > :last-child { margin-left: auto; }
+.xz-page-tools a { color: inherit; text-decoration: none; }
+.xz-page-tools a:hover { color: #a32727; }
+.xz-page-tools a:focus-visible { outline: 2px solid #a32727; outline-offset: 3px; }
+.xz-page-tools .net { margin: 0; font-size: 13px; }
+body.wb-page #wb-topbar-slot { position: relative; top: auto; z-index: 30; }
+body.wb-page .wb-sidebar { top: var(--xz-header-height); height: calc(100dvh - var(--xz-header-height)); }
+body.wb-page .wb-topbar { min-height: 64px; background: transparent; box-shadow: none; backdrop-filter: none; }
+body.wb-page .wb-drawer-backdrop { top: var(--xz-header-height) !important; }
+body.wb-page .wb-motto { margin-top: 0; }
+.xz-workspace .shell { min-height: calc(100dvh - var(--xz-header-height)); }
+.xz-workspace .sidebar { top: var(--xz-header-height); height: calc(100dvh - var(--xz-header-height)); }
+.xz-workspace .auth { min-height: calc(100dvh - var(--xz-header-height)); }
+.xz-workspace .topbar { background: transparent; }
+.xz-admin .admin-session-tools { display: flex; justify-content: flex-end; align-items: center; gap: 16px; min-height: 44px; margin-bottom: 20px; color: #807064; font-size: 12px; }
+body[data-site-presentation="true"] main :is(p,li,label) { font-size: 18px; line-height: 1.75; }
+body[data-site-presentation="true"] main h1 { font-size: clamp(36px, 4vw, 56px); }
+
+@media (max-width: 900px) {
+  :root { --xz-header-height: 76px; }
+  .xz-site-header { padding: 12px 24px; gap: 16px; }
+  .xz-workspace .sidebar { position: static; height: auto; }
+}
+@media (max-width: 600px) {
+  :root { --xz-header-height: 72px; }
+  .xz-site-header { padding: 12px 20px; gap: 12px; }
+  .xz-site-header .xz-site-brand > span { font-size: 22px; }
+  .xz-site-header .xz-site-brand > small { font-size: 11px; }
+  .xz-page-tools { padding: 12px 20px; gap: 8px 16px; font-size: 12px; }
+  .xz-page-tools .net { text-align: left; font-size: 12px; }
+  body.wb-page .wb-topbar { padding: 10px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .xz-site-header * { transition: none !important; } }

@@ -1,0 +1,224 @@
+{
+  "version": 1,
+  "asOf": "2026-10-07T12:00:00+08:00",
+  "notice": "全部人物、机构、事件与哈希均为虚构演示。未接入区块链；不能据此判断任何真实人的学术行为。",
+  "examples": [
+    {
+      "key": "multiple",
+      "query": "bbdb04314a99a3fdfd318512023c0351ff1eec71f54f4216c37b0ccab2b929e4"
+    },
+    {
+      "key": "closed",
+      "query": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa"
+    },
+    {
+      "key": "frequency",
+      "query": "DEMO-FREQUENT"
+    },
+    {
+      "key": "normal",
+      "query": "DEMO-COLLAB"
+    }
+  ],
+  "events": [
+    {
+      "time": "2026-10-02T09:30:00+08:00",
+      "kind": "submit",
+      "content_hash": "bbdb04314a99a3fdfd318512023c0351ff1eec71f54f4216c37b0ccab2b929e4",
+      "org": "演示期刊 A",
+      "author_id": "DEMO-MULTI",
+      "author_name": "虚构作者 M",
+      "note": "虚构期刊登记投稿；快照内尚未出现与之对应的结案。"
+    },
+    {
+      "time": "2026-10-06T14:20:00+08:00",
+      "kind": "submit",
+      "content_hash": "bbdb04314a99a3fdfd318512023c0351ff1eec71f54f4216c37b0ccab2b929e4",
+      "org": "演示期刊 B",
+      "author_id": "DEMO-MULTI",
+      "author_name": "虚构作者 M",
+      "note": "虚构期刊登记投稿；快照内尚未出现与之对应的结案。"
+    },
+    {
+      "time": "2026-10-04T10:00:00+08:00",
+      "kind": "claim",
+      "content_hash": "bbdb04314a99a3fdfd318512023c0351ff1eec71f54f4216c37b0ccab2b929e4",
+      "org": "演示身份核查站",
+      "author_id": "DEMO-MULTI",
+      "author_name": "虚构作者 M",
+      "note": "模拟关联作者身份的认领记录；不等于真实身份认证。"
+    },
+    {
+      "time": "2026-10-02T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "e2ff6f1a915f0bc8f8f6ad3f87b36324d33eacc09ac94df20d10db9b8822677a",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 1 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-02T15:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "c08274bc8e396f0337aee6ca8d5a57f3d541be9438b5fdcb05bb3c1ce880be70",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 2 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-03T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "dc536b9469c5b50070fed1bcb3d790773337e44119a25ca88c0b8a8e5f74ff87",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 3 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-03T15:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "5af883e39df912ae81126b0ae130ea53b481e61e08b7854885f285ee6f01281f",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 4 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-04T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "4f491128a36de117c7020d7370e929d80523466e9281f798ea3d1d7db9dac0d0",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 5 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-04T15:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "c2a9568f06a8bcbca86f4193824e4a24ded503ec365accdd02eb9eb9db90b1dd",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 6 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-05T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "aef0c03ad9cfc9beeddfc969769e714e2e801871d530692881b543a8d2aafa1c",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 7 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-05T15:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "a34b458d8bd40ffa38d93af6564f4ab89449a4239a3dc15ac6a6cabb5606e7c1",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 8 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-06T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "d2910b329c3febbce7d7b34ee8fcd5cd9f1418df72f69cb3f94b9c1fceb0d7fb",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 9 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-06T15:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "9f917d49c74a58055ccb8d8a71c3f33694ce03b88117c6498be2ad6e048a2bf9",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 10 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-07T08:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "b28b1aaebe3f0cf7cb7bd29310172ad2dfc908ac6a264090d54895606b5c7929",
+      "org": "演示期刊 C",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 11 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-10-07T09:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "60acd09d24bb29c76f6870b21caca2b7444201f2e3eeb0b49ed48063d80daca8",
+      "org": "演示期刊 D",
+      "author_id": "DEMO-FREQUENT",
+      "author_name": "虚构作者 F",
+      "note": "模拟第 12 份稿件。不同文件指纹不代表内容不相似。"
+    },
+    {
+      "time": "2026-09-29T10:00:00+08:00",
+      "kind": "claim",
+      "content_hash": "9e27a2fffa2b29f26fa67aea03b1fbf3d799dfa194d63aacd7709c39ba6149c2",
+      "org": "演示身份核查站",
+      "author_id": "DEMO-COLLAB",
+      "author_name": "虚构作者 C",
+      "note": "示例：认领记录可关联后续核验材料。"
+    },
+    {
+      "time": "2026-10-01T10:00:00+08:00",
+      "kind": "submit",
+      "content_hash": "9e27a2fffa2b29f26fa67aea03b1fbf3d799dfa194d63aacd7709c39ba6149c2",
+      "org": "演示期刊 E",
+      "author_id": "DEMO-COLLAB",
+      "author_name": "虚构作者 C",
+      "note": "该指纹仅有一家机构的投稿记录。"
+    },
+    {
+      "time": "2026-10-04T16:30:00+08:00",
+      "kind": "review",
+      "content_hash": "eb09e61f5d91f7019e58ba712cd932a3277e10b687b95f7e58ce7afb5cf47615",
+      "org": "演示期刊 F",
+      "author_id": "DEMO-COLLAB",
+      "author_name": "虚构作者 C",
+      "note": "示例：完成参考文献复核，保留核查记录指纹。"
+    },
+    {
+      "time": "2026-10-06T11:15:00+08:00",
+      "kind": "reproduce",
+      "content_hash": "57563e41b96e63e23487d8ea69814eac4762d4cdd73adf449c6b6f7f5f412e84",
+      "org": "演示复现实验室",
+      "author_id": "DEMO-COLLAB",
+      "author_name": "虚构作者 C",
+      "note": "示例：提交复现日志指纹，仍需独立验收。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-01T10:00:00+08:00",
+      "kind": "submit",
+      "org": "演示期刊甲",
+      "note": "先向期刊甲投稿。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-03T10:00:00+08:00",
+      "kind": "close",
+      "org": "演示期刊甲",
+      "close_reason": "REJECTED",
+      "note": "期刊甲登记拒稿结案，其在审状态关闭。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-05T10:00:00+08:00",
+      "kind": "submit",
+      "org": "演示期刊乙",
+      "note": "结案之后改投期刊乙，仅一家仍在审。"
+    }
+  ]
+}

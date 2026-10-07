@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <meta name="description" content="灋廌覈鑒 · Xiezhi，学术信誉链。先辨认同名学者，再查看可追查的评分与链上收据。">
+  <title>灋廌覈鑒 · Xiezhi｜学术信誉链</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c41e3a'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23f5f0e8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style-guanya.css">
+  <link rel="stylesheet" href="search.css">
+  <link rel="stylesheet" href="guanya-components.css">
+  <link rel="stylesheet" href="entry.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="home-mode.js"></script>
+  <script defer src="search.js"></script>
+  <script defer src="network-nav.js"></script>
+  <script defer src="menu.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="guanya-page guanya-search-page">
+  <a class="guanya-skip" href="#main">跳到查询</a>
+  <header data-site-header data-projection-control="ss-present"></header>
+  <button type="button" id="home-mode-exit" aria-label="退出极简模式，显示完整首页" title="退出极简模式" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M9 9h6v6H9z"/></svg></button>
+  <main id="main" class="guanya-main">
+    <section class="guanya-hero" aria-labelledby="ss-title" style="text-align: center;">
+      <button type="button" id="brand-seal" class="guanya-seal guanya-seal-interactive" aria-label="旋转灋廌覈鑒印章">
+        <span class="guanya-seal-text" aria-hidden="true">灋廌<br>覈鑒</span>
+      </button>
+      <h1 id="ss-title" class="guanya-title">以灋廌之法：核实明鉴</h1>
+      <p class="guanya-subtitle">同一个名字，可能是完全不同的研究者。<br>从公开记录出发，让每一分都有据可查。</p>
+      <nav class="checkup-entry" aria-label="选择体检对象">
+        <a href="/ui/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>查学者</a>
+        <a href="/paper/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l5 5v13H5zM14 3v6h5M8 14h8M8 18h5"/></svg>查论文<span>ARA</span></a>
+      </nav>
+      <form class="guanya-search" id="ss-form" role="search" aria-label="搜索 OpenAlex 公开学术档案" style="margin: 0 auto; max-width: 600px;">
+        <label class="guanya-sr" for="ss-query" style="position: absolute; width: 1px; height: 1px; overflow: hidden;">输入 ORCID、中文名或拼音</label>
+        <svg class="guanya-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" fill="none" stroke-width="2"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="2"/></svg>
+        <input id="ss-query" class="guanya-search-input" type="search" name="q" placeholder="输入 ORCID、中文名或拼音" autocomplete="off" spellcheck="false" enterkeyhint="search" maxlength="160" aria-describedby="ss-search-help">
+        <button type="submit" id="ss-submit" class="guanya-search-submit" aria-label="搜索">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+      </form>
+      <p id="ss-search-help" class="guanya-search-help">连接 OpenAlex 全库查询，支持姓名、ORCID 与作者编号；收录和更新以 OpenAlex 为准。</p>
+      <a class="checkup-demo-entry" href="/live/?demo=claim-xu"><span class="checkup-demo-tag">互动案例</span><span>徐林森 · 体验认领、邮箱验证与盖章</span><span aria-hidden="true">↗</span><small>模拟材料 · 本地测试链</small></a>
+      <div class="guanya-examples" aria-label="点击体验搜索" style="display: flex; justify-content: center; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-lg);"><span style="color: var(--guanya-text-secondary); font-size: 0.875rem; align-self: center;">试一试</span><button type="button" data-query="Zhiyuan Lyu" style="padding: var(--space-xs) var(--space-md); background: var(--guanya-bg-paper); border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s ease;">Zhiyuan Lyu <span>↗</span></button><button type="button" data-query="吕志远" style="padding: var(--space-xs) var(--space-md); background: var(--guanya-bg-paper); border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s ease;">吕志远 <span>↗</span></button><button type="button" data-query="0009-0008-5473-5367" style="padding: var(--space-xs) var(--space-md); background: var(--guanya-bg-paper); border: 1px solid var(--guanya-border-medium); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s ease;">本人 ORCID <span>↗</span></button></div>
+    </section>
+    <section class="guanya-results" id="ss-results" aria-labelledby="ss-results-title" hidden style="margin-top: var(--space-2xl);">
+      <div class="guanya-section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-lg); padding-bottom: var(--space-md); border-bottom: 2px solid var(--guanya-gold-accent);"><div><p style="color: var(--guanya-text-muted); font-size: 0.875rem; margin-bottom: var(--space-xs);">辨认同名</p><h2 id="ss-results-title" tabindex="-1" class="guanya-title" style="font-size: 1.875rem; margin: 0;">请先选对这位研究者</h2></div><span id="ss-result-count" style="color: var(--guanya-text-secondary); font-size: 0.875rem;"></span></div>
+      <section id="ss-institution-guide" class="ss-refinement" aria-labelledby="ss-institution-label" hidden>
+        <form id="ss-institution-form" aria-label="按学术单位缩小候选范围">
+          <label id="ss-institution-label" for="ss-institution">补充学术单位，缩小范围 <span>选填</span></label>
+          <p id="ss-institution-help">学校、研究所或简称都可以；不填也能直接查看下方候选。</p>
+          <div class="ss-refinement-fields">
+            <input id="ss-institution" type="search" name="institution" placeholder="如 河海大学 / Hohai / MIT" maxlength="160" autocomplete="off" enterkeyhint="search" aria-describedby="ss-institution-help ss-institution-status">
+            <button id="ss-institution-apply" type="submit">缩小范围 <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="ss-refinement-bottom">
+            <p id="ss-institution-status" role="status" aria-live="polite"></p>
+            <button id="ss-institution-skip" type="button">不填，查看全部</button>
+          </div>
+        </form>
+      </section>
+      <p id="ss-result-note" class="guanya-text-center" style="margin-bottom: var(--space-lg); color: var(--guanya-text-secondary);"></p>
+      <div id="ss-result-list" class="guanya-result-list" style="display: grid; gap: var(--space-md);"></div>
+      <div id="ss-empty" class="guanya-empty" hidden style="text-align: center; padding: var(--space-2xl);"><span aria-hidden="true" style="font-size: 3rem; color: var(--guanya-text-muted);">⌕</span><h3 id="ss-empty-title" style="font-family: var(--font-serif-cn); font-size: 1.5rem; margin: var(--space-md) 0;">暂未检索到候选档案</h3><p id="ss-empty-detail" style="color: var(--guanya-text-secondary);">可以换用 ORCID、英文名或其他拼音写法继续查询。</p><div class="ss-fallback-links"><a id="ss-external-search" href="https://openalex.org/" target="_blank" rel="noopener noreferrer" class="guanya-button">在 OpenAlex 继续搜索 ↗</a><a href="cases.html">查看典型案例</a></div></div>
+    </section>
+    <p id="ss-status" class="guanya-status" role="status" aria-live="polite" style="text-align: center; color: var(--guanya-text-secondary); margin: var(--space-lg) 0;"></p>
+    <button id="ss-retry" class="guanya-button" type="button" hidden style="margin: 0 auto; display: block; font-size: 0.875rem; padding: var(--space-xs) var(--space-sm); background: transparent; border: 1px solid var(--guanya-border-medium); color: var(--guanya-text-secondary);">重新查询</button>
+  </main>
+  <footer class="guanya-footer" style="padding: var(--space-md); background: var(--guanya-bg-paper); border-top: 1px solid var(--guanya-border-light); text-align: center;">
+    <p style="color: var(--guanya-text-muted); font-size: 0.875rem; margin: 0;">
+      <span style="color: var(--guanya-text-secondary);">灋廌覈鑒</span> · 学术信誉链 · <span style="color: var(--guanya-text-muted);">身份先认清 / 分数能追查 / 规则钉上链</span>
+    </p>
+    <p id="ss-source-note" class="guanya-source-note">OpenAlex 全库查询 · 公开档案不等于身份认证</p>
+  </footer>
+  <noscript><p class="guanya-text-center" style="margin: var(--space-lg); padding: var(--space-lg); background: var(--guanya-bg-paper); border-radius: var(--radius-md);">搜索需要 JavaScript；也可<a href="cases.html">查看四个典型案例</a>。</p></noscript>
+</body>
+</html>

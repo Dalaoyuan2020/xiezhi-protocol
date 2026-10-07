@@ -1,0 +1,73 @@
+.checkup-entry { display:flex; justify-content:center; gap:5px; width:fit-content; margin:0 auto 22px; padding:5px; border:1px solid #dfd5c4; border-radius:100px; background:#ebe5da75; }
+.checkup-entry a { display:flex; align-items:center; gap:8px; padding:10px 22px; border-radius:100px; color:#76695c; font-size:14px; font-weight:600; text-decoration:none; transition:background .2s,color .2s; }
+.checkup-entry a[aria-current="page"] { color:#a52532; background:#fffdf9; box-shadow:0 2px 8px #3c28130a; }
+.checkup-entry a:hover { color:#a52532; background:#fffdf9b0; }
+.checkup-entry svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; }
+.checkup-entry a>span { font:10px ui-monospace,monospace; border:1px solid #cfc1ab; border-radius:4px; padding:2px 4px; letter-spacing:.03em; }
+.checkup-entry a:focus-visible,.checkup-demo-entry:focus-visible { outline:2px solid #a52532; outline-offset:4px; }
+.checkup-demo-entry { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; column-gap:9px; row-gap:8px; width:fit-content; max-width:100%; margin:24px auto 0; padding:12px 16px; border:1px solid #ded3c3; border-radius:12px; color:#554b42; text-decoration:none; font-size:13px; background:#fffdf955; transition:border-color .2s,background .2s; }
+.checkup-demo-entry:hover { border-color:#b28867; background:#fffdf9; }
+.checkup-demo-tag { font-size:10px; letter-spacing:.08em; color:#a52532; border-right:1px solid #d7c8b5; padding-right:9px; }
+.checkup-demo-entry small { width:100%; color:#857769; font-size:11px; letter-spacing:.02em; }
+.wb-page .checkup-entry { margin-left:0; }
+.wb-page .checkup-demo-entry { margin:16px 0; }
+@media(max-width:480px) { .checkup-entry a { padding:10px 17px; }.checkup-demo-entry { padding:12px; font-size:12px; } }
+@media(prefers-reduced-motion:reduce) { .checkup-entry a,.checkup-demo-entry { transition:none; } }
+
+/* The homepage keeps the search close to its identity, even on a tall screen. */
+.guanya-search-page #main { max-width:800px; margin:0 auto; padding:28px 32px 36px; display:flex; flex-direction:column; justify-content:flex-start; }
+.guanya-search-page #brand-seal { display:flex; width:92px; height:92px; margin:0 auto 18px; }
+.guanya-search-page #brand-seal .guanya-seal-text { font-size:31px; }
+.guanya-search-page:is([data-has-results=true],[data-presentation=true]) #brand-seal { display:none; }
+.guanya-search-page #ss-title { margin:0 0 12px; font-size:30px; }
+.guanya-search-page .guanya-subtitle { margin:0 0 20px; font-size:14px; line-height:1.75; }
+.guanya-search-page .checkup-entry { margin-bottom:18px; }
+.guanya-search-page .checkup-entry a { padding:8px 22px; }
+.guanya-search-page .guanya-search-help { margin-top:12px; }
+.guanya-search-page .checkup-demo-entry { margin-top:18px; }
+.guanya-search-page .guanya-examples { margin-top:18px !important; gap:8px !important; }
+.guanya-search-page .guanya-examples button { min-height:40px; padding:6px 12px !important; font-size:12px; }
+.guanya-search-page #ss-results { margin-top:24px !important; scroll-margin-top:calc(var(--xz-header-height,82px) + 16px); }
+.guanya-search-page .guanya-hero { margin-bottom:0 !important; }
+.guanya-search-page #ss-status { margin:16px 0 0 !important; overflow-wrap:anywhere; }
+.guanya-search-page #ss-status:empty { display:none; }
+.guanya-search-page #ss-retry { min-height:44px; margin-top:12px !important; }
+.guanya-search-page .guanya-footer { padding:18px 20px !important; }
+.guanya-search-page .guanya-footer p { font-size:12px !important; }
+.guanya-search-page #home-mode-exit { position:fixed; top:max(16px,env(safe-area-inset-top)); right:max(16px,env(safe-area-inset-right)); z-index:20; display:grid; place-items:center; width:44px; height:44px; padding:0; border:1px solid #d8cbb8; border-radius:14px; background:#fffdf8e8; color:#786b5f; cursor:pointer; touch-action:manipulation; box-shadow:0 2px 8px #29221d05; }
+.guanya-search-page #home-mode-exit svg { width:21px; height:21px; }
+.guanya-search-page #home-mode-exit:hover { color:#a32727; border-color:#b99a76; }
+.guanya-search-page[data-minimal=true] { min-height:100vh; min-height:var(--home-viewport-height,100svh); }
+.guanya-search-page[data-minimal=true] > :is([data-site-header],.guanya-footer) { display:none !important; }
+.guanya-search-page[data-minimal=true] .guanya-hero > :not(#ss-form) { display:none !important; }
+.guanya-search-page[data-minimal=true] #main { min-height:100vh; min-height:var(--home-viewport-height,100svh); justify-content:center; padding-top:76px; padding-bottom:76px; }
+.guanya-search-page[data-minimal=true][data-has-results=true] #main { justify-content:flex-start; }
+.guanya-search-page[data-minimal=true] #ss-status { font-size:13px; }
+.guanya-search-page[data-minimal=true] #ss-results { margin-top:30px !important; scroll-margin-top:76px; }
+
+@media(max-width:760px) {
+  .guanya-search-page #main { padding:22px 20px 28px !important; }
+  .guanya-search-page #brand-seal { width:80px; height:80px; margin-bottom:16px; }
+  .guanya-search-page #brand-seal .guanya-seal-text { font-size:27px; }
+  .guanya-search-page #ss-title { font-size:27px; margin-bottom:10px; }
+  .guanya-search-page .guanya-subtitle { margin-bottom:18px; font-size:13px; }
+  .guanya-search-page .guanya-hero { margin-bottom:0 !important; }
+  .guanya-search-page #ss-query,.guanya-search-page #ss-institution { font-size:16px; }
+  .guanya-search-page[data-minimal=true] #main { padding-top:76px !important; padding-bottom:76px !important; }
+  .guanya-search-page .ss-result-go { flex-wrap:wrap; }
+  .guanya-search-page #ss-results-title { font-size:24px !important; }
+  .guanya-search-page .guanya-section-heading { flex-wrap:wrap; gap:10px; }
+  .guanya-search-page #ss-result-count { max-width:none; text-align:left; }
+  .guanya-search-page .ss-refinement-fields { flex-wrap:wrap; }
+  .guanya-search-page .ss-refinement-fields input { flex:1 1 170px; }
+  .guanya-search-page #ss-institution-apply { flex:1 0 auto; }
+}
+@media(max-width:360px) {
+  .guanya-search-page #main { padding-left:16px !important; padding-right:16px !important; }
+  .guanya-search-page #ss-title { font-size:24px; }
+  .guanya-search-page #ss-query { padding-left:38px; padding-right:58px; }
+  .guanya-search-page #ss-query::placeholder { font-size:13px; }
+  .guanya-search-page .guanya-search-icon { left:13px; width:16px; }
+  .guanya-search-page .guanya-examples > span { width:100%; text-align:center; }
+  .guanya-search-page .checkup-entry a { padding:8px 16px; }
+}

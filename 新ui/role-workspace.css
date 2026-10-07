@@ -1,0 +1,70 @@
+/* All role workspace styles inherit the shared paper/wood tokens. */
+.role-page { --draft-toolbar-height: 120px; --draft-anchor-offset: calc(var(--wb-topbar-height, 67px) + var(--draft-toolbar-height) + 20px); }
+.role-page [id] { scroll-margin-top: var(--draft-anchor-offset); }
+.role-page .draft-toolbar { position: sticky; top: var(--wb-topbar-height, 67px); z-index: 30; padding: 12px 14px 10px; margin: 20px 0; border: 1px solid var(--wb-line-strong); border-top: 2px solid var(--wb-copper); border-radius: 5px; background: var(--wb-surface); box-shadow: 0 4px 14px var(--wb-shadow-color); }
+.role-page .draft-toolbar-row, .role-page .draft-more-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.role-page .draft-toolbar-row { align-items: flex-start; }
+.role-page .draft-more-actions { flex: 1; min-width: 0; }
+.role-page .draft-toolbar :is(button, a) { min-height: 44px; padding: 9px 12px; font-size: 12px; }
+.role-page .draft-state { margin: 8px 0 0; padding: 7px 0 0; border-top: 1px solid var(--wb-line); font-size: 12px; line-height: 1.65; overflow-wrap: anywhere; }
+.role-page .draft-more { display: none; }
+.role-page :is(.draft-entry, .draft-confirm, .draft-storage) { margin: 18px 0; }
+.role-page :is(.draft-entry, .draft-confirm, .draft-storage) h2 { font-size: 18px; margin-bottom: 10px; }
+.role-page :is(.draft-entry, .draft-confirm, .draft-storage) p { overflow-wrap: anywhere; }
+.role-page [hidden] { display: none !important; }
+.role-page .draft-help { color: var(--wb-muted); font-size: 13px; line-height: 1.75; }
+.role-page .draft-import-fields { max-height: 260px; overflow: auto; padding: 8px 14px; background: var(--wb-surface-inset); border: 1px solid var(--wb-line); }
+.role-page .draft-import-fields p { font-size: 13px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.role-page .draft-section-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+.role-page .draft-section-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--wb-line); border-radius: 4px; background: var(--wb-surface); color: var(--wb-accent); font-size: 13px; text-decoration: none; }
+.role-page :is(.draft-review-grid, .draft-submit-grid) { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+.role-page .draft-pane { min-width: 0; }
+.role-page .draft-material { border-top: 2px solid var(--wb-copper); }
+.role-page .draft-material p { font-size: 14px; line-height: 1.95; }
+.role-page .draft-paragraph-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 25px; padding-top: 14px; border-top: 1px solid var(--wb-line); }
+.role-page .draft-paragraph-head h3 { margin: 0; font-size: 16px; }
+.role-page .draft-paragraph-number { font-family: ui-monospace, monospace; font-size: 12px; color: var(--wb-copper); }
+.role-page .draft-cite { flex: none; min-height: 44px; font-size: 12px; }
+.role-page .draft-reference-links { display: flex; flex-wrap: wrap; gap: 8px; margin: -8px 0 18px; }
+.role-page .draft-reference-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 4px 9px; border: 1px solid var(--wb-accent-line); border-radius: 4px; font-size: 12px; color: var(--wb-accent); }
+.role-page .draft-editor :is(input, textarea, select) { font-size: 16px; line-height: 1.7; min-height: 44px; }
+.role-page .draft-editor textarea { resize: vertical; }
+.role-page .draft-editor [aria-invalid="true"] { border-color: var(--wb-danger); outline-color: var(--wb-danger); }
+.role-page .draft-field-group { min-width: 0; border: 0; padding: 0; margin: 24px 0 30px; }
+.role-page .draft-field-group legend { width: 100%; padding: 0 0 10px; margin-bottom: 16px; border-bottom: 1px solid var(--wb-line-strong); color: var(--wb-copper); font-size: 17px; font-weight: 600; }
+.role-page .draft-count { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; margin: 12px 0; border-top: 1px solid var(--wb-line); border-bottom: 1px solid var(--wb-line); }
+.role-page .draft-count strong { font-size: 28px; color: var(--wb-ink); font-weight: 500; }
+.role-page .draft-count span { font-size: 12px; color: var(--wb-muted); }
+.role-page .draft-live-list { list-style: none; padding: 0; margin: 14px 0 20px; }
+.role-page .draft-live-list li { margin: 0; border-bottom: 1px solid var(--wb-line); }
+.role-page .draft-live-list a { display: block; padding: 11px 0; min-height: 44px; color: var(--wb-muted); font-size: 13px; text-decoration: none; }
+.role-page .draft-live-list [data-complete="false"] a { color: var(--wb-copper); }
+.role-page .draft-live-list [data-complete="true"] a::before { content: '✓ '; color: var(--wb-success); }
+.role-page .draft-preparation ol { padding-left: 20px; color: var(--wb-muted); font-size: 13px; line-height: 1.8; }
+.role-page .draft-preparation li { margin: 10px 0; }
+.role-page .draft-check a { display: inline-block; padding: 8px 0; min-height: 44px; color: var(--wb-accent); }
+.role-page :is(.draft-material, .draft-editor, .draft-preparation) :focus-visible { outline: 2px solid var(--wb-accent); outline-offset: 3px; }
+@media (min-width: 1100px) {
+  .role-page .draft-review-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .role-page .draft-review-grid .draft-pane { max-height: calc(100dvh - var(--wb-topbar-height, 67px) - var(--draft-toolbar-height) - 34px); min-height: 0; overflow: auto; scrollbar-gutter: stable; overscroll-behavior: contain; }
+  .role-page .draft-submit-grid { grid-template-columns: minmax(0, 1fr) minmax(270px, .46fr); }
+  .role-page .draft-preparation { position: sticky; top: calc(var(--wb-topbar-height, 67px) + var(--draft-toolbar-height) + 18px); max-height: calc(100dvh - var(--wb-topbar-height, 67px) - var(--draft-toolbar-height) - 35px); overflow: auto; }
+}
+@media (max-width: 700px) {
+  .role-page { --draft-toolbar-height: 120px; }
+  .role-page .draft-toolbar { padding: 10px 12px; margin: 16px 0; }
+  .role-page .draft-toolbar-row { position: relative; align-items: center; justify-content: space-between; }
+  .role-page .draft-more { display: inline-flex; }
+  .role-page .draft-more-actions { display: none; position: absolute; top: calc(100% + 8px); right: 0; width: min(360px, 100%); max-height: calc(100dvh - var(--wb-topbar-height, 67px) - var(--draft-toolbar-height) - 18px); overflow: auto; padding: 10px; background: var(--wb-surface); border: 1px solid var(--wb-line-strong); border-radius: 4px; box-shadow: 0 8px 20px var(--wb-shadow-color); }
+  .role-page .draft-more-actions[data-open="true"] { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .role-page .draft-more-actions button { width: 100%; text-align: left; justify-content: flex-start; }
+  .role-page .draft-toolbar :is(button, a) { font-size: 13px; }
+  .role-page .draft-state { font-size: 12px; }
+  .role-page :is(.draft-review-grid, .draft-submit-grid) { gap: 16px; }
+  .role-page .draft-material p { font-size: 14px; }
+  .role-page .draft-section-nav { gap: 6px; }
+  .role-page .draft-section-nav a { padding: 7px 10px; }
+  .role-page .draft-storage .wb-toolbar { flex-direction: column; align-items: stretch; }
+}
+
+.role-page .wb-field .draft-field-error { color: var(--wb-danger); font-size: 13px; line-height: 1.65; font-weight: 500; }

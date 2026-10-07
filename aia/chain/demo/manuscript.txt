@@ -1,0 +1,2 @@
+演示稿件（虚构）：Information-theoretic limits of short-term soil moisture forecasting under sparse sensing.
+这份文本只用于黑客松演示「同一稿件指纹出现在两家期刊」，不代表任何真实投稿。

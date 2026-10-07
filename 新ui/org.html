@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>机构查询 · 灋廌覈鑒 Xiezhi</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b8292f'/%3E%3Cpath d='M5 5h22v22H5zM16 5v22M5 16h22' fill='none' stroke='%23f4f1ea' stroke-width='1.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="checkup-chain.css">
+  <link rel="stylesheet" href="org.css">
+  <link rel="stylesheet" href="workbench.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="page-registry.js"></script>
+  <script defer src="workbench.js"></script>
+  <script src="org-core.js" defer></script>
+  <script src="checkup-chain.js" defer></script>
+  <script src="org.js" defer></script>
+  <script src="network-nav.js" defer></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="org-page wb-page" data-section="org" data-page-title="机构查询">
+  <a class="skip" href="#main">跳到查询</a>
+  <header data-site-header></header>
+  <div id="wb-sidebar-slot"></div>
+  <div id="wb-topbar-slot"></div>
+  <button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+  <div class="wb-content" id="wb-content">
+  <div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+  <main id="main" class="wb-main">
+    <div class="wb-toolbar"><span class="mode"><i></i><span id="source-status">模拟数据 · 未连接链上行为</span></span><button id="org-present" class="org-present wb-button-secondary" type="button" aria-pressed="false">投影模式</button></div>
+    <section class="intro">
+      <div><p class="eyebrow">FOR INSTITUTIONS / 机构工作台</p><h1>机构行为查询</h1><p class="intro-copy">从一份稿件指纹，看见行为的来路。每一个提示，都有可核对的记录。</p></div>
+      <div class="privacy-seal"><span aria-hidden="true">⌘</span><div>共享指纹，保护内容<small>链上设计只记哈希 · 不上传稿件</small></div></div>
+    </section>
+    <section class="search-panel" aria-labelledby="search-heading">
+      <div class="panel-heading"><h2 id="search-heading">查询行为档案</h2><span>ID / FINGERPRINT</span></div>
+      <div class="source-switch" role="group" aria-label="查询数据来源"><button type="button" id="mode-mock" aria-pressed="true">虚构快照 <span>DEMO</span></button><button type="button" id="mode-chain" aria-pressed="false">链上只读 <span>LIVE READ</span></button><p id="source-hint">用虚构记录演示跨机构核查规则。</p></div>
+      <form id="search-form" novalidate>
+        <label class="sr-only" for="query">学者 ID 或完整稿件指纹</label>
+        <div class="input-wrap"><span aria-hidden="true">⌕</span><input id="query" name="query" type="search" placeholder="输入学者 ID 或 64 位稿件指纹" autocomplete="off" spellcheck="false" aria-describedby="query-help"><button type="submit" id="search-button">查询记录 <span aria-hidden="true">→</span></button></div>
+        <p id="query-help">支持学者 ID、OpenAlex 作者链接或完整十六进制哈希。以下案例全部虚构，与真实学者无关。</p>
+      </form>
+      <div class="examples" id="mock-examples" aria-label="虚构案例快捷查询">
+        <span>试试看</span><button type="button" data-example="multiple"><i class="amber"></i>两家在审 · 红灯</button><button type="button" data-example="closed"><i class="cyan"></i>结案后改投 · 绿灯</button><button type="button" data-example="frequency"><i class="pink"></i>一周 · 12 篇投稿</button><button type="button" data-example="normal"><i class="cyan"></i>协作贡献档案</button><button id="reset-mock" type="button">重置虚构演示 ↺</button>
+      </div>
+      <div id="load-error" role="alert" hidden><span id="load-message"></span><button id="retry" type="button">重新加载</button></div>
+      <p id="query-error" class="query-error" role="alert" hidden></p>
+    </section>
+    <div id="status" class="status" role="status" aria-live="polite">正在加载虚构行为快照…</div>
+    <section id="chain-results" hidden aria-label="链上原始行为记录">
+      <div class="chain-boundary"><div><p class="eyebrow">PUBLIC LEDGER / 期刊签发核查</p><h2>投稿到结案，每一步都有来路。</h2><p>只采信公开期刊名单中“登记地址＋机构指纹”同时匹配的记录。同一作者、稿件、机构及登记人的结案才关闭投稿；未认证来源保留展示，不计入判断。名单缺失时显示未知。</p><p id="chain-query-label" hidden></p><p id="journals-status" role="status"></p></div><div class="chain-boundary-actions"><button type="button" id="refresh-chain">刷新名单与链上记录 ↻</button><a id="same-author-receipt" href="checkup.html" hidden>查看此作者的收据 →</a><button type="button" id="return-mock">返回虚构快照 ↗</button></div></div>
+      <p id="chain-empty" class="chain-empty">输入 OpenAlex 作者 ID（如 A5126602136），或完整稿件指纹，即可检查部署状态并尝试只读查询。查询不需要钱包或 Gas。</p>
+      <div id="chain-assessment" class="lifecycle" data-state="unknown"><p class="eyebrow">SUBMISSION LIFECYCLE</p><h2>等待可核查的期刊记录</h2><p>未取得可信期刊名单与行为记录之前，不会显示绿色结论。</p></div>
+      <section id="chain-lifecycle-timeline" class="timeline-panel" hidden aria-label="可信投稿生命周期"><div class="panel-heading"><h2>投稿与结案时间线</h2><span>TRUSTED JOURNALS</span></div><p class="scope">未认证来源、无法识别的行为保留展示，不计入判断。时间为 UTC+8。</p><ol id="chain-timeline" class="timeline"></ol></section>
+      <div id="chain-panel"></div>
+    </section>
+    <section id="results" hidden aria-label="查询结果">
+      <div class="result-heading"><div><p class="eyebrow" id="result-type">AUTHOR DOSSIER</p><h2 id="result-title"></h2><p id="result-subtitle"></p></div><span class="snapshot" id="snapshot"></span></div>
+      <div class="stats" id="stats"></div>
+      <div id="mock-assessment" class="lifecycle" data-state="unknown"></div>
+      <div class="workspace">
+        <section class="timeline-panel" aria-labelledby="timeline-heading"><div class="panel-heading"><h2 id="timeline-heading">行为时间线</h2><span id="timeline-count"></span></div><p class="scope" id="timeline-scope"></p><ol id="timeline" class="timeline"></ol><div class="empty" id="empty" hidden><span aria-hidden="true">⌕</span><h3>快照中没有匹配记录</h3><p>无记录不代表没有风险。请核对 ID 或指纹，或试试上方的虚构案例。</p></div></section>
+        <aside class="insights"><section class="risk-panel" aria-labelledby="risk-heading"><div class="panel-heading"><h2 id="risk-heading">需核实的信号</h2><span id="risk-count"></span></div><div id="alerts"></div></section><section class="rules"><p class="eyebrow">HOW WE CHECK / 公开规则</p><h3>在审看状态，结案看签发。</h3><ol><li><b>投稿 → 结案 → 可改投</b><span>投稿后，只有同登记人、机构、主体、稿件的结案才关闭在审；再次投稿可重开。同一指纹两家以上同时在审才提示疑似一稿多投。</span></li><li><b>只采信可信期刊</b><span>链上名单须同时匹配地址与机构指纹。未知来源不计判断；没有名单或可信投稿时显示未知。</span></li><li><b>7 天 · 投稿频率</b><span>以读取时间为截止，可用记录中单一作者 7 天投稿至少 10 篇不同指纹的稿件时提示复核。</span></li></ol><p>相同指纹只表示相同文件，不识别改写。提示仍需独立核实；绿色只表示当前可信记录没有触发规则，不构成学术信誉背书，也不会直接加减分。</p></section></aside>
+      </div>
+    </section>
+    <footer><span><i></i>仅展示记录，不替代独立核查</span><span id="footer-source">固定虚构快照 · 无内容上传 · 无真实链上交易</span></footer>
+  </main>
+  </div>
+</body>
+</html>

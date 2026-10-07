@@ -1,0 +1,13 @@
+{
+  "name": "aia-research-platform",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["aia/app", "aia/research-core"],
+  "engines": { "node": ">=24.13.0" },
+  "scripts": {
+    "start": "npm run start --workspace @aia/product",
+    "test": "npm run test --workspace @aia/product",
+    "test:ui": "npm --prefix 新ui test && npm --prefix xiezhi-ui test",
+    "test:legacy": "npm --prefix aia/commission-demo test && npm run test:ui"
+  }
+}

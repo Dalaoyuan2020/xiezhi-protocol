@@ -1,0 +1,9 @@
+{
+  "name": "@aia/research-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared research import, immutable file archive and rule-based assessment",
+  "exports": { "./research": "./lib/research.mjs", "./pdf": "./lib/pdf.mjs", "./zip": "./lib/zip.cjs", "./names": "./lib/names.mjs" },
+  "dependencies": { "pdf-parse": "2.4.5" }
+}

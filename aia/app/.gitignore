@@ -1,0 +1,9 @@
+.data/
+.runtime/
+output/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*
+!.env.example

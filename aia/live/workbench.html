@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灋廌覈鑒 · 实时学术体检</title>
+<link rel="stylesheet" href="/workbench/style.css">
+<link rel="stylesheet" href="/workbench/workbench.css">
+<link rel="stylesheet" href="workbench-live.css">
+<script defer src="/ui/site-header.js"></script>
+  <script defer src="/workbench/page-registry.js"></script>
+<script defer src="/workbench/workbench.js"></script>
+<script defer src="/workbench/reader-context.js"></script>
+<link rel="stylesheet" href="/live/claim-flow.css">
+<script defer src="/live/claim-flow.js"></script>
+<script defer src="/live/zhidian.js"></script>
+<script defer src="live.js"></script>
+<script defer src="/workbench/network-nav.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="wb-page live-page" data-section="reader" data-page-title="实时学术档案">
+<a class="skip" href="#q">跳到学者核验</a>
+<header data-site-header></header>
+<div id="wb-sidebar-slot"></div>
+<div id="wb-topbar-slot"></div>
+<button id="wb-drawer-backdrop" class="wb-drawer-backdrop" type="button" aria-label="关闭导航" hidden></button>
+<div class="wb-content" id="wb-content">
+<div id="network-notice" class="wb-network-slot" aria-live="polite"></div>
+<main class="wb-main live-main" id="live-main">
+  <div class="live-context">
+    <nav aria-label="当前位置"><a id="return-search" href="/workbench/index.html">← 返回搜索</a><span aria-hidden="true"> / </span><span>实时学术档案</span></nav>
+    <div id="net" class="net" role="status" aria-live="polite">正在连接公开数据源…</div>
+  </div>
+  <section class="hero wb-panel" aria-labelledby="live-title">
+    <div class="wb-page-heading">
+    <div class="wb-eyebrow">读者 / 身份辨认与证据核实</div>
+    <h1 id="live-title">输入一位学者，Agent 实时核验</h1>
+    <p>从公开记录出发，查清身份、论文归属与评分依据。</p>
+    </div>
+    <form id="f" class="search" autocomplete="off">
+      <label for="q" class="sr-only">学者姓名、拼音或 ORCID</label>
+      <input id="q" type="search" aria-describedby="source-note" placeholder="学者姓名、拼音或 ORCID" maxlength="200" required>
+      <button type="submit" aria-label="开始核验"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+    </form>
+    <div class="try"><a href="?demo=claim-xu" class="demo-link">徐林森 · 模拟认领案例</a>试试：<a href="?q=吕志远" data-q="吕志远">吕志远</a><a href="?q=0009-0008-5473-5367" data-q="0009-0008-5473-5367">本人 ORCID</a><a href="?q=Kaiming%20He" data-q="Kaiming He">Kaiming He</a></div>
+    <p id="source-note" class="source-note">数据来自 OpenAlex、ORCID 与 Crossref 的公开记录，缓存最长 24 小时。未检索到资料时，不生成虚构评分。</p>
+  </section>
+  <section id="steps" class="panel wb-panel hidden"><h2>Agent 工作过程</h2><ol id="log" aria-live="polite"></ol></section>
+  <section id="pick" class="panel wb-panel hidden">
+    <h2>同名学者较多，请选出本人</h2>
+    <label for="cfilter" class="sr-only">按单位或研究方向筛选候选学者</label>
+    <div class="candidate-filter-row"><input id="cfilter" class="cfilter" placeholder="按单位或方向筛选，例如：河海 / Hohai / soil" maxlength="160" aria-describedby="candidate-filter-status"><button id="candidate-filter-clear" class="candidate-filter-clear" type="button" hidden>清除筛选</button></div>
+    <p id="candidate-filter-status" class="candidate-filter-status" role="status" aria-live="polite"></p>
+    <div id="ccount" class="muted" aria-live="polite"></div>
+    <div id="cands" class="cands"></div>
+    <div id="candidate-filter-empty" class="candidate-filter-empty" hidden><p id="candidate-filter-message"></p><a id="candidate-filter-home" href="/workbench/">前往首页按单位查询 →</a></div>
+  </section>
+  <section id="result" class="panel wb-panel hidden"></section>
+  <section id="claimbox" class="panel wb-panel hidden" aria-label="论文认领与凭证"><div id="claim-app"></div></section>
+</main>
+<footer class="wb-footer"><span>公开数据核验 · 不代表身份认证</span><span>学术分 ≠ 人品分 · 规则公开可复算</span></footer>
+</div>
+</body>
+</html>

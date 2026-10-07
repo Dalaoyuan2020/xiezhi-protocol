@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>数据源管理 · 灋廌覈鑒</title>
+  <link rel="stylesheet" href="admin.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="admin.js"></script>
+  <link rel="stylesheet" href="/ui/site-header.css">
+</head>
+<body class="xz-admin">
+  <a class="admin-skip" href="#main">跳到数据源管理</a>
+  <header data-site-header></header>
+  <main id="main">
+    <div class="admin-session-tools"><span>数据源管理 · 独立管理入口</span><button id="admin-logout" class="admin-secondary" type="button" hidden>退出管理</button></div>
+    <section class="admin-intro"><p class="admin-eyebrow">连接学术来源与评审模型</p><h1>让数据，有序接入。</h1><p>集中管理检索来源与两个独立评审模型；模型接口和名称可按需修改。</p></section>
+    <section id="admin-login-panel" class="admin-login-panel" aria-labelledby="admin-login-title">
+      <div class="admin-lock-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v2"/></svg></div>
+      <h2 id="admin-login-title">解锁配置</h2><p>输入服务器提供的管理访问口令。</p>
+      <form id="admin-login-form"><label for="admin-token">管理访问口令</label><input id="admin-token" type="password" autocomplete="off" spellcheck="false" required maxlength="512" placeholder="粘贴管理口令"><button id="admin-login" class="admin-primary" type="submit">进入数据源管理 <span aria-hidden="true">→</span></button></form>
+      <p class="admin-login-note">管理会话有时限；已保存的密钥不会回显到页面。</p>
+    </section>
+    <p id="admin-status" class="admin-status" role="status" aria-live="polite">正在检查管理会话…</p>
+    <section id="admin-workspace" hidden aria-label="数据源配置">
+      <div class="admin-summary"><div><strong id="admin-count-wired">—</strong><span>已接入服务</span></div><div><strong id="admin-count-planned">—</strong><span>待接入来源</span></div><div><strong id="admin-count-configured">—</strong><span>已设置配置字段</span></div></div>
+      <div class="admin-toolbar"><div class="admin-filters" role="group" aria-label="筛选数据源"><button type="button" data-filter="all" aria-pressed="true">全部来源</button><button type="button" data-filter="implemented" aria-pressed="false">已接入</button><button type="button" data-filter="planned" aria-pressed="false">待接入</button></div><button id="admin-refresh" class="admin-secondary" type="button">刷新状态 ↻</button></div>
+      <p class="admin-guidance">留空保留现有值。密钥保存后清空且永不回显；模型接口和名称可回显编辑。两个模型都配置后，用户主动评审才会发送材料并可能产生接口费用；保存配置不调用模型。</p>
+      <div id="admin-sources" class="admin-source-grid"></div>
+      <p id="admin-empty" class="admin-empty" hidden>这个分组暂时没有数据源。</p>
+    </section>
+  </main>
+  <footer>配置保存在服务器 · 普通使用页面不展示凭据与管理入口</footer>
+  <noscript><p class="admin-noscript">数据源管理需要启用 JavaScript。</p></noscript>
+</body>
+</html>
