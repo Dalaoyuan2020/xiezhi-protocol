@@ -68,9 +68,9 @@
   }
   const workspace = document.createElement('a');
   workspace.className = 'guanya-app-tile'; workspace.href = '/workspace/';
-  workspace.setAttribute('aria-label', '研究协作工作空间');
+  workspace.setAttribute('aria-label', '知行社社区');
   if (active === 'workspace') workspace.setAttribute('aria-current', 'page');
-  workspace.innerHTML = icon('workspace') + '<span>协作空间</span>'; panel.append(workspace);
+  workspace.innerHTML = icon('workspace') + '<span>知行社 · 社区</span>'; panel.append(workspace);
   const edition = document.createElement('a');
   edition.id = 'edition-workbench'; edition.className = 'guanya-app-tile';
   edition.href = workbench ? '/ui/index.html' : '/workbench/index.html';

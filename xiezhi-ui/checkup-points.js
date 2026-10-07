@@ -77,17 +77,17 @@
     function rules() { return options.rules || host && host.ScholarPointsRules; }
     function statusMessage() {
       if (state === 'loading') return '正在从当前网络读取余额与账本事件…';
-      if (state === 'synthetic') return '虚构案例不对应真实学者，不查询或生成链上积分。';
-      if (state === 'missing') return readMessage(result, '当前网络尚未配置积分账本，不能据此认为余额为零。');
-      if (state === 'error') return readMessage(result, '暂时无法读取积分，请稍后刷新；读取失败不等于零积分。');
+      if (state === 'synthetic') return '虚构案例不对应真实学者，不查询或生成链上廌点。';
+      if (state === 'missing') return readMessage(result, '当前网络尚未配置廌点账本，不能据此认为余额为零。');
+      if (state === 'error') return readMessage(result, '暂时无法读取廌点，请稍后刷新；读取失败不等于零廌点。');
       if (state === 'partial') return result.history && result.history.reason || readMessage(result, '余额已读取，流水未全部取得。下方仅展示本次查询到的事件。');
-      return '余额与流水来自链上读取；本页不会发放、扣除或转移积分。';
+      return '余额与流水来自链上读取；本页不会发放、扣除或转移廌点。';
     }
     function summary() {
       const section = node('div', 'sc-points__summary');
       const balance = node('div', 'sc-points__balance');
       balance.append(node('p', 'sc-points__eyebrow', 'CONTRIBUTION LEDGER / 贡献账本'));
-      balance.append(node('h3', 'sc-points__metric-label', '当前链上积分'));
+      balance.append(node('h3', 'sc-points__metric-label', '当前链上廌点'));
       const figure = node('div', 'sc-points__figure');
       const value = (state === 'ready' || state === 'partial') && integer(result && result.balance, false) !== null ? amount(result.balance) : '—';
       figure.append(node('strong', 'sc-points__number', value), node('span', 'sc-points__unit', 'POINTS'));
@@ -96,8 +96,8 @@
       flags.append(node('span', 'sc-points__chip', state === 'synthetic' ? '虚构样例 · 不查询网络' : networkLabel(result && result.network || options.network)));
       if (result && result.network && result.network.chainId != null) flags.append(node('span', 'sc-points__chip', 'Chain ' + result.network.chainId));
       balance.append(flags);
-      balance.append(node('p', 'sc-points__balance-note', '贡献积分 · 无转账功能'));
-      balance.append(node('p', 'sc-points__balance-note', '积分不能转让、不能买卖。'));
+      balance.append(node('p', 'sc-points__balance-note', '贡献廌点 · 无转账功能'));
+      balance.append(node('p', 'sc-points__balance-note', '廌点不能转让、不能买卖。'));
       const meta = node('p', 'sc-points__read-meta');
       if (result && result.asOf && result.asOf.number != null) {
         meta.append(node('span', '', '读取至区块 ' + result.asOf.number));
@@ -114,7 +114,7 @@
       const score = typeof current.score === 'number' && Number.isFinite(current.score) && current.score >= 0 && current.score <= 100 ? current.score : null;
       const selected = shared && typeof shared.tierOf === 'function' && score !== null ? shared.tierOf(score) : null;
       const top = node('div', 'sc-points__tier-heading');
-      top.append(node('h3', '', '档位看可核查度，积分记贡献'));
+      top.append(node('h3', '', '档位看可核查度，廌点记贡献'));
       column.append(top);
       column.append(node('p', 'sc-points__score-source', (state === 'synthetic' ? '虚构样例 · 当前体检快照' : '分档依据：当前体检快照') + ' · 可核查度 ' + (score === null ? '未取得' : score + ' / 100')));
       if (shared && Array.isArray(shared.TIERS) && shared.TIERS.length) {
@@ -128,25 +128,25 @@
           card.append(node('h4', '', tierNames[tier.id] || tier.id));
           const next = all[index + 1];
           card.append(node('p', 'sc-points__range', next ? tier.min + '–' + (next.min - 1) : '≥ ' + tier.min));
-          card.append(node('p', 'sc-points__tier-description', Number(tier.submitCost) > 0 ? '投稿规则：消耗 ' + amount(tier.submitCost) + ' 积分' : '投稿规则：不消耗积分'));
+          card.append(node('p', 'sc-points__tier-description', Number(tier.submitCost) > 0 ? '投稿规则：消耗 ' + amount(tier.submitCost) + ' 廌点' : '投稿规则：不消耗廌点'));
           if (tier.canReview) card.append(node('p', 'sc-points__tier-extra', '可申请参与审稿'));
           if (tier.priority) card.append(node('p', 'sc-points__tier-extra', '期刊优先 · 待机构启用'));
           list.append(card);
         });
         column.append(list);
       } else column.append(node('p', 'sc-points__notice', '共享分档规则尚未加载，暂不判定档位。'));
-      column.append(node('p', 'sc-points__boundary', '积分余额不会直接加到体检分。档位权益属于试行规则，需要参与机构启用并核验资格，不表示机构已经承诺减免、优先或审稿资格。'));
-      if (current.claimSimulation) column.append(node('p', 'sc-points__claim-note', '本地认领演示不会发放积分，也不会改写链上余额；只有授权发放方提交并确认的账本事件才计入。'));
+      column.append(node('p', 'sc-points__boundary', '廌点余额不会直接加到体检分。档位权益属于试行规则，需要参与机构启用并核验资格，不表示机构已经承诺减免、优先或审稿资格。'));
+      if (current.claimSimulation) column.append(node('p', 'sc-points__claim-note', '本地认领演示不会发放廌点，也不会改写链上余额；只有授权发放方提交并确认的账本事件才计入。'));
       return column;
     }
     function ruleTable() {
       const shared = rules();
       const details = node('details', 'sc-points__rules');
-      const toggle = node('summary', '', '查看积分规则与发放条件');
+      const toggle = node('summary', '', '查看廌点规则与发放条件');
       toggle.append(node('span', '', shared && shared.VERSION ? shared.VERSION + ' · 试行参数' : '规则暂未加载'));
       details.append(toggle);
       const body = node('div', 'sc-points__rules-body');
-      body.append(node('p', 'sc-points__rule-note', '这些数值是公开试行参数，不是完成按钮后的自动奖励。积分需由授权发放方依据有效记录发放或扣除；本页只读取。'));
+      body.append(node('p', 'sc-points__rule-note', '这些数值是公开试行参数，不是完成按钮后的自动奖励。廌点需由授权发放方依据有效记录发放或扣除；本页只读取。'));
       const entries = shared && shared.RULES && Object.entries(shared.RULES);
       if (entries && entries.length) {
         const list = node('ul', 'sc-points__rule-list');
@@ -180,7 +180,7 @@
       const delta = integer(event.change, true) !== null ? event.change : integer(event.amount, false) !== null ? (spending ? '-' : '+') + event.amount : '';
       lead.append(node('strong', 'sc-points__delta ' + (spending ? 'sc-points__negative' : 'sc-points__positive'), amount(delta, true)));
       const copy = node('div', 'sc-points__event-copy');
-      copy.append(node('h4', '', rule && rule.label || event.reason || '未识别的积分原因'));
+      copy.append(node('h4', '', rule && rule.label || event.reason || '未识别的廌点原因'));
       const meta = node('p', 'sc-points__event-meta', (spending ? '扣除' : '发放') + ' · 区块 ' + (event.blockNumber == null ? '—' : event.blockNumber));
       meta.append(node('span', '', '操作后余额 ' + amount(event.balance)));
       if (event.evidenceAvailable === false || zeroHash.test(String(event.evidence || ''))) meta.append(node('span', 'sc-points__evidence-missing', '未附证据指纹'));
@@ -196,10 +196,10 @@
       field(fields, '原因编码', event.reason || '无法解码，保留原始指纹');
       if (event.reasonHash) field(fields, '原因指纹', event.reasonHash);
       field(fields, '证据指纹', event.evidence ? zeroHash.test(event.evidence) ? '未附证据指纹（链上值为零）' : event.evidence : '本次未取得');
-      field(fields, spending ? '扣除发起地址' : '积分发放地址', event.issuer || '本次未取得', explorerLink('address', event.issuer));
+      field(fields, spending ? '扣除发起地址' : '廌点发放地址', event.issuer || '本次未取得', explorerLink('address', event.issuer));
       field(fields, '交易哈希', event.transactionHash || '本次未取得', transactionURL);
-      field(fields, '操作后余额', amount(event.balance) + ' 积分');
-      details.append(fields, node('p', 'sc-points__evidence-note', '账本事件证明某地址发放或扣除了积分。证据指纹仍需对应原始材料，单个哈希不证明任务已经完成。'));
+      field(fields, '操作后余额', amount(event.balance) + ' 廌点');
+      details.append(fields, node('p', 'sc-points__evidence-note', '账本事件证明某地址发放或扣除了廌点。证据指纹仍需对应原始材料，单个哈希不证明任务已经完成。'));
       item.append(details);
       return item;
     }
@@ -207,7 +207,7 @@
       const section = node('section', 'sc-points__history');
       section.setAttribute('aria-labelledby', id + '-history');
       const head = node('div', 'sc-points__history-head');
-      const title = node('h3', '', '链上积分流水');
+      const title = node('h3', '', '链上廌点流水');
       title.id = id + '-history';
       head.append(title);
       const events = (state === 'ready' || state === 'partial') && result && Array.isArray(result.events) ? result.events : [];
@@ -218,7 +218,7 @@
         events.slice().sort((a, b) => Number(b.blockNumber) - Number(a.blockNumber) || Number(b.logIndex) - Number(a.logIndex)).forEach(event => list.append(eventCard(event)));
         section.append(list);
       } else {
-        const messages = { loading: '正在读取当前学者标识的积分事件。', ready: '本次查询范围内没有积分流水。是否已有余额，以同一区块读取的余额为准。', partial: '已取得余额，但当前返回的流水为空。查询范围不完整，不能据此断言没有历史发放。', missing: '当前网络没有可用的积分部署，暂不能展示真实流水。', error: '此次读取未取得可靠流水。刷新后重试，不以空列表代替链上结果。', synthetic: '虚构样例不生成余额、流水或可点击的真实交易。' };
+        const messages = { loading: '正在读取当前学者标识的廌点事件。', ready: '本次查询范围内没有廌点流水。是否已有余额，以同一区块读取的余额为准。', partial: '已取得余额，但当前返回的流水为空。查询范围不完整，不能据此断言没有历史发放。', missing: '当前网络没有可用的廌点部署，暂不能展示真实流水。', error: '此次读取未取得可靠流水。刷新后重试，不以空列表代替链上结果。', synthetic: '虚构样例不生成余额、流水或可点击的真实交易。' };
         section.append(node('p', 'sc-points__empty', messages[state] || messages.error));
       }
       if (result && result.history && result.history.scannedFromBlock != null) section.append(node('p', 'sc-points__scan-range', '本次事件范围：区块 ' + result.history.scannedFromBlock + ' → ' + (result.history.toBlock == null ? '—' : result.history.toBlock) + (result.history.complete ? ' · 已覆盖本次完整查询范围' : ' · 未覆盖全部历史')));
@@ -239,7 +239,7 @@
       const head = node('div', 'sc-points__header');
       const identity = node('div', '');
       identity.append(node('p', 'sc-points__eyebrow', 'POINTS & TIERS / 各有依据'));
-      const title = node('h2', '', '积分与档位');
+      const title = node('h2', '', '廌点与档位');
       title.id = id + '-title';
       identity.append(title);
       const controls = node('div', 'sc-points__controls');
@@ -248,12 +248,12 @@
       const refresh = node('button', 'sc-points__refresh', state === 'loading' ? '读取中…' : '刷新账本 ↻');
       refresh.type = 'button';
       refresh.dataset.pointsAction = 'refresh';
-      refresh.setAttribute('aria-label', '重新读取当前学者的链上积分和流水');
+      refresh.setAttribute('aria-label', '重新读取当前学者的链上廌点和流水');
       refresh.setAttribute('aria-disabled', String(state === 'loading' || state === 'synthetic'));
       controls.append(refresh);
       head.append(identity, controls);
       wrapper.append(head);
-      if (state === 'synthetic') wrapper.append(node('p', 'sc-points__synthetic', '虚构样例 / SYNTHETIC · 不代表任何真实学者的积分、资格或权益'));
+      if (state === 'synthetic') wrapper.append(node('p', 'sc-points__synthetic', '虚构样例 / SYNTHETIC · 不代表任何真实学者的廌点、资格或权益'));
       wrapper.append(summary());
       const notice = node('p', 'sc-points__status', statusMessage());
       notice.setAttribute('role', state === 'error' ? 'alert' : 'status');
@@ -275,17 +275,17 @@
           reader = host.ScholarCheckupPointsCore.createReader({ network: options.network });
           ownsReader = true;
         }
-        if (!reader || typeof reader.read !== 'function') throw new Error('积分读取模块未加载，暂时无法查询链上账本。');
+        if (!reader || typeof reader.read !== 'function') throw new Error('廌点读取模块未加载，暂时无法查询链上账本。');
         const next = await reader.read(current, { signal: controller && controller.signal, retry: Boolean(retry) });
         if (destroyed || token !== request) return;
         result = next || { kind: 'error', message: '读取模块没有返回可用结果。' };
         state = ['ready', 'partial', 'missing', 'error', 'synthetic'].includes(result.kind) ? result.kind : 'error';
         if (state === 'ready' && result.history && result.history.complete === false) state = 'partial';
-        if ((state === 'ready' || state === 'partial') && integer(result.balance, false) === null) { state = 'error'; result = { ...result, message: '未取得有效链上余额，不能以零积分替代。' }; }
+        if ((state === 'ready' || state === 'partial') && integer(result.balance, false) === null) { state = 'error'; result = { ...result, message: '未取得有效链上余额，不能以零廌点替代。' }; }
       } catch (error) {
         if (destroyed || token !== request) return;
         state = 'error';
-        result = { kind: 'error', message: error.name === 'AbortError' ? '本次读取已取消，请刷新重试。' : error.message || '积分读取失败，请稍后重试。' };
+        result = { kind: 'error', message: error.name === 'AbortError' ? '本次读取已取消，请刷新重试。' : error.message || '廌点读取失败，请稍后重试。' };
       }
       render();
     }
