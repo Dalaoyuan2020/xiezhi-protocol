@@ -10,6 +10,7 @@
 | 📄 白皮书 | [《AIA 社区白皮书》PDF](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf) |
 | 🎬 视频 1 · 核心协议（85 秒） | [media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4) |
 | 🎬 视频 2 · AIA 社区（2 分 18 秒） | [media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4) |
+| 🌐 在线体验 | **https://aia.hai.college/** |
 | 📋 提交材料 | [SUBMISSION.md](SUBMISSION.md) |
 | ⛓ BOT Chain 主网 | ActionRegistry [`0xA085…10eD`](https://scan.botchain.ai/address/0xA0853161002Af018225419324560FCE9CD9b10eD) · PointsLedger [`0x28B2…D60A`](https://scan.botchain.ai/address/0x28B2af15386C0D65D5427d5b81bEe485D4edD60A) |
 

@@ -66,6 +66,7 @@
 - **视频 1 · 核心协议演示（85 秒）**：[media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4)
 - **视频 2 · AIA 社区（2 分 18 秒）**：[media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4)（每段标注已上线 / 规划中）
 - **《AIA 社区白皮书》**：[whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf)
+- **在线体验（正式部署）：https://aia.hai.college/**（`/ui/` 学术查询 · `/live/` 实时核验 · `/workspace/` 知行社 · `/paper/` 论文体检）
 - 静态演示站（早期版本）：https://dalaoyuan2020.github.io/xiezhi-protocol/
 
 ## 4. BOT Chain 部署核验
