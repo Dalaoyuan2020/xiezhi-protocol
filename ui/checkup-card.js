@@ -114,7 +114,7 @@
       const top = element('header', 'sc-card__header');
       const introduction = element('div', 'sc-card__identity');
       const eyebrow = element('div', 'sc-card__eyebrow');
-      eyebrow.append(element('span', 'sc-card__step', '03'), element('span', '', 'EVIDENCE PROFILE / 体检卡'));
+      eyebrow.append(element('span', 'sc-card__step', '02'), element('span', '', 'EVIDENCE PROFILE / 体检卡'));
       const title = element('h2', 'sc-card__name', data.name || '学者快照');
       title.id = instanceId + '-title';
       introduction.append(eyebrow, title, element('p', 'sc-card__case', data.label || '公开学术档案快照'));

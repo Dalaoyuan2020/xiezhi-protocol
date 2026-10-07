@@ -8,6 +8,10 @@
       "query": "bbdb04314a99a3fdfd318512023c0351ff1eec71f54f4216c37b0ccab2b929e4"
     },
     {
+      "key": "closed",
+      "query": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa"
+    },
+    {
       "key": "frequency",
       "query": "DEMO-FREQUENT"
     },
@@ -24,7 +28,7 @@
       "org": "演示期刊 A",
       "author_id": "DEMO-MULTI",
       "author_name": "虚构作者 M",
-      "note": "模拟投稿记录；未接入在审、撤回或拒稿状态。"
+      "note": "虚构期刊登记投稿；快照内尚未出现与之对应的结案。"
     },
     {
       "time": "2026-10-06T14:20:00+08:00",
@@ -33,7 +37,7 @@
       "org": "演示期刊 B",
       "author_id": "DEMO-MULTI",
       "author_name": "虚构作者 M",
-      "note": "与另一家机构记录的完整文件指纹相同。"
+      "note": "虚构期刊登记投稿；快照内尚未出现与之对应的结案。"
     },
     {
       "time": "2026-10-04T10:00:00+08:00",
@@ -187,6 +191,34 @@
       "author_id": "DEMO-COLLAB",
       "author_name": "虚构作者 C",
       "note": "示例：提交复现日志指纹，仍需独立验收。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-01T10:00:00+08:00",
+      "kind": "submit",
+      "org": "演示期刊甲",
+      "note": "先向期刊甲投稿。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-03T10:00:00+08:00",
+      "kind": "close",
+      "org": "演示期刊甲",
+      "close_reason": "REJECTED",
+      "note": "期刊甲登记拒稿结案，其在审状态关闭。"
+    },
+    {
+      "content_hash": "a366c64b7e759fc886d3be2af39fe8b23a346054dc62c5c12d13d906060378aa",
+      "author_id": "DEMO-TRANSFER",
+      "author_name": "虚构作者 T",
+      "time": "2026-10-05T10:00:00+08:00",
+      "kind": "submit",
+      "org": "演示期刊乙",
+      "note": "结案之后改投期刊乙，仅一家仍在审。"
     }
   ]
 }

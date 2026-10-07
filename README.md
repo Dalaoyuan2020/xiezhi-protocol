@@ -21,7 +21,7 @@ ORCID 给了学者一张名片，但名片不说明你靠不靠谱。AI 让论�
 
 ## 现在能看什么
 
-- **演示页面**：[学术体检](ui/checkup.html)（个人档案、可核查度评分、认领与提分任务）· [机构查询台](ui/org.html)（行为时间线、一稿多投提示）
+- **演示页面**：[首页搜索](ui/index.html)（输入 ORCID / 中文名 / 拼音，重名先选人）· [学术体检](ui/checkup.html)（个人档案、可核查度评分、认领与提分任务）· [机构查询台](ui/org.html)（行为时间线、一稿多投提示）
 - **评分脚本**：[product/checkup.py](product/checkup.py)，只用 OpenAlex 公开数据，五维各 20 分；[案例](product/cases_2026-10-07.md)
 - **合约**：[chain/contracts/ActionRegistry.sol](chain/contracts/ActionRegistry.sol)，记录 `SCORE / SUBMIT / CLOSE / REVIEW / REPRODUCE / CLAIM` 六种行为
 
@@ -36,7 +36,7 @@ ORCID 给了学者一张名片，但名片不说明你靠不靠谱。AI 让论�
 ## 本地运行
 
 ```sh
-python3 -m http.server 8878          # 在仓库根目录，打开 http://127.0.0.1:8878/ui/checkup.html
+python3 -m http.server 8878          # 在仓库根目录，打开 http://127.0.0.1:8878/ui/index.html
 cd chain && npm install && npm run check && npm run test-demo   # 合约本地自检与演示流程
 NETWORK=testnet npm run read -- A5126602136                     # 读测试网上的真实记录
 ```

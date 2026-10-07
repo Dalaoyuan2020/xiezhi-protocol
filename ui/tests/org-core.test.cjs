@@ -21,21 +21,19 @@ test('queries accept full hash, case-insensitive IDs and OpenAlex links, with ex
   assert.ok(core.parseQuery('0x123').error);
 });
 
-test('30-day rule includes exact boundary and excludes a separation one millisecond beyond it', () => {
+test('open submissions remain open beyond thirty days until an authenticated matching closure', () => {
   const first = '2026-08-01T00:00:00.000Z';
   assert.equal(alerts([event(first), event('2026-08-31T00:00:00.000Z', { org: 'Org B' })]).length, 1);
-  assert.equal(alerts([event(first), event('2026-08-31T00:00:00.001Z', { org: 'Org B' })]).length, 0);
+  assert.equal(alerts([event(first), event('2026-09-30T00:00:00.001Z', { org: 'Org B' })]).length, 1);
 });
 
-test('rolling historical windows find a later pair and never merge distant institutions into one window', () => {
+test('closing before a later submission avoids a duplicate-submission signal', () => {
   const result = alerts([
     event('2026-06-01T00:00:00Z'),
+    event('2026-07-01T00:00:00Z', { kind: 'close', close_reason: 'REJECTED' }),
     event('2026-08-01T00:00:00Z', { org: 'Org B' }),
-    event('2026-08-20T00:00:00Z', { org: 'Org C' })
   ]);
-  assert.equal(result.length, 1);
-  assert.equal(result[0].orgCount, 2);
-  assert.deepEqual(result[0].orgs, ['Org B', 'Org C']);
+  assert.equal(result.length, 0);
 });
 
 test('same organization, repeated logs, non-submissions and future events cannot trigger cross-institution risk', () => {
@@ -108,4 +106,78 @@ test('bundled fictional cases exercise repeated manuscript, frequent author and 
   assert.equal(frequent.alerts[0].count, 12);
   assert.equal(core.analyze(data, 'DEMO-COLLAB').alerts.length, 0);
   assert.equal(core.analyze(data, 'DEMO-COLLAB').events.length, 4);
+  assert.equal(core.analyze(data, 'DEMO-TRANSFER').assessment.status, 'clear');
+  assert.equal(core.analyze(data, 'DEMO-TRANSFER').assessment.closedCount, 1);
+});
+
+const address = n => '0x' + n.toString(16).padStart(40, '0');
+const hash = n => '0x' + h(n);
+const manifest = { kind: 'ready', journals: [
+  { name: 'Journal A', address: address(1), org: hash(101) },
+  { name: 'Journal B', address: address(2), org: hash(102) }
+] };
+const chainRow = (kind, sequence, overrides = {}) => ({ kind, knownKind: true, sequence,
+  time: Date.parse('2026-10-06T00:00:00Z') / 1000, content: hash(1), subject: hash(201),
+  recorder: address(1), org: hash(101), ...overrides });
+const chainAnalysis = (records, list = manifest) => core.analyze(core.normalizeChain(records, list, { asOf: snapshot }), { type: 'hash', value: h(1) });
+
+test('chain lifecycle changes red to green only for the same recorder, org, subject and content', () => {
+  const records = [chainRow('SUBMIT', 0), chainRow('SUBMIT', 1, { recorder: address(2), org: hash(102) })];
+  assert.equal(chainAnalysis(records).assessment.status, 'risk');
+  for (const overrides of [{ recorder: address(9) }, { recorder: address(2) }, { org: hash(102) }, { subject: hash(999) }, { content: hash(999) }]) {
+    assert.equal(chainAnalysis([...records, chainRow('CLOSE', 2, overrides)]).assessment.status, 'risk');
+  }
+  const result = chainAnalysis([...records, chainRow('CLOSE', 2, { closeReason: 'REJECTED' })]);
+  assert.equal(result.assessment.status, 'clear');
+  assert.equal(result.assessment.openCount, 1);
+  assert.equal(result.assessment.closedCount, 1);
+});
+
+test('same-second order uses sequence; a close-before-submit cannot close a later submission and resubmitting reopens', () => {
+  const rows = [chainRow('CLOSE', 0), chainRow('SUBMIT', 1), chainRow('SUBMIT', 2, { recorder: address(2), org: hash(102) })];
+  assert.equal(chainAnalysis(rows.slice().reverse()).assessment.status, 'risk');
+  rows.push(chainRow('CLOSE', 3));
+  assert.equal(chainAnalysis(rows).assessment.status, 'clear');
+  rows.push(chainRow('SUBMIT', 4));
+  assert.equal(chainAnalysis(rows).assessment.status, 'risk');
+});
+
+test('missing, empty and failed trusted lists remain unknown instead of green', () => {
+  const rows = [chainRow('SUBMIT', 0), chainRow('SUBMIT', 1, { recorder: address(2), org: hash(102) })];
+  for (const list of [{ kind: 'missing', journals: [] }, { kind: 'error', journals: manifest.journals }, { kind: 'ready', journals: [] }]) {
+    const result = chainAnalysis(rows, list);
+    assert.equal(result.assessment.status, 'unknown');
+    assert.equal(result.alerts.length, 0);
+    assert.equal(result.assessment.trustedCount, 0);
+  }
+  assert.equal(chainAnalysis([]).assessment.status, 'unknown');
+});
+
+test('only address plus institution fingerprint grants trust, with case-insensitive matching', () => {
+  const wrongPair = chainRow('SUBMIT', 0, { recorder: address(2), org: hash(101) });
+  const result = chainAnalysis([wrongPair]);
+  assert.equal(result.assessment.status, 'unknown');
+  assert.equal(result.events[0].trusted, false);
+  const correct = chainAnalysis([chainRow('SUBMIT', 0, { recorder: address(1).toUpperCase(), org: hash(101).toUpperCase() })]);
+  assert.equal(correct.events[0].trusted, true);
+});
+
+test('closures cannot remove another manuscript or author and unknown kinds never close submissions', () => {
+  const records = [chainRow('SUBMIT', 0), chainRow('SUBMIT', 1, { recorder: address(2), org: hash(102) }),
+    chainRow('CLOSE', 2, { subject: hash(202) }), chainRow('OTHER', 3, { knownKind: false })];
+  const result = chainAnalysis(records);
+  assert.equal(result.assessment.status, 'risk');
+  assert.equal(result.assessment.closedCount, 0);
+  assert.equal(result.events[0].kind, 'unknown');
+});
+
+test('untrusted or future submissions cannot inflate the seven-day frequency signal', () => {
+  const records = Array.from({ length: 12 }, (_, i) => chainRow('SUBMIT', i, { content: hash(i + 1), recorder: address(9) }));
+  const normalized = core.normalizeChain(records, manifest, { asOf: snapshot });
+  const result = core.analyze(normalized, { type: 'subject', value: hash(201) });
+  assert.equal(result.assessment.status, 'unknown');
+  assert.equal(result.alerts.length, 0);
+  const future = core.normalizeChain([chainRow('SUBMIT', 0, { time: Date.parse(snapshot) / 1000 + 1 })], manifest, { asOf: snapshot });
+  assert.equal(future.events.length, 0);
+  assert.equal(future.ignored, 1);
 });

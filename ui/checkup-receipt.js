@@ -308,7 +308,7 @@
       section.setAttribute('aria-busy', String(busy || claiming || verifying));
       var header = node('header', 'sc-receipt-header');
       var titles = node('div');
-      titles.append(node('span', 'sc-receipt-eyebrow', '04 / VERIFIABLE RECEIPT'), node('h2', '', '让这一次体检，有据可查。'), node('p', '', '把身份、数据和评分规则绑定在一张收据里。谁改了什么，都能重新核对。'));
+      titles.append(node('span', 'sc-receipt-eyebrow', '03 / VERIFIABLE RECEIPT'), node('h2', '', '让这一次体检，有据可查。'), node('p', '', '把身份、数据和评分规则绑定在一张收据里。谁改了什么，都能重新核对。'));
       header.append(titles, node('span', 'sc-receipt-tag', 'SHA-256 · 本地生成'));
       section.append(header);
       if (current.synthetic) section.append(node('div', 'sc-receipt-synthetic', '虚构样例 · 此收据不对应真实学者'));

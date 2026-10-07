@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070e15">
+  <meta name="description" content="獬豸协议 · Xiezhi，学术信誉层。先辨认同名学者，再查看可追查的评分与链上收据。">
+  <title>獬豸协议 · Xiezhi｜学术信誉层</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070e15'/%3E%3Cpath d='M5 17h6l3-9 5 16 3-7h5' fill='none' stroke='%2358e7f0' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="search.css">
+  <script defer src="search-core.js"></script>
+  <script defer src="search.js"></script>
+  <script defer src="network-nav.js"></script>
+</head>
+<body class="ss-page">
+  <a class="ss-skip" href="#ss-query">跳到学者搜索</a>
+  <header class="ss-header">
+    <a class="ss-brand" href="index.html" aria-label="獬豸协议 Xiezhi 首页，学术信誉层"><span class="ss-brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M3 19h8l4-12 6 23 4-11h8"/></svg></span><span>獬豸协议 <span class="ss-brand-en">· Xiezhi</span><small>学术信誉层</small></span></a>
+    <nav aria-label="主导航"><a href="index.html" aria-current="page">个人体检</a><a href="org.html">机构查询 <span aria-hidden="true">↗</span></a></nav>
+    <button type="button" class="ss-present" id="ss-present" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7V3h4m6 0h4v4M3 13v4h4m6 0h4v-4"/></svg>投影模式</button>
+  </header>
+  <main class="ss-main">
+    <section class="ss-hero" aria-labelledby="ss-title">
+      <p class="ss-eyebrow"><span></span> REPUTATION STARTS WITH IDENTITY</p>
+      <h1 id="ss-title">先认清人，<span>再看分数。</span></h1>
+      <p class="ss-lead">同一个名字，可能是完全不同的研究者。<br>从公开记录出发，让每一分都有据可查。</p>
+      <form class="ss-search" id="ss-form" role="search" aria-label="搜索本次演示中的学术档案">
+        <label class="ss-sr" for="ss-query">输入 ORCID、中文名或拼音</label>
+        <svg class="ss-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+        <input id="ss-query" type="search" name="q" placeholder="输入 ORCID、中文名或拼音" autocomplete="off" spellcheck="false" maxlength="200" aria-describedby="ss-search-help">
+        <button type="submit" id="ss-submit">开始体检 <span aria-hidden="true">→</span></button>
+      </form>
+      <p id="ss-search-help" class="ss-help">本次演示使用公开数据快照，暂不提供全库实时搜索。</p>
+      <div class="ss-examples" aria-label="点击体验搜索"><span>试一试</span><button type="button" data-query="Zhiyuan Lyu">Zhiyuan Lyu <span>↗</span></button><button type="button" data-query="吕志远">吕志远 <span>↗</span></button><button type="button" data-query="0009-0008-5473-5367">本人 ORCID <span>↗</span></button></div>
+    </section>
+    <section class="ss-results" id="ss-results" aria-labelledby="ss-results-title" hidden>
+      <div class="ss-section-heading"><div><p class="ss-eyebrow">01 / DISAMBIGUATION</p><h2 id="ss-results-title" tabindex="-1">请先选对这位研究者</h2></div><span id="ss-result-count"></span></div>
+      <p id="ss-result-note" class="ss-result-note"></p>
+      <div id="ss-result-list" class="ss-result-list"></div>
+      <div id="ss-empty" class="ss-empty" hidden><span aria-hidden="true">⌕</span><h3>这个名字还不在演示快照中</h3><p>可以试试上面的示例，或前往 OpenAlex 查找公开档案。这里不会为未收录的人生成分数。</p><a id="ss-external-search" href="https://openalex.org/" target="_blank" rel="noopener noreferrer">在 OpenAlex 继续搜索 ↗</a></div>
+    </section>
+    <p id="ss-status" class="ss-status" role="status" aria-live="polite">正在载入候选档案…</p>
+    <button id="ss-retry" class="ss-retry" type="button" hidden>重新加载搜索数据</button>
+    <section class="ss-cases" aria-labelledby="ss-cases-title">
+      <div class="ss-section-heading"><div><p class="ss-eyebrow">TAKE A CLOSER LOOK</p><h2 id="ss-cases-title">四个案例，看见分数背后</h2></div><span>直接打开体检卡 <span aria-hidden="true">↙</span></span></div>
+      <div class="ss-case-grid">
+        <a class="ss-case ss-case-self" href="index.html?q=Zhiyuan%20Lyu"><span class="ss-case-top"><span class="ss-avatar">ZL</span><span class="ss-case-tag">本人案例</span></span><h3>吕志远 <small>Zhiyuan Lv</small></h3><p>同名之下，论文去了谁的档案？</p><span class="ss-case-bottom">先辨认同名档案<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case" href="checkup.html?case=A5009290031"><span class="ss-case-top"><span class="ss-avatar">AK</span><span class="ss-case-tag">公开人物</span></span><h3>Andrej Karpathy</h3><p>被看见的影响力，怎样追查证据？</p><span class="ss-case-bottom">影响力与开放程度<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case" href="checkup.html?case=A5100700361"><span class="ss-case-top"><span class="ss-avatar">KH</span><span class="ss-case-tag">公开人物</span></span><h3>何恺明 <small>Kaiming He</small></h3><p>高分从哪里来，能逐项解释吗？</p><span class="ss-case-bottom">五维评分与证据<span aria-hidden="true">↗</span></span></a>
+        <a class="ss-case ss-case-fiction" href="checkup.html?case=SYNTHETIC"><span class="ss-case-top"><span class="ss-avatar">DEMO</span><span class="ss-case-tag">完全虚构</span></span><h3>虚构「灌水号」</h3><p>论文很多，就等于值得信任吗？</p><span class="ss-case-bottom">异常模式与核查任务<span aria-hidden="true">↗</span></span></a>
+      </div>
+    </section>
+    <section class="ss-principle" aria-label="产品原则"><span aria-hidden="true">01 → 02 → 03</span><p>身份先认清<span> / </span>分数能追查<span> / </span>规则钉上链</p><a href="org.html">进入机构查询台 <span aria-hidden="true">→</span></a></section>
+  </main>
+  <footer class="ss-footer"><span><i aria-hidden="true"></i> OPEN RECORDS · OPEN RULES</span><p id="ss-source-note">OpenAlex 公开数据快照 · 2026-10-07</p><span>评分仅供核查参考</span></footer>
+  <noscript><p class="ss-noscript">搜索需要 JavaScript；也可以直接使用上面的四个案例链接。</p></noscript>
+</body>
+</html>

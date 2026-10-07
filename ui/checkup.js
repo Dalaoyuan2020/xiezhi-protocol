@@ -55,6 +55,60 @@
     routeNotice.hidden = true;
     routeNotice.textContent = '';
   }
+  async function loadCandidate(id) {
+    if (!normalizeId(id) || id === 'SYNTHETIC') return;
+    const version = loadVersion;
+    try {
+      const response = await fetch('search-data.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('候选快照读取失败');
+      const data = await response.json();
+      if (version !== loadVersion || selected) return;
+      const person = data.candidates?.find(item => item.id === id);
+      if (!person) return;
+      const box = byId('sc-candidate');
+      const node = (tag, text, cls) => {
+        const element = document.createElement(tag);
+        element.textContent = text;
+        if (cls) element.className = cls;
+        return element;
+      };
+      box.replaceChildren();
+      box.append(node('p', 'IDENTITY FIRST / 同名候选公开档案', 'sc-eyebrow'));
+      const title = node('h2', person.name); title.id = 'sc-candidate-name';
+      box.append(title, node('p', '已选中这个候选。当前尚无完整的五维评分快照，暂未评分。'));
+      const list = node('dl', '');
+      const rows = [
+        ['OpenAlex ID', person.id],
+        ['候选单位线索', (person.displayInstitutions || person.institutions)?.join(' / ') || '数据未注明'],
+        ['研究方向', (person.displayTopics || person.topics)?.join(' / ') || '数据未注明'],
+        ['快照论文数', Number.isSafeInteger(person.works) ? String(person.works) : '数据未注明'],
+        ['ORCID', person.orcid || '数据未注明'],
+        ['快照日期', person.snapshotDate || data.generated || '数据未注明']
+      ];
+      rows.forEach(([label, value]) => { const row = node('div', ''); row.append(node('dt', label), node('dd', value)); list.append(row); });
+      box.append(list);
+      box.append(node('p', '公开库当前单位字段：' + (person.institutions?.join(' / ') || '数据未注明')));
+      if (person.note) box.append(node('p', person.note));
+      box.append(node('p', '公开库可能合并或拆散同名者；候选记录不代表已经核验本人身份。'));
+      const links = node('div', '', 'sc-candidate-links');
+      const source = node('a', '查看 OpenAlex 原始档案 ↗');
+      source.href = 'https://api.openalex.org/authors/' + id; source.target = '_blank'; source.rel = 'noopener';
+      const back = node('a', '返回搜索，重新辨认 →'); back.href = 'index.html?q=Zhiyuan%20Lyu';
+      const chain = node('a', '机构台查看此档案 ↗'); chain.href = 'org.html?mode=chain&q=' + encodeURIComponent(id);
+      links.append(back, source, chain); box.append(links);
+      box.hidden = false;
+      clearRouteNotice();
+      document.querySelectorAll('[data-journey]').forEach(button => { button.disabled = true; button.removeAttribute('aria-current'); });
+      showChainStatus({ kind: 'snapshot', label: '候选快照 · 暂未评分' });
+      document.title = person.name + ' · 獬豸协议 Xiezhi';
+      announce('已选择 ' + person.name + '，暂无五维评分快照。');
+    } catch (_) {
+      if (version === loadVersion && !selected) {
+        routeNotice.textContent = '候选档案暂时无法读取。可返回搜索重试，或选择已有评分的演示案例。';
+        routeNotice.hidden = false;
+      }
+    }
+  }
   function setPresentation(enabled) {
     const active = Boolean(enabled);
     document.body.dataset.presentation = String(active);
@@ -70,13 +124,23 @@
   function showView(view, focus = false) {
     if (!panels[view]) return;
     currentView = view;
+    document.querySelectorAll('[data-journey]').forEach(button => {
+      if (button.dataset.journey === view) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+    });
     for (const key of Object.keys(panels)) {
       panels[key].hidden = key !== view;
       tabs[key].setAttribute('aria-selected', String(key === view));
       tabs[key].tabIndex = key === view ? 0 : -1;
     }
-    document.title = (view === 'card' ? '体检卡' : '上链收据') + ' · 学术体检';
+    document.title = (view === 'card' ? '体检卡' : '上链收据') + ' · 獬豸协议 Xiezhi';
     if (focus) tabs[view].focus({ preventScroll: true });
+    if (selected && /^https?:$/.test(location.protocol)) {
+      const url = new URL(location.href);
+      if (view === 'receipt') url.searchParams.set('view', 'receipt');
+      else url.searchParams.delete('view');
+      history.replaceState(null, '', url.href);
+    }
     window.dispatchEvent(new CustomEvent('scholar-checkup:view', { detail: { view, caseId: selected?.id } }));
   }
   function handleClaim(value) {
@@ -102,6 +166,8 @@
     const record = records.get(id);
     if (!record) throw new Error('案例不存在，请从演示档案中选择');
     clearRouteNotice();
+    byId('sc-candidate').hidden = true;
+    document.querySelectorAll('[data-journey]').forEach(button => { button.disabled = false; });
     if (selected?.id === id) return;
     // Keep completed receipts and claims in this page session, including when switching cases.
     // Close open dialogs before hiding their case so a previous identity never overlays the next.
@@ -147,9 +213,12 @@
     showChainStatus(view.chainStatus);
     for (const button of caseRoot.querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.caseId === id));
     byId('sc-record-label').textContent = selected.synthetic ? 'SYNTHETIC / 虚构样例' : 'OPENALEX / ' + selected.id;
+    byId('sc-subject-org').hidden = selected.synthetic;
+    byId('sc-subject-org').href = 'org.html?mode=chain&q=' + encodeURIComponent(selected.id);
     if (location.protocol === 'http:' || location.protocol === 'https:') {
       const url = new URL(location.href);
       url.searchParams.set('case', selected.id);
+      url.searchParams.delete('candidate');
       history.replaceState(null, '', url.href);
     }
     byId('sc-workspace').hidden = false;
@@ -210,6 +279,7 @@
       const message = '未找到档案「' + String(requestedId) + '」。请选择上方已有案例，或检查链接中的案例 ID。';
       if (routeNotice) { routeNotice.textContent = message; routeNotice.hidden = false; }
       announce(message);
+      if (new URLSearchParams(location.search).get('candidate') === '1') loadCandidate(normalizeId(requestedId));
       return;
     }
     selectCase(requestedId === undefined || requestedId === null ? nextRecords[0].id : requestedId);
@@ -227,7 +297,9 @@
       if (!response.ok) throw new Error('HTTP ' + response.status);
       const data = await response.json();
       if (token !== loadVersion) return;
+      const requestedView = new URLSearchParams(location.search).get('view');
       loadDataset(data, new URLSearchParams(location.search).get('case'));
+      if (selected && requestedView === 'receipt') showView('receipt');
     } catch (error) {
       if (token === loadVersion) showError(error, 'network');
     } finally {
@@ -255,6 +327,13 @@
     event.target.value = '';
   });
   if (retryButton) retryButton.addEventListener('click', loadDefaultDataset);
+  document.querySelectorAll('[data-journey]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!selected) return;
+      showView(button.dataset.journey, true);
+      byId('sc-workspace').scrollIntoView({ block: 'start', behavior: 'auto' });
+    });
+  });
   if (presentationButton) presentationButton.addEventListener('click', () => setPresentation(document.body.dataset.presentation !== 'true'));
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && document.body.dataset.presentation === 'true' && !document.querySelector('dialog[open]')) {

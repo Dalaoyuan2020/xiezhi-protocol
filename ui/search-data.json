@@ -1,0 +1,249 @@
+{
+  "generated": "2026-10-07",
+  "source": "OpenAlex API；中文机构及研究方向为界面摘要，原字段保留",
+  "sources": [
+    "https://api.openalex.org/authors?search=Zhiyuan%20Lyu&per-page=10",
+    "../product/mock_cases.json"
+  ],
+  "scope": "本地演示候选快照，不是全库实时搜索。作者档案可能存在拆分或合并，评分不证明身份。",
+  "candidates": [
+    {
+      "id": "A5126602136",
+      "name": "Zhiyuan Lv",
+      "institutions": [
+        "Hohai University",
+        "Suzhou Research Institute"
+      ],
+      "topics": [
+        "Robotic Mechanisms and Dynamics",
+        "Infrastructure Maintenance and Monitoring",
+        "Control and Dynamics of Mobile Robots"
+      ],
+      "works": 2,
+      "orcid": "https://orcid.org/0009-0008-5473-5367",
+      "sourceUrl": "https://api.openalex.org/authors/A5126602136",
+      "snapshotDate": "2026-10-07",
+      "fetchedAt": "2026-10-07T06:44:54.2192443Z",
+      "note": "公开档案含 2 篇论文；管道机器人方向与错挂线索来自本人说明及仓库案例，尚未更改 OpenAlex 记录。",
+      "aliases": [
+        "Zhiyuan Lyu",
+        "Zhiyuan Lv",
+        "吕志远",
+        "Lyu",
+        "Lv"
+      ],
+      "provenance": "OpenAlex API 公开快照",
+      "hasScore": true,
+      "affiliations": [
+        {
+          "name": "Hohai University",
+          "years": [
+            2025
+          ]
+        },
+        {
+          "name": "Suzhou Research Institute",
+          "years": [
+            2025
+          ]
+        }
+      ],
+      "displayInstitutions": [
+        "河海大学",
+        "苏州研究所"
+      ],
+      "displayTopics": [
+        "管道机器人",
+        "控制与机器人动力学"
+      ],
+      "identityNote": "本人案例 · ORCID 精确匹配"
+    },
+    {
+      "id": "A5111337086",
+      "name": "Zhiyuan Lyu",
+      "institutions": [
+        "Hohai University"
+      ],
+      "topics": [
+        "Model Reduction and Neural Networks",
+        "Advanced Combustion Engine Technologies",
+        "Computational Fluid Dynamics and Aerodynamics"
+      ],
+      "works": 5,
+      "orcid": "https://orcid.org/0009-0005-5014-6889",
+      "sourceUrl": "https://api.openalex.org/authors/A5111337086",
+      "snapshotDate": "2026-10-07",
+      "fetchedAt": "2026-10-07T06:44:55.1110747Z",
+      "note": "OpenAlex 历史署名含上海交通大学（2024–2025）；当前 last_known 却为河海大学（2026）。本人报告有一篇论文错挂至该档案，仍需核对；保留原始记录，不将合并档案当作身份结论。",
+      "aliases": [
+        "Zhiyuan Lyu",
+        "Zhiyuan Lv",
+        "Lyu",
+        "Lv"
+      ],
+      "provenance": "OpenAlex API 公开快照",
+      "hasScore": false,
+      "affiliations": [
+        {
+          "name": "Hohai University",
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "Shanghai Jiao Tong University",
+          "years": [
+            2025,
+            2024
+          ]
+        }
+      ],
+      "displayInstitutions": [
+        "上海交通大学（2024–2025 历史署名）"
+      ],
+      "displayTopics": [
+        "燃烧技术",
+        "计算流体力学"
+      ],
+      "identityNote": "单位记录冲突 · 待核对"
+    },
+    {
+      "id": "A5008144497",
+      "name": "Zhiyuan Lyu",
+      "institutions": [
+        "Chinese University of Hong Kong"
+      ],
+      "topics": [
+        "Computational Geometry and Mesh Generation",
+        "3D Shape Modeling and Analysis",
+        "Computer Graphics and Visualization Techniques"
+      ],
+      "works": 7,
+      "orcid": "https://orcid.org/0009-0007-8655-8716",
+      "sourceUrl": "https://api.openalex.org/authors/A5008144497",
+      "snapshotDate": "2026-10-07",
+      "fetchedAt": "2026-10-07T06:44:56.1799395Z",
+      "note": "公开数据库中的作者档案；同名不等于同一人。",
+      "aliases": [
+        "Zhiyuan Lyu",
+        "Zhiyuan Lv",
+        "Lyu",
+        "Lv"
+      ],
+      "provenance": "OpenAlex API 公开快照",
+      "hasScore": false,
+      "affiliations": [
+        {
+          "name": "Chinese University of Hong Kong",
+          "years": [
+            2026,
+            2024,
+            2023
+          ]
+        }
+      ],
+      "displayInstitutions": [
+        "香港中文大学"
+      ],
+      "displayTopics": [
+        "计算几何",
+        "三维形状建模"
+      ],
+      "identityNote": ""
+    },
+    {
+      "id": "A5113431368",
+      "name": "Zhiyuan Lyu",
+      "institutions": [
+        "Wenzhou Polytechnic",
+        "University of Technology Malaysia"
+      ],
+      "topics": [
+        "Entrepreneurship Studies and Influences",
+        "Online Learning and Analytics",
+        "Data Mining and Machine Learning Applications"
+      ],
+      "works": 2,
+      "orcid": null,
+      "sourceUrl": "https://api.openalex.org/authors/A5113431368",
+      "snapshotDate": "2026-10-07",
+      "fetchedAt": "2026-10-07T06:44:57.1859843Z",
+      "note": "公开数据库中的作者档案；同名不等于同一人。",
+      "aliases": [
+        "Zhiyuan Lyu",
+        "Zhiyuan Lv",
+        "Lyu",
+        "Lv"
+      ],
+      "provenance": "OpenAlex API 公开快照",
+      "hasScore": false,
+      "affiliations": [
+        {
+          "name": "Wenzhou Polytechnic",
+          "years": [
+            2025,
+            2024
+          ]
+        },
+        {
+          "name": "University of Technology Malaysia",
+          "years": [
+            2025,
+            2024
+          ]
+        }
+      ],
+      "displayInstitutions": [
+        "温州职业技术学院",
+        "马来西亚理工大学"
+      ],
+      "displayTopics": [
+        "创业研究",
+        "在线学习分析"
+      ],
+      "identityNote": ""
+    },
+    {
+      "id": "A5104300844",
+      "name": "Zhiyuan LYU",
+      "institutions": [
+        "University of Electronic Science and Technology of China"
+      ],
+      "topics": [
+        "Reliability and Maintenance Optimization",
+        "Advanced Multi-Objective Optimization Algorithms",
+        "Probabilistic and Robust Engineering Design"
+      ],
+      "works": 1,
+      "orcid": null,
+      "sourceUrl": "https://api.openalex.org/authors/A5104300844",
+      "snapshotDate": "2026-10-07",
+      "fetchedAt": "2026-10-07T06:44:58.1218393Z",
+      "note": "公开数据库中的作者档案；同名不等于同一人。",
+      "aliases": [
+        "Zhiyuan Lyu",
+        "Zhiyuan Lv",
+        "Lyu",
+        "Lv"
+      ],
+      "provenance": "OpenAlex API 公开快照",
+      "hasScore": false,
+      "affiliations": [
+        {
+          "name": "University of Electronic Science and Technology of China",
+          "years": [
+            2022
+          ]
+        }
+      ],
+      "displayInstitutions": [
+        "电子科技大学"
+      ],
+      "displayTopics": [
+        "可靠性与维护优化",
+        "多目标优化"
+      ],
+      "identityNote": ""
+    }
+  ]
+}

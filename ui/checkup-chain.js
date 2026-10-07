@@ -5,12 +5,24 @@
   if (root) root.ScholarCheckupChain = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
-  const RPC = 'https://rpc.botchain.ai';
+  const NETWORKS = Object.freeze({
+    mainnet: Object.freeze({ key: 'mainnet', chainId: 677, rpc: 'https://rpc.botchain.ai', explorer: 'https://scan.botchain.ai', label: 'BOT 主网 · 677', deploymentPath: '../chain/deployments/botchain.json', journalsPath: '../chain/deployments/journals.json' }),
+    testnet: Object.freeze({ key: 'testnet', chainId: 968, rpc: 'https://rpc.bohr.life', explorer: 'https://scan.bohr.life', label: 'BOT 测试网 · 968', deploymentPath: '../chain/deployments/botchain-testnet.json', journalsPath: '../chain/deployments/journals-testnet.json' })
+  });
+  function getNetwork(name) {
+    if (name === undefined) {
+      const requested = typeof location === 'object' ? new URLSearchParams(location.search).get('network') : null;
+      name = requested === 'testnet' ? 'testnet' : 'mainnet';
+    }
+    if (!Object.hasOwn(NETWORKS, name)) throw new Error('网络仅支持 mainnet 或 testnet。');
+    return NETWORKS[name];
+  }
   const SDK = 'https://cdn.jsdelivr.net/npm/ethers@6.17.0/+esm';
   const HASH = /^0x[0-9a-f]{64}$/i;
   const ADDRESS = /^0x[0-9a-f]{40}$/i;
   const ZERO = '0x' + '0'.repeat(64);
-  const KINDS = { SCORE: '评分', SUBMIT: '投稿', REVIEW: '审稿', REPRODUCE: '复现', CLAIM: '认领' };
+  const KINDS = { SCORE: '评分', SUBMIT: '投稿', CLOSE: '结案', REVIEW: '审稿', REPRODUCE: '复现', CLAIM: '认领' };
+  const CLOSE_REASONS = { REJECTED: '拒稿', WITHDRAWN: '撤稿', ACCEPTED: '录用' };
   const errorText = error => error && error.message ? error.message : String(error);
   const aborted = () => Object.assign(new Error('读取已取消'), { name: 'AbortError' });
 
@@ -36,11 +48,57 @@
     });
   }
 
-  function validateDeployment(value) {
-    if (!value || value.chainId !== 677) throw new Error('部署清单的 chainId 必须为 BOT Chain 主网 677。');
+  function validateDeployment(value, network) {
+    const config = getNetwork(network);
+    if (!value || value.chainId !== config.chainId) throw new Error('部署清单的 chainId 必须为 ' + config.label + '。');
     if (!ADDRESS.test(value.address || '') || /^0x0{40}$/i.test(value.address)) throw new Error('部署清单中的合约地址无效。');
     if (!Number.isSafeInteger(value.block) || value.block < 0) throw new Error('部署清单缺少有效的部署区块。');
-    return { chainId: 677, address: value.address, block: value.block };
+    return { chainId: config.chainId, address: value.address, block: value.block };
+  }
+
+  function validateJournals(value) {
+    if (!value || !Array.isArray(value.journals) || !value.journals.length) throw new Error('可信期刊名单为空或格式无效。');
+    if (!HASH.test(value.manuscript || '') || value.manuscript.toLowerCase() === ZERO) throw new Error('可信期刊名单缺少有效的演示稿件指纹。');
+    const pairs = new Set();
+    const journals = value.journals.map(row => {
+      if (!row || typeof row.name !== 'string' || !row.name.trim() || row.name.trim().length > 160) throw new Error('可信期刊名称无效。');
+      if (!ADDRESS.test(row.address || '') || /^0x0{40}$/i.test(row.address)) throw new Error('可信期刊登记地址无效。');
+      if (!HASH.test(row.org || '') || row.org.toLowerCase() === ZERO) throw new Error('可信期刊机构指纹无效。');
+      const address = row.address.toLowerCase();
+      const org = row.org.toLowerCase();
+      const key = address + ':' + org;
+      if (pairs.has(key)) throw new Error('可信期刊名单包含重复的地址与机构指纹。');
+      pairs.add(key);
+      return { name: row.name.trim(), address, org, ...(typeof row.key === 'string' ? { key: row.key } : {}) };
+    });
+    return { journals, manuscript: value.manuscript.toLowerCase(), ...(typeof value.demoAuthor === 'string' ? { demoAuthor: value.demoAuthor } : {}) };
+  }
+
+  async function loadJournals(options) {
+    const opts = options || {};
+    const fetcher = opts.fetch || ((...args) => fetch(...args));
+    try {
+      const network = getNetwork(opts.network);
+      const value = await deadline(async signal => {
+        const response = await fetcher(network.journalsPath, { signal, cache: 'no-store' });
+        if (response.status === 404) return null;
+        if (!response.ok) throw new Error('可信期刊名单读取失败（HTTP ' + response.status + '）。');
+        return validateJournals(await response.json());
+      }, opts.timeoutMs || 12000, opts.signal);
+      if (!value) return { kind: 'missing', network: network.key, journals: [], manuscript: null, message: network.label + '尚未发布可信期刊名单，暂不进行机构风险判断。' };
+      return { kind: 'ready', network: network.key, ...value, message: '已读取' + network.label + '的演示可信期刊名单；同时核对登记地址和机构指纹。' };
+    } catch (error) {
+      if (error.name === 'AbortError') throw error;
+      return { kind: 'error', journals: [], manuscript: null, message: errorText(error) };
+    }
+  }
+
+  function trustedJournal(record, manifestOrList) {
+    if (!record || !ADDRESS.test(record.recorder || '') || !HASH.test(record.org || '')) return null;
+    if (!Array.isArray(manifestOrList) && (!manifestOrList || (manifestOrList.kind && manifestOrList.kind !== 'ready'))) return null;
+    const list = Array.isArray(manifestOrList) ? manifestOrList : manifestOrList.journals;
+    if (!Array.isArray(list)) return null;
+    return list.find(journal => ADDRESS.test(journal.address || '') && HASH.test(journal.org || '') && journal.address.toLowerCase() === record.recorder.toLowerCase() && journal.org.toLowerCase() === record.org.toLowerCase()) || null;
   }
 
   function asNumber(value, label, min, max) {
@@ -49,22 +107,26 @@
     return number;
   }
 
-  function actionRecord(row, query, sdk) {
+  function actionRecord(row, query, sdk, sequence) {
     if (!HASH.test(row.subject || '') || (query.subject && row.subject.toLowerCase() !== query.subject.toLowerCase())) throw new Error('链上行为的主体不匹配。');
     if (!HASH.test(row.content || '') || !HASH.test(row.org || '') || !HASH.test(row.rule || '') || !HASH.test(row.kind || '') || !ADDRESS.test(row.recorder || '')) throw new Error('链上行为的哈希或登记人地址无效。');
     if (query.contentHash && row.content.toLowerCase() !== query.contentHash.toLowerCase()) throw new Error('链上行为的内容指纹不匹配。');
-    let kind;
-    try { kind = sdk.decodeBytes32String(row.kind); } catch (_) { throw new Error('链上行为类型无法识别。'); }
-    if (!Object.hasOwn(KINDS, kind)) throw new Error('链上返回了未知的行为类型。');
-    const value = asNumber(row.value, '行为数值', 0, kind === 'SCORE' ? 100 : 0);
+    let kind = 'UNKNOWN';
+    try { kind = sdk.decodeBytes32String(row.kind) || 'UNKNOWN'; } catch (_) { /* Retain unrecognized records with their original bytes32 value. */ }
+    const knownKind = Object.hasOwn(KINDS, kind);
+    const value = asNumber(row.value, '行为数值', 0, knownKind ? kind === 'SCORE' ? 100 : 0 : 65535);
+    let ruleName = null;
     let ruleLabel = row.rule;
-    try { ruleLabel = sdk.decodeBytes32String(row.rule) || row.rule; } catch (_) { /* Non-text rules retain their original hash. */ }
+    try { ruleName = sdk.decodeBytes32String(row.rule) || null; ruleLabel = ruleName || row.rule; } catch (_) { /* Non-text rules retain their original hash. */ }
     if (row.rule.toLowerCase() === ZERO) ruleLabel = '未指定规则';
+    const closeReason = kind === 'CLOSE' && Object.hasOwn(CLOSE_REASONS, ruleName) ? ruleName : null;
+    const closeReasonLabel = kind === 'CLOSE' ? closeReason ? CLOSE_REASONS[closeReason] : '未知结案原因' : null;
+    if (closeReason) ruleLabel = closeReasonLabel;
     return {
-      subject: row.subject, kind, kindHash: row.kind, kindLabel: KINDS[kind],
+      subject: row.subject, kind, kindHash: row.kind, kindLabel: knownKind ? KINDS[kind] : '未知行为', knownKind,
       content: row.content, org: row.org, value,
-      rule: row.rule, ruleLabel, recorder: row.recorder,
-      time: asNumber(row.time, '时间', 0, 8640000000000), transactionHash: null, blockNumber: null
+      rule: row.rule, ruleName, ruleLabel, closeReason, closeReasonLabel, recorder: row.recorder,
+      sequence, time: asNumber(row.time, '时间', 0, 8640000000000), transactionHash: null, blockNumber: null, logIndex: null, eventId: null
     };
   }
 
@@ -81,7 +143,7 @@
     records.forEach(row => { const key = recordKey(row); if (!rows.has(key)) rows.set(key, []); rows.get(key).push(row); });
     const seen = new Set();
     events.slice().sort((a, b) => a.blockNumber - b.blockNumber || Number(a.index) - Number(b.index)).forEach(event => {
-      if (!event.args || !HASH.test(event.transactionHash || '') || !Number.isSafeInteger(event.blockNumber) || event.blockNumber < 0) return;
+      if (!event.args || !HASH.test(event.transactionHash || '') || !Number.isSafeInteger(event.blockNumber) || event.blockNumber < 0 || !Number.isSafeInteger(event.index) || event.index < 0) return;
       const identity = event.transactionHash + ':' + event.index;
       if (seen.has(identity)) return;
       seen.add(identity);
@@ -95,6 +157,8 @@
       group.forEach((row, index) => {
         row.transactionHash = matches[index].transactionHash;
         row.blockNumber = matches[index].blockNumber;
+        row.logIndex = matches[index].index;
+        row.eventId = /^\d+$/.test(String(matches[index].args.id)) ? String(matches[index].args.id) : null;
       });
     });
     return records;
@@ -102,6 +166,8 @@
 
   function createReader(dependencies) {
     const deps = dependencies || {};
+    const network = getNetwork(deps.network);
+    const identity = { network: network.key, chainId: network.chainId, networkLabel: network.label, explorer: network.explorer };
     const fetcher = deps.fetch || ((...args) => fetch(...args));
     const timeout = deps.timeoutMs || 12000;
     const chunk = deps.chunkSize || 1000;
@@ -120,7 +186,7 @@
     function manifest(retry) {
       if (retry) manifestPromise = undefined;
       if (!manifestPromise) {
-        const pending = json('../chain/deployments/botchain.json', true).then(value => value === null ? null : validateDeployment(value));
+        const pending = json(network.deploymentPath, true).then(value => value === null ? null : validateDeployment(value, network.key));
         manifestPromise = pending;
         pending.catch(() => { if (manifestPromise === pending) manifestPromise = undefined; });
       }
@@ -137,19 +203,19 @@
     async function read(normalized, options) {
       const opts = options || {};
       if (normalized.synthetic || normalized.id === 'SYNTHETIC') {
-        return { kind: 'synthetic', label: '虚构案例 · 快照演示', message: '这个案例只用于说明规则，不对应真实学者，不查询或生成链上记录。', records: [] };
+        return { ...identity, kind: 'synthetic', label: '虚构案例 · 快照演示', message: '这个案例只用于说明规则，不对应真实学者，不查询或生成链上记录。', records: [] };
       }
       let provider;
       try {
         const byContent = normalized.contentHash !== undefined;
         if (byContent ? !HASH.test(normalized.contentHash || '') : !/^A\d+$/.test(normalized.id || '')) throw new Error('需要有效的 OpenAlex 作者 ID 或 32 字节内容指纹。');
         const deployment = await deadline(() => manifest(opts.retry), timeout, opts.signal);
-        if (!deployment) return { kind: 'snapshot', label: '未部署 · 快照演示', message: '尚未发现 BOT Chain 部署清单，当前没有可读取的已部署合约。页面中的快照演示不代表任何记录已上链。', records: [] };
+        if (!deployment) return { ...identity, kind: 'snapshot', label: network.key === 'testnet' ? '测试网未部署 · 快照演示' : '未部署 · 快照演示', message: '尚未发现' + network.label + '部署清单，当前没有可读取的已部署合约。页面中的快照演示不代表任何记录已上链；不会自动切换到另一网络。', records: [] };
         const [library, artifact] = await Promise.all([deadline(sdk, timeout, opts.signal), deadline(() => json('../chain/artifacts/ActionRegistry.json'), timeout, opts.signal)]);
         if (!artifact || !Array.isArray(artifact.abi)) throw new Error('合约 ABI 文件无效。');
-        provider = deps.createProvider ? deps.createProvider(RPC, library) : new library.JsonRpcProvider(RPC, undefined, { batchMaxCount: 1 });
-        const network = await deadline(() => provider.getNetwork(), timeout, opts.signal);
-        if (BigInt(network.chainId) !== 677n) throw new Error('RPC 网络不匹配：期望 677，收到 ' + String(network.chainId) + '。');
+        provider = deps.createProvider ? deps.createProvider(network.rpc, library) : new library.JsonRpcProvider(network.rpc, undefined, { batchMaxCount: 1 });
+        const actualNetwork = await deadline(() => provider.getNetwork(), timeout, opts.signal);
+        if (BigInt(actualNetwork.chainId) !== BigInt(network.chainId)) throw new Error('RPC 网络不匹配：期望 ' + network.chainId + '，收到 ' + String(actualNetwork.chainId) + '。');
         const latest = asNumber(await deadline(() => provider.getBlockNumber(), timeout, opts.signal), '区块号', 0, Number.MAX_SAFE_INTEGER);
         if (latest < deployment.block) throw new Error('RPC 当前区块早于部署区块，请检查部署清单或稍后重试。');
         const code = await deadline(() => provider.getCode(deployment.address, latest), timeout, opts.signal);
@@ -159,7 +225,7 @@
         const contentHash = byContent ? normalized.contentHash.toLowerCase() : null;
         const values = await deadline(() => byContent ? contract.actionsByContent(contentHash, { blockTag: latest }) : contract.actionsOf(subject, { blockTag: latest }), timeout, opts.signal);
         if (!Array.isArray(values)) throw new Error('链上行为列表格式无效。');
-        const records = values.map(value => actionRecord(value, { subject, contentHash }, library));
+        const records = values.map((value, sequence) => actionRecord(value, { subject, contentHash }, library, sequence));
         const events = [];
         let cursor = latest;
         let count = 0;
@@ -186,19 +252,19 @@
         const matched = records.filter(value => value.transactionHash).length;
         const partial = records.length > 0 && (cursor >= deployment.block || matched !== records.length || Boolean(logError));
         return {
-          kind: partial ? 'partial' : 'ready', label: partial ? '链上只读 · 交易历史未齐' : '链上只读 · BOT Chain',
+          ...identity, kind: partial ? 'partial' : 'ready', label: '链上只读 · ' + network.label + (partial ? ' · 交易历史未齐' : ''),
           message: partial ? matched === records.length ? '行为及对应交易已取得；事件查询只覆盖部分区块，尚未回溯部署以来的完整历史。' : '行为已从合约读取。部分交易事件未取得或无法唯一对应，缺失的交易哈希与区块号不会补写。' : records.length ? '来自 BOT Chain ActionRegistry 的公开行为记录，按登记顺序呈现。链上登记与行为核实是两个步骤。' : '已连接部署合约，但这个查询在当前读取区块没有行为记录。',
           records, deployment, subject, contentHash, readBlock: latest, checkedAt: new Date().toISOString(),
           history: { complete: !partial, fromBlock: count ? cursor + 1 : null, toBlock: latest, matched, count: records.length, logError, limit: chunk * maxChunks }
         };
       } catch (error) {
         if (error.name === 'AbortError') throw error;
-        return { kind: 'error', label: '链上读取失败 · 快照可用', message: errorText(error), records: [] };
+        return { ...identity, kind: 'error', label: network.label + '读取失败 · 快照可用', message: errorText(error), records: [] };
       } finally {
         if (provider && typeof provider.destroy === 'function') provider.destroy();
       }
     }
-    return { read };
+    return { read, network };
   }
 
   // Subject switches must never let a slower, older RPC response repaint a newer case.
@@ -254,7 +320,7 @@
       panel.append(top, el('p', 'sc-chain__message', state.message));
       if (state.deployment) {
         const metadata = el('dl', 'sc-chain__metadata');
-        [['网络', 'BOT Chain · 677'], ['读取区块', '#' + state.readBlock.toLocaleString('en-US')], ['合约地址', state.deployment.address]].forEach(([label, value]) => {
+        [['网络', state.networkLabel || 'BOT 主网 · 677'], ['读取区块', '#' + state.readBlock.toLocaleString('en-US')], ['合约地址', state.deployment.address]].forEach(([label, value]) => {
           const group = el('div'); group.append(el('dt', '', label), el('dd', '', value)); metadata.append(group);
         });
         panel.append(metadata, el('p', 'sc-chain__trust', '任何地址都能登记行为。链上存证说明这条记录存在，不代表行为已经核实；请按信任的登记人、行为和规则筛选。机构指纹不等于机构身份认证，认领或复现记录也不会自动加分。这里的评分不会覆盖体检卡。'));
@@ -270,12 +336,14 @@
           count.textContent = '显示 ' + visible.length + ' / ' + state.records.length + ' 条行为 · 其中 ' + scoreCount + ' 次评分 · 由新到旧';
           visible.slice().reverse().forEach(row => {
             const item = el('article', 'sc-chain__entry');
+            if (!row.knownKind) item.dataset.unknown = 'true';
             const lead = el('div', 'sc-chain__entry-head');
             const score = el('div', row.kind === 'SCORE' ? 'sc-chain__score' : 'sc-chain__kind');
             if (row.kind === 'SCORE') score.append(el('strong', '', String(row.value)), el('span', '', '/100'));
             else score.append(el('strong', '', row.kindLabel));
-            const heading = el('div'); heading.append(el('h3', '', row.kind === 'SCORE' ? '评分 · ' + row.ruleLabel : row.kind + ' / 已登记'), el('p', '', new Date(row.time * 1000).toLocaleString('zh-CN', { hour12: false, timeZone: 'Asia/Shanghai' }) + ' UTC+8'));
+            const heading = el('div'); heading.append(el('h3', '', row.kind === 'SCORE' ? '评分 · ' + row.ruleLabel : row.kind === 'CLOSE' ? '结案 · ' + row.closeReasonLabel : row.knownKind ? row.kind + ' / 已登记' : '未知行为 / 尚未支持'), el('p', '', new Date(row.time * 1000).toLocaleString('zh-CN', { hour12: false, timeZone: 'Asia/Shanghai' }) + ' UTC+8 · 记录序号 ' + (row.sequence + 1)));
             lead.append(score, heading); item.append(lead);
+            if (!row.knownKind) item.append(el('p', 'sc-chain__warning', '当前版本不解释这类行为，不参与规则判断。原始类型：' + row.kindHash));
             const details = el('dl', 'sc-chain__fields');
             [['登记人', row.recorder], ['内容指纹', row.content], ['主体指纹', row.subject], ['机构指纹', row.org.toLowerCase() === ZERO ? '未指定机构（零值）' : row.org], ['规则原值', row.rule]].forEach(([label, value]) => {
               const group = el('div'); group.append(el('dt', '', label), el('dd', '', value)); details.append(group);
@@ -283,8 +351,8 @@
             const tx = el('div'); tx.append(el('dt', '', '交易凭据'));
             const receipt = el('dd');
             if (row.transactionHash) {
-              const link = el('a', '', row.transactionHash); link.href = 'https://scan.botchain.ai/tx/' + row.transactionHash; link.target = '_blank'; link.rel = 'noopener noreferrer';
-              receipt.append(link, el('span', 'sc-chain__block', '区块 #' + row.blockNumber.toLocaleString('en-US')));
+              const link = el('a', '', row.transactionHash); link.href = getNetwork(state.network || 'mainnet').explorer + '/tx/' + row.transactionHash; link.target = '_blank'; link.rel = 'noopener noreferrer';
+              receipt.append(link, el('span', 'sc-chain__block', '区块 #' + row.blockNumber.toLocaleString('en-US') + ' · 日志序号 ' + row.logIndex));
             } else receipt.textContent = '未取得可唯一对应的事件，暂不展示交易哈希或区块号。';
             tx.append(receipt); details.append(tx); item.append(details); list.append(item);
           });
@@ -321,5 +389,5 @@
     session.update(normalized);
     return { update(value) { recorder = ''; rule = ''; kind = ''; return session.update(value); }, reload: session.reload, getStatus: session.getStatus, destroy() { session.destroy(); container.replaceChildren(); } };
   }
-  return { mount, createReader, createSession, validateDeployment, matchEvents };
+  return { mount, createReader, createSession, validateDeployment, matchEvents, validateJournals, loadJournals, trustedJournal, getNetwork };
 });
