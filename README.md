@@ -53,4 +53,4 @@ NETWORK=testnet npm run read -- A5126602136                     # 读测试网�
 
 ## 团队
 
-汉客松 S1 · ETH Wuhan 2026 参赛作品。GCC 公共物品赛道 · BOT Chain 赛道。
+**Know & Act（知行合一）** 队 · 汉客松 S1 · ETH Wuhan 2026 参赛作品。GCC 公共物品赛道 · BOT Chain 赛道。
