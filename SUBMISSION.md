@@ -18,7 +18,7 @@
 - 选题研究与产品定义：GCC 资助方向调研、AIA（注意力 / 想法 / 行动）框架、獬豸协议定名
 - 评分脚本 `product/checkup.py`（OpenAlex 五维评分）与 4 个案例
 - 合约 `ActionRegistry`（Solidity）+ 编译、部署、登记、读取、演示数据脚本，本地 EVM 自检
-- **BOT Chain 测试网部署**及 7 笔演示交易；⏳ 主网部署
+- **BOT Chain 测试网与主网部署**：学术行为登记合约 + 贡献积分合约，主网 7 笔演示交易
 - 前端：首页搜索与重名候选、学术体检（体检卡、评分收据、认领、提分任务）、机构查询台（读 BOT 测试网真实记录，投稿—结案生命周期）、链上只读模块；66 项前端单元测试
 - 公开仓库与 GitHub Pages 演示站
 
@@ -60,6 +60,7 @@
 | 网络 | 合约地址 | 浏览器 |
 |---|---|---|
 | 测试网（968） | `0xA0853161002Af018225419324560FCE9CD9b10eD` | https://scan.bohr.life/address/0xA0853161002Af018225419324560FCE9CD9b10eD |
-| ⏳ 主网（677） | 待 Gas 发放后部署 | https://scan.botchain.ai |
+| **主网（677）· ActionRegistry** | `0xA0853161002Af018225419324560FCE9CD9b10eD` | https://scan.botchain.ai/address/0xA0853161002Af018225419324560FCE9CD9b10eD |
+| **主网（677）· PointsLedger** | `0x28B2af15386C0D65D5427d5b81bEe485D4edD60A` | https://scan.botchain.ai/address/0x28B2af15386C0D65D5427d5b81bEe485D4edD60A |
 
-测试网交易记录见 [README](README.md)；主网交易记录部署后补充。
+测试网交易记录见 [README](README.md)；**主网部署交易与 7 笔演示交易见 [chain/MAINNET.md](chain/MAINNET.md)**。

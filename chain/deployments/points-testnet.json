@@ -1,0 +1,11 @@
+{
+  "network": "BOT Chain testnet",
+  "chainId": 968,
+  "address": "0x07F0Ac8dC05C992eb76c46779263C2Bd4B0aBAd4",
+  "deployTx": "0x260fc6b9807aaa53fcd2b08fddf1a8791584ea6bd762d94eec790bd6ee09c9c7",
+  "block": 26013286,
+  "explorer": "https://scan.bohr.life/address/0x07F0Ac8dC05C992eb76c46779263C2Bd4B0aBAd4",
+  "owner": "0xE7c719eBf64D2AA5dF3b00CF31A864811b3e242b",
+  "rules": "points-v0",
+  "deployedAt": "2026-10-07T10:37:08.279Z"
+}

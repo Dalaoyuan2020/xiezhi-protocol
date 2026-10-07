@@ -1,0 +1,11 @@
+{
+  "network": "BOT Chain mainnet",
+  "chainId": 677,
+  "address": "0x28B2af15386C0D65D5427d5b81bEe485D4edD60A",
+  "deployTx": "0x39b7f88bb9853b3870707ef8a61cf4ad40a914195290ed660f8f1c9aa5f9d8c6",
+  "block": 25849297,
+  "explorer": "https://scan.botchain.ai/address/0x28B2af15386C0D65D5427d5b81bEe485D4edD60A",
+  "owner": "0xE7c719eBf64D2AA5dF3b00CF31A864811b3e242b",
+  "rules": "points-v0",
+  "deployedAt": "2026-10-07T11:09:23.494Z"
+}

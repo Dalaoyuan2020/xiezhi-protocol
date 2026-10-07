@@ -10,10 +10,14 @@
     "read": "node read.mjs",
     "record": "node record.mjs",
     "demo": "node demo.mjs",
-    "test-demo": "node test-demo.mjs"
+    "test-demo": "node test-demo.mjs",
+    "agent": "node agent-server.mjs",
+    "points": "node points-cli.mjs",
+    "test-points": "node test-points.mjs"
   },
   "dependencies": {
     "ethers": "6.17.0",
+    "pinyin-pro": "^3.29.4",
     "solc": "0.8.37"
   },
   "devDependencies": {

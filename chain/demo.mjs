@@ -37,7 +37,7 @@ export async function seed({ platform, reg, cards, fund = ethers.parseEther("0.0
       console.log(`[转账] ${j.name} ${j.wallet.address} ← ${ethers.formatEther(fund)} BOT`);
     }
   }
-  for (const card of cards) log.push(await send(reg, platform, "submitScore", toChainArgs(card, "checkup-v0"), `评分 ${card.name} ${card.score}`));
+  for (const card of cards) log.push(await send(reg, platform, "submitScore", toChainArgs(card, card.rule || "checkup-v0"), `评分 ${card.name} ${card.score}`));
   for (const j of journals)
     log.push(await send(reg, j.wallet, "record", [subjectOf(DEMO_AUTHOR), kindOf("SUBMIT"), manuscript(), orgOf(j.name), ethers.ZeroHash, 0], `${j.name} 登记投稿`));
   return { journals: journals.map(({ key, name, wallet }) => ({ key, name, address: wallet.address, org: orgOf(name) })), manuscript: manuscript(), demoAuthor: DEMO_AUTHOR, log };
@@ -61,7 +61,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const platform = new ethers.Wallet(process.env.BOT_PRIVATE_KEY, provider);
   const reg = new ethers.Contract(dep.address, artifact().abi, provider);
   if (cmd === "seed") {
-    const out = await seed({ platform, reg, cards: CASES.map(runCheckup) });
+    const out = await seed({ platform, reg, cards: CASES.map((id) => runCheckup(id, { rule: "v2" })) });
     writeFileSync(JOURNALS_FILE, JSON.stringify({
       note: "演示用可信期刊名单：机构页只采信这些地址登记的行为", platform: platform.address, ...out }, null, 2));
     console.log(`已写出 ${JOURNALS_FILE.pathname}`);

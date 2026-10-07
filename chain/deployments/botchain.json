@@ -1,0 +1,13 @@
+{
+  "network": "BOT Chain mainnet",
+  "chainId": 677,
+  "address": "0xA0853161002Af018225419324560FCE9CD9b10eD",
+  "explorer": "https://scan.botchain.ai/address/0xA0853161002Af018225419324560FCE9CD9b10eD",
+  "deployTxUrl": "https://scan.botchain.ai/tx/0x0116376b976b20f4113731d3f0db5d8d87953290bcd4e272ec7202d84b2e2184",
+  "deployTx": "0x0116376b976b20f4113731d3f0db5d8d87953290bcd4e272ec7202d84b2e2184",
+  "block": 25849278,
+  "deployer": "0xE7c719eBf64D2AA5dF3b00CF31A864811b3e242b",
+  "compiler": "0.8.37+commit.f401782d.Emscripten.clang",
+  "evmVersion": "paris",
+  "deployedAt": "2026-10-07T11:09:13.441Z"
+}

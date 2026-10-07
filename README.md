@@ -31,7 +31,11 @@ ORCID 给了学者一张名片，但名片不说明你靠不靠谱。AI 让论�
 - 部署交易：[`0x43b4…87e8`](https://scan.bohr.life/tx/0x43b428548ca34a23da0e5bc73fd3837a7dfadae74f7e2728068d6a9f8a1187e8)
 - 演示记录：3 笔评分（[致远 70](https://scan.bohr.life/tx/0xe88454487ee6e72b4e82de0c710808f8668c273db5503b1ee94c49f42573dd13)、[Karpathy 78](https://scan.bohr.life/tx/0x1d6119ca5aecbdff1aeeb4b53508010797b92fceb9980273b5fa066885551ed9)、[何恺明 83](https://scan.bohr.life/tx/0xed028b7995b27baca333f5222f965109a0331d032203f0d140f1a7733b469ed7)），两家演示期刊登记同一份演示稿件（[期刊甲](https://scan.bohr.life/tx/0x532137f7133159bde7d52f2ba16c81d14a3cc7e7a9fdd03ec854cffe81b6f29e)、[期刊乙](https://scan.bohr.life/tx/0x834a3f00b753e03f9d679cd8250eb0f0d892590a8a0f30c15131e55195e925f6)）
 
-主网（Chain ID 677）部署待 Gas 发放后进行。
+## BOT Chain 主网部署（Chain ID 677）✅
+
+- 学术行为登记 ActionRegistry：[`0xA0853161002Af018225419324560FCE9CD9b10eD`](https://scan.botchain.ai/address/0xA0853161002Af018225419324560FCE9CD9b10eD)
+- 贡献积分 PointsLedger（不可转让，不是虚拟货币）：[`0x28B2af15386C0D65D5427d5b81bEe485D4edD60A`](https://scan.botchain.ai/address/0x28B2af15386C0D65D5427d5b81bEe485D4edD60A)
+- 全部主网交易记录：[chain/MAINNET.md](chain/MAINNET.md)
 
 ## 本地运行
 
