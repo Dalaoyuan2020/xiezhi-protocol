@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070e15">
+  <meta name="description" content="学术体检：五维评分证据、可核验快照收据和本人认领演示。">
+  <title>学术体检 · Scholar Checkup</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070e15'/%3E%3Cpath d='M5 17h6l3-9 5 16 3-7h5' fill='none' stroke='%2358e7f0' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="checkup-page.css">
+  <link rel="stylesheet" href="checkup-card.css">
+  <link rel="stylesheet" href="checkup-receipt.css">
+  <link rel="stylesheet" href="checkup-chain.css">
+  <link rel="stylesheet" href="checkup-actions.css">
+  <script defer src="checkup-core.js"></script>
+  <script defer src="checkup-card.js"></script>
+  <script defer src="checkup-receipt.js"></script>
+  <script defer src="checkup-chain.js"></script>
+  <script defer src="checkup-actions.js"></script>
+  <script defer src="checkup.js"></script>
+</head>
+<body class="sc-page">
+  <a class="sc-skip" href="#checkup-main">跳到体检内容</a>
+  <header class="sc-header">
+    <a class="sc-brand" href="checkup.html" aria-label="学术体检演示首页">
+      <span class="sc-brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M3 19h8l4-12 6 23 4-11h8"/></svg></span>
+      <span>学术体检<span class="sc-brand-en">SCHOLAR CHECKUP</span></span>
+    </a>
+    <span class="sc-motto">身份先认清，分数能追查，规则钉上链</span>
+    <div class="sc-header-tools">
+      <a class="sc-org-link" href="org.html">机构查询 ↗</a>
+      <span class="sc-mode" id="sc-chain-mode" role="status"><i aria-hidden="true"></i><span>正在检查部署 · 快照演示</span></span>
+      <button type="button" class="sc-present-button" id="sc-present" aria-pressed="false" aria-label="投影模式" title="收起介绍，放大核心内容；Esc 退出"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7V3h4m6 0h4v4M3 13v4h4m6 0h4v-4"/></svg><span>投影模式</span></button>
+    </div>
+  </header>
+  <main id="checkup-main" class="sc-main">
+    <section class="sc-intro" aria-labelledby="sc-title">
+      <div><p class="sc-eyebrow"><span></span> SCHOLAR INTELLIGENCE / 学术档案体检</p><h1 id="sc-title">一份档案，<span>看见分数的来路。</span></h1><p class="sc-intro-copy">公开记录生成画像，每个维度都有可以追查的依据。</p></div>
+      <div class="sc-intro-stamp" aria-hidden="true"><span>TRANSPARENT BY DESIGN</span><strong>5<span>维证据</span> / 100<span>分</span></strong></div>
+    </section>
+    <section class="sc-case-section" aria-labelledby="case-title">
+      <div class="sc-case-caption"><h2 id="case-title">案例速览<span>点击切换档案</span></h2><span id="sc-snapshot-date">正在读取数据快照…</span></div>
+      <div class="sc-case-list" id="sc-cases" role="group" aria-label="四个演示案例"></div>
+    </section>
+    <section id="sc-load-state" class="sc-load-state" role="status"><span class="sc-load-orbit" aria-hidden="true"></span><p>正在读取仓库中的案例数据…</p></section>
+    <button id="sc-retry-data" class="sc-retry-button" type="button" hidden>重新加载案例</button>
+    <p id="sc-route-notice" class="sc-route-notice" role="status" hidden></p>
+    <section id="sc-file-fallback" class="sc-file-fallback" hidden aria-labelledby="sc-file-heading">
+      <h2 id="sc-file-heading">选择仓库中的案例文件</h2>
+      <p>可以手动选择 <code>aia/product/mock_cases.json</code> 继续，文件只在当前浏览器中读取。双击打开页面时需用此方式加载相邻文件。</p>
+      <label class="sc-file-button">选择 mock_cases.json<input id="sc-data-file" type="file" accept=".json,application/json"></label>
+    </section>
+    <section id="sc-workspace" hidden>
+      <div class="sc-tabs" role="tablist" aria-label="体检流程">
+        <button type="button" id="sc-tab-card" role="tab" aria-selected="true" aria-controls="sc-card-panel"><span>03</span>体检卡 <small>CHECKUP</small></button>
+        <button type="button" id="sc-tab-receipt" role="tab" aria-selected="false" aria-controls="sc-receipt-panel" tabindex="-1"><span>04</span>评分收据 <small>RECEIPT</small></button>
+        <p id="sc-record-label"></p>
+      </div>
+      <section id="sc-card-panel" role="tabpanel" aria-labelledby="sc-tab-card" tabindex="0"><div id="sc-card-root"></div><div id="sc-actions-root"></div></section>
+      <section id="sc-receipt-panel" role="tabpanel" aria-labelledby="sc-tab-receipt" tabindex="0" hidden>
+        <div id="sc-chain-root"></div>
+        <details class="sc-local-receipt" id="sc-local-receipt" open><summary>本地快照与本人认领 <span>演示 · 不广播交易</span></summary><div id="sc-receipt-root"></div></details>
+        <p class="sc-session-note">切换档案会保留当前页的演示记录。离开或刷新前，可导出收据保存。</p>
+      </section>
+    </section>
+    <div id="sc-announcer" class="sc-sr-only" aria-live="polite" aria-atomic="true"></div>
+  </main>
+  <footer class="sc-footer"><span><i aria-hidden="true"></i> OPEN RECORDS · OPEN RULES</span><p>仓库快照演示 · v0 启发式规则 · 认领不修改 OpenAlex 原记录</p><a href="../product/checkup.py" target="_blank" rel="noopener">查看评分脚本 ↗</a></footer>
+  <noscript><p>需要开启 JavaScript 才能查看评分证据和收据。</p></noscript>
+</body>
+</html>

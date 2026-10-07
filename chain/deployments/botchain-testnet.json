@@ -1,0 +1,13 @@
+{
+  "network": "BOT Chain testnet",
+  "chainId": 968,
+  "address": "0xA0853161002Af018225419324560FCE9CD9b10eD",
+  "explorer": "https://scan.bohr.life/address/0xA0853161002Af018225419324560FCE9CD9b10eD",
+  "deployTxUrl": "https://scan.bohr.life/tx/0x43b428548ca34a23da0e5bc73fd3837a7dfadae74f7e2728068d6a9f8a1187e8",
+  "deployTx": "0x43b428548ca34a23da0e5bc73fd3837a7dfadae74f7e2728068d6a9f8a1187e8",
+  "block": 25995510,
+  "deployer": "0xE7c719eBf64D2AA5dF3b00CF31A864811b3e242b",
+  "compiler": "0.8.37+commit.f401782d.Emscripten.clang",
+  "evmVersion": "paris",
+  "deployedAt": "2026-10-07T06:54:55.843Z"
+}

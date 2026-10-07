@@ -1,0 +1,22 @@
+{
+  "name": "aia-chain",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "node compile.mjs",
+    "check": "node check.mjs",
+    "deploy": "node deploy.mjs",
+    "score": "node score.mjs",
+    "read": "node read.mjs",
+    "record": "node record.mjs",
+    "demo": "node demo.mjs",
+    "test-demo": "node test-demo.mjs"
+  },
+  "dependencies": {
+    "ethers": "6.17.0",
+    "solc": "0.8.37"
+  },
+  "devDependencies": {
+    "ganache": "^7.9.2"
+  }
+}

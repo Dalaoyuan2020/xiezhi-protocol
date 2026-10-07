@@ -1,0 +1,408 @@
+{
+  "compiler": "0.8.37+commit.f401782d.Emscripten.clang",
+  "evmVersion": "paris",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "subject",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "kind",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "content",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "org",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint16",
+          "name": "value",
+          "type": "uint16"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "recorder",
+          "type": "address"
+        }
+      ],
+      "name": "Recorded",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "CLAIM",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "CLOSE",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "REPRODUCE",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "REVIEW",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "SCORE",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "SUBMIT",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "content",
+          "type": "bytes32"
+        }
+      ],
+      "name": "actionsByContent",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "subject",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "kind",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "content",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "org",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "rule",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "value",
+              "type": "uint16"
+            },
+            {
+              "internalType": "address",
+              "name": "recorder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "time",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct ActionRegistry.Action[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "subject",
+          "type": "bytes32"
+        }
+      ],
+      "name": "actionsOf",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "subject",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "kind",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "content",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "org",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "rule",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "value",
+              "type": "uint16"
+            },
+            {
+              "internalType": "address",
+              "name": "recorder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "time",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct ActionRegistry.Action[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "count",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAction",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "subject",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "kind",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "content",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "org",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "rule",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "value",
+              "type": "uint16"
+            },
+            {
+              "internalType": "address",
+              "name": "recorder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "time",
+              "type": "uint64"
+            }
+          ],
+          "internalType": "struct ActionRegistry.Action",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "subject",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "kind",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "content",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "org",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "rule",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint16",
+          "name": "value",
+          "type": "uint16"
+        }
+      ],
+      "name": "record",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "subject",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint16",
+          "name": "score",
+          "type": "uint16"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "snapshot",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "rule",
+          "type": "bytes32"
+        }
+      ],
+      "name": "submitScore",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b506109758061001f6000396000f3fe608060405234801561001057600080fd5b50600436106100b45760003560e01c8063b6e7687311610071578063b6e7687314610120578063d6fea4cd14610140578063d717f73814610160578063d816edc214610173578063e0cdcf7314610183578063ffcdd7d21461019657600080fd5b806306661abd146100b95780630acbd572146100d057806342fa44e0146100e357806373d74876146100f35780637610edd4146101025780637dcca13114610111575b600080fd5b6000545b6040519081526020015b60405180910390f35b6100bd6100de3660046107ac565b6101a9565b6100bd6514d55093525560d21b81565b6100bd64434c41494d60d81b81565b6100bd64434c4f534560d81b81565b6100bd6453434f524560d81b81565b61013361012e3660046107fd565b61050c565b6040516100c7919061087a565b61015361014e3660046107fd565b6105b3565b6040516100c79190610889565b6100bd61016e3660046108d8565b6105d3565b6100bd6552455649455760d01b81565b6100bd68524550524f4455434560b81b81565b6101536101a43660046107fd565b6105f4565b60006453434f524560d81b8614806101c957506514d55093525560d21b86145b806101db575064434c4f534560d81b86145b806101ee57506552455649455760d01b86145b80610204575068524550524f4455434560b81b86145b80610216575064434c41494d60d81b86145b6102565760405162461bcd60e51b815260206004820152600c60248201526b1d5b9adb9bdddb881ada5b9960a21b60448201526064015b60405180910390fd5b6453434f524560d81b86036102ab5760648261ffff1611156102a65760405162461bcd60e51b8152602060048201526009602482015268073636f72653e3130360bc1b604482015260640161024d565b6102f4565b61ffff8216156102f45760405162461bcd60e51b815260206004820152601460248201527376616c7565206f6e6c7920666f722053434f524560601b604482015260640161024d565b600080549050905060006040518061010001604052808981526020018881526020018781526020018681526020018581526020018461ffff168152602001336001600160a01b031681526020014267ffffffffffffffff168152509080600181540180825580915050600190039060005260206000209060060201600090919091909150600082015181600001556020820151816001015560408201518160020155606082015181600301556080820151816004015560a08201518160050160006101000a81548161ffff021916908361ffff16021790555060c08201518160050160026101000a8154816001600160a01b0302191690836001600160a01b0316021790555060e08201518160050160166101000a81548167ffffffffffffffff021916908367ffffffffffffffff160217905550505060016000888152602001908152602001600020819080600181540180825580915050600190039060005260206000200160009091909190915055600260008681526020019081526020016000208190806001815401808255809150506001900390600052602060002001600090919091909150558587827f64986f8ab5824d912723709f5bb9da68b1bc26b0d06dc35fcc4b2abb333ea6e4888887336040516104fa9493929190938452602084019290925261ffff1660408301526001600160a01b0316606082015260800190565b60405180910390a49695505050505050565b610514610751565b6000828154811061052757610527610913565b60009182526020918290206040805161010081018252600690930290910180548352600181015493830193909352600283015490820152600382015460608201526004820154608082015260059091015461ffff811660a08301526001600160a01b036201000082041660c083015267ffffffffffffffff600160b01b9091041660e082015292915050565b60008181526001602052604090206060906105cd9061060a565b92915050565b60006105eb856453434f524560d81b858486896101a9565b95945050505050565b60008181526002602052604090206060906105cd905b805460609067ffffffffffffffff81111561062757610627610929565b60405190808252806020026020018201604052801561066057816020015b61064d610751565b8152602001906001900390816106455790505b50905060005b825481101561074b57600083828154811061068357610683610913565b90600052602060002001548154811061069e5761069e610913565b60009182526020918290206040805161010081018252600690930290910180548352600181015493830193909352600283015490820152600382015460608201526004820154608082015260059091015461ffff811660a08301526001600160a01b036201000082041660c083015267ffffffffffffffff600160b01b9091041660e0820152825183908390811061073857610738610913565b6020908102919091010152600101610666565b50919050565b6040805161010081018252600080825260208201819052918101829052606081018290526080810182905260a0810182905260c0810182905260e081019190915290565b803561ffff811681146107a757600080fd5b919050565b60008060008060008060c087890312156107c557600080fd5b86359550602087013594506040870135935060608701359250608087013591506107f160a08801610795565b90509295509295509295565b60006020828403121561080f57600080fd5b5035919050565b805182526020810151602083015260408101516040830152606081015160608301526080810151608083015261ffff60a08201511660a083015260018060a01b0360c08201511660c083015267ffffffffffffffff60e08201511660e08301525050565b61010081016105cd8284610816565b602080825282518282018190526000918401906040840190835b818110156108cd576108b6838551610816565b6020939093019261010092909201916001016108a3565b509095945050505050565b600080600080608085870312156108ee57600080fd5b843593506108fe60208601610795565b93969395505050506040820135916060013590565b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fdfea264697066735822122008f7e26a80651f8fe75ebccf4505f89a0907253ae1a93ae14df8f47e885b7f0764736f6c63430008250033"
+}

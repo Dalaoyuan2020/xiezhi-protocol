@@ -1,0 +1,104 @@
+{
+  "generated": "2026-10-07",
+  "source": "OpenAlex via checkup.py v0（灌水号为虚构）",
+  "cases": [
+    {
+      "name": "Zhiyuan Lv",
+      "openalex": "A5126602136",
+      "orcid": "https://orcid.org/0009-0008-5473-5367",
+      "institutions": [
+        "Hohai University",
+        "Suzhou Research Institute"
+      ],
+      "works": 2,
+      "cited_by": 0,
+      "h_index": 0,
+      "i10_index": 0,
+      "score": 70,
+      "confidence": "低（论文少于 10 篇，仅供参考）",
+      "dims": {
+        "身份清晰度": "20/20（ORCID 有；主领域 Engineering 占 100%）",
+        "撤稿与更正": "20/20（撤稿 0 篇）",
+        "开放程度": "10/20（开放获取 50%）",
+        "同领域影响力": "0/20（FWCI 中位数 0.0，1.0=世界平均）",
+        "产出节奏": "20/20（单年最多 2 篇，2025）"
+      },
+      "case_label": "致远本人（ORCID 0009-0008-5473-5367）",
+      "note": "论文被拆散在两个档案里：本人档案 A5126602136 只收录 2 篇 2025 年管道机器人会议论文；2026 年墒情预印本被错挂到上海交大另一位 Zhiyuan Lyu（ORCID 0009-0005-5014-6889，燃烧方向，档案 A5111337086）名下。UI 看点：论文从错的档案飞回本人档案（本人认领）",
+      "misattributed": {
+        "wrong_profile": "A5111337086",
+        "wrong_orcid": "0009-0005-5014-6889",
+        "paper": "Information requirements for short-term root-zone soil moisture forecasting（SSRN 预印本，2026）"
+      }
+    },
+    {
+      "name": "Andrej Karpathy",
+      "openalex": "A5009290031",
+      "orcid": null,
+      "institutions": [
+        "Yale University",
+        "University of New Haven"
+      ],
+      "works": 27,
+      "cited_by": 59079,
+      "h_index": 19,
+      "i10_index": 20,
+      "score": 78,
+      "confidence": "中",
+      "dims": {
+        "身份清晰度": "8/20（ORCID 无；主领域 Computer Science 占 78%）",
+        "撤稿与更正": "20/20（撤稿 0 篇）",
+        "开放程度": "10/20（开放获取 48%）",
+        "同领域影响力": "20/20（FWCI 中位数 41.31，1.0=世界平均）",
+        "产出节奏": "20/20（单年最多 6 篇，2014）"
+      },
+      "case_label": "Andrej Karpathy（公开人物）",
+      "note": "单位被记成 Yale / University of New Haven，与公开履历不符：大牌也会错"
+    },
+    {
+      "name": "Kaiming He",
+      "openalex": "A5100700361",
+      "orcid": "https://orcid.org/0000-0001-7318-9658",
+      "institutions": [
+        "Google DeepMind (United Kingdom)",
+        "Massachusetts Institute of Technology"
+      ],
+      "works": 158,
+      "cited_by": 584533,
+      "h_index": 86,
+      "i10_index": 120,
+      "score": 83,
+      "confidence": "高",
+      "dims": {
+        "身份清晰度": "20/20（ORCID 有；主领域 Computer Science 占 97%）",
+        "撤稿与更正": "20/20（撤稿 0 篇）",
+        "开放程度": "11/20（开放获取 54%）",
+        "同领域影响力": "20/20（FWCI 中位数 28.99，1.0=世界平均）",
+        "产出节奏": "12/20（单年最多 18 篇，2015）"
+      },
+      "case_label": "何恺明 Kaiming He（公开人物）",
+      "note": "高影响力、身份清晰的正面样例"
+    },
+    {
+      "case_label": "虚构「灌水号」（明确标注为虚构）",
+      "name": "Demo Paper Mill",
+      "openalex": "SYNTHETIC",
+      "orcid": null,
+      "institutions": [],
+      "works": 412,
+      "cited_by": 230,
+      "h_index": 6,
+      "i10_index": 2,
+      "score": 21,
+      "confidence": "高",
+      "dims": {
+        "身份清晰度": "2/20（ORCID 无；主领域 Medicine 占 21%，跨 9 个领域）",
+        "撤稿与更正": "0/20（撤稿 3 篇）",
+        "开放程度": "5/20（开放获取 24%）",
+        "同领域影响力": "2/20（FWCI 中位数 0.18）",
+        "产出节奏": "0/20（单年最多 196 篇，2025）"
+      },
+      "note": "虚构数据，只用来展示低分卡长什么样"
+    }
+  ]
+}
