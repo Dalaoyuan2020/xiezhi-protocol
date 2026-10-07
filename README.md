@@ -47,6 +47,10 @@ NETWORK=testnet npm run read -- A5126602136                     # 读测试网�
 - 案例数据是 2026-10-07 的 OpenAlex 快照；演示期刊与演示稿件均为虚构
 - 稿件指纹目前是精确哈希，改动文字即可绕过；相似指纹在路线图中
 
+## 提交材料
+
+见 [SUBMISSION.md](SUBMISSION.md)（按赛事 5.2 交付物要求整理）。
+
 ## 团队
 
 汉客松 S1 · ETH Wuhan 2026 参赛作品。GCC 公共物品赛道 · BOT Chain 赛道。
