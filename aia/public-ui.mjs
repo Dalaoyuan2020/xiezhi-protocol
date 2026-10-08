@@ -26,9 +26,12 @@ publicAssets.set('/paper/', 'aia/paper-checkup/index.html');
 for (const name of ['index.html', 'paper.css', 'paper.js']) publicAssets.set(`/paper/${name}`, `aia/paper-checkup/${name}`);
 for (const name of ['ActionRegistry.json', 'PointsLedger.json']) publicAssets.set(`/chain/artifacts/${name}`, `aia/chain/artifacts/${name}`);
 for (const name of ['botchain.json','botchain-testnet.json','journals.json','journals-testnet.json','points.json','points-testnet.json']) publicAssets.set(`/chain/deployments/${name}`, `aia/chain/deployments/${name}`);
+// Agent 入口：llms.txt 说明公开接口与 Agent 授权；agent-guide.md 为社区 Agent 接口全文
+publicAssets.set('/llms.txt', 'aia/agent/llms.txt');
+publicAssets.set('/agent-guide.md', 'aia/app/AGENT_GUIDE.md');
 for (const name of ['seal.html','seal.png','zhidian-coin.png','zhidian-coin-256.png','zhidian-coin-gold.png','zhidian-coin-gold-256.png']) publicAssets.set(`/brand/${name}`, `brand/${name}`);
 
-export const publicMime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png' };
+export const publicMime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.png': 'image/png', '.txt': 'text/plain; charset=utf-8', '.md': 'text/markdown; charset=utf-8' };
 
 export function publicRedirect(url) {
   let target = url.pathname;

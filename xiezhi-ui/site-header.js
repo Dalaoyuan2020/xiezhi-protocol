@@ -8,6 +8,7 @@
   const path = location.pathname;
   const svg = content => '<svg viewBox="0 0 24 24" aria-hidden="true">' + content + '</svg>';
   const icons = {
+    agent: '<rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 16h6"/>',
     scholar: '<circle cx="10" cy="9" r="3"/><path d="M4 20v-2a6 6 0 0 1 8-5.65"/><circle cx="17" cy="16" r="3.5"/><path d="m19.5 18.5 2.5 2.5"/>',
     org: '<path d="m3 9 9-6 9 6H3ZM4 21h16M5 11v7m5-7v7m4-7v7m5-7v7"/>',
     cases: '<rect x="4" y="4" width="12" height="14" rx="2"/><path d="M8 8h4m-4 4h5m-5 9h10a2 2 0 0 0 2-2V8"/>',
@@ -71,6 +72,10 @@
   workspace.setAttribute('aria-label', '知行社社区');
   if (active === 'workspace') workspace.setAttribute('aria-current', 'page');
   workspace.innerHTML = icon('workspace') + '<span>知行社 · 社区</span>'; panel.append(workspace);
+  const agentLink = document.createElement('a');
+  agentLink.className = 'guanya-app-tile'; agentLink.href = '/llms.txt';
+  agentLink.setAttribute('aria-label', 'Agent 接口说明（llms.txt）');
+  agentLink.innerHTML = icon('agent') + '<span>Agent 接口</span>'; panel.append(agentLink);
   const edition = document.createElement('a');
   edition.id = 'edition-workbench'; edition.className = 'guanya-app-tile';
   edition.href = workbench ? '/ui/index.html' : '/workbench/index.html';
