@@ -130,6 +130,13 @@
     };
   }
 
+  function scorePresentation(row) {
+    if (!row || row.kind !== 'SCORE' || !Number.isInteger(row.value) || row.value < 0 || row.value > 100) return null;
+    if (row.ruleName === 'checkup-v2') return { value: 350 + 6 * row.value, suffix: '分', label: 'checkup-v2 · 350–950 分', note: '链上原值 ' + row.value + '/100；按该版本显示公式 350 + 6 × 原值换算。' };
+    if (row.ruleName === 'checkup-v0') return { value: row.value, suffix: '/100', label: 'checkup-v0 · 0–100 分', note: '旧版评分量尺，与 checkup-v2 分数不能直接比较。' };
+    return { value: row.value, suffix: '原值', label: '尚未识别评分量尺', note: '保留合约中的原始数值；未识别规则版本，不推断显示分数或档位。' };
+  }
+
   function recordKey(row) {
     // Recorded does not include rule or time. Never manufacture them from logs.
     return [row.subject, row.kindHash || row.kind, row.content, row.org, row.value, row.recorder].join('|').toLowerCase();
@@ -339,10 +346,12 @@
             if (!row.knownKind) item.dataset.unknown = 'true';
             const lead = el('div', 'sc-chain__entry-head');
             const score = el('div', row.kind === 'SCORE' ? 'sc-chain__score' : 'sc-chain__kind');
-            if (row.kind === 'SCORE') score.append(el('strong', '', String(row.value)), el('span', '', '/100'));
+            const presentation = scorePresentation(row);
+            if (presentation) score.append(el('strong', '', String(presentation.value)), el('span', '', presentation.suffix));
             else score.append(el('strong', '', row.kindLabel));
             const heading = el('div'); heading.append(el('h3', '', row.kind === 'SCORE' ? '评分 · ' + row.ruleLabel : row.kind === 'CLOSE' ? '结案 · ' + row.closeReasonLabel : row.knownKind ? row.kind + ' / 已登记' : '未知行为 / 尚未支持'), el('p', '', new Date(row.time * 1000).toLocaleString('zh-CN', { hour12: false, timeZone: 'Asia/Shanghai' }) + ' UTC+8 · 记录序号 ' + (row.sequence + 1)));
             lead.append(score, heading); item.append(lead);
+            if (presentation) item.append(el('p', 'sc-chain__message', presentation.label + '。' + presentation.note));
             if (!row.knownKind) item.append(el('p', 'sc-chain__warning', '当前版本不解释这类行为，不参与规则判断。原始类型：' + row.kindHash));
             const details = el('dl', 'sc-chain__fields');
             [['登记人', row.recorder], ['内容指纹', row.content], ['主体指纹', row.subject], ['机构指纹', row.org.toLowerCase() === ZERO ? '未指定机构（零值）' : row.org], ['规则原值', row.rule]].forEach(([label, value]) => {
@@ -389,5 +398,5 @@
     session.update(normalized);
     return { update(value) { recorder = ''; rule = ''; kind = ''; return session.update(value); }, reload: session.reload, getStatus: session.getStatus, destroy() { session.destroy(); container.replaceChildren(); } };
   }
-  return { mount, createReader, createSession, validateDeployment, matchEvents, validateJournals, loadJournals, trustedJournal, getNetwork };
+  return { mount, createReader, createSession, validateDeployment, matchEvents, validateJournals, loadJournals, trustedJournal, getNetwork, scorePresentation };
 });

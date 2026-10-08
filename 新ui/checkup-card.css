@@ -138,9 +138,7 @@
   .sc-card__metric { gap: 5px; }
   .sc-card__metric strong { font-size: 19px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .sc-card *, .sc-card *::before, .sc-card *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
+
 .wb-page .sc-card { --sc-card-bg: var(--wb-surface); --sc-card-line: var(--wb-line); --sc-card-accent: var(--wb-accent); }
 .wb-page .sc-card__name { font-family: var(--wb-font-serif); letter-spacing: .02em; }
 .wb-page .sc-card__instrument { border-radius: 7px; box-shadow: 0 6px 20px var(--wb-shadow-color); }

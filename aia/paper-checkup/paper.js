@@ -1,6 +1,5 @@
 'use strict';
 const $ = id => document.getElementById(id);
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let session = null, busy = false, selectedFile = null, activeUpload = null;
 function element(tag, text, className) { const node = document.createElement(tag); if (text != null) node.textContent = text; if (className) node.className = className; return node; }
 function error(message) { $('error').textContent = message; $('error').hidden = !message; }
@@ -46,7 +45,7 @@ async function check({ file, sample }) {
     const report = await upload(payload, currentSession.csrfToken);
     steps(4, true); $('progressTitle').textContent = '检查完成'; $('progressDetail').textContent = '结果来自实际材料检查';
     renderReport(report);
-    $('report').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    $('report').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (reason) { error(reason.message || '体检未完成，请重试。'); }
   finally { busy = false; controls(false); $('progressSection').hidden = true; }
 }
@@ -93,7 +92,7 @@ function renderReport(report) {
   $('privacyNote').textContent = report.privacy;
   $('report').hidden = false;
   const target = report.score.value, started = performance.now();
-  function frame(time) { const progress = reducedMotion ? 1 : Math.min((time - started) / 850, 1); const value = Math.round(target * (1 - Math.pow(1 - progress, 3))); $('scoreValue').textContent = value; $('scoreRing').style.setProperty('--score', value); if (progress < 1) requestAnimationFrame(frame); }
+  function frame(time) { const progress = Math.min((time - started) / 850, 1); const value = Math.round(target * (1 - Math.pow(1 - progress, 3))); $('scoreValue').textContent = value; $('scoreRing').style.setProperty('--score', value); if (progress < 1) requestAnimationFrame(frame); }
   requestAnimationFrame(frame);
 }
 $('chooseFile').addEventListener('click', () => $('fileInput').click());
@@ -103,7 +102,7 @@ const dropzone = $('dropzone');
 dropzone.addEventListener('dragover', event => { event.preventDefault(); if (!busy) dropzone.classList.add('dragover'); });
 dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
 dropzone.addEventListener('drop', event => { event.preventDefault(); dropzone.classList.remove('dragover'); if (busy) return; if (event.dataTransfer.files.length !== 1) return error('请一次提交一个 PDF、文本文件或 ARA ZIP。'); selectedFile = event.dataTransfer.files[0]; if (selectedFile) check({ file: selectedFile }); });
-$('another').addEventListener('click', () => { error(''); $('uploadSection').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); $('chooseFile').focus({ preventScroll: true }); });
+$('another').addEventListener('click', () => { error(''); $('uploadSection').scrollIntoView({ behavior: 'smooth' }); $('chooseFile').focus({ preventScroll: true }); });
 // Avoid navigating away when a file is dropped just outside the upload box.
 document.addEventListener('dragover', event => { if (event.dataTransfer.types.includes('Files')) event.preventDefault(); });
 document.addEventListener('drop', event => { if (event.dataTransfer.types.includes('Files')) event.preventDefault(); });

@@ -38,8 +38,8 @@ function scored(view, index = 0) {
   return { root, record, instance: view.api.mount(root, record) };
 }
 
-test('animated graphs show the actual total in text and ARIA from mount through intermediate frames and replay', () => {
-  const view = component({ reducedMotion: false }); const { root, record, instance } = scored(view);
+for (const reducedMotion of [false, true]) test(`animated graphs preserve the actual score through frames and replay with OS reduced motion ${reducedMotion}`, () => {
+  const view = component({ reducedMotion }); const { root, record, instance } = scored(view);
   const before = JSON.stringify(record);
   const value = root.querySelector('.sc-card__score-value');
   const line = root.querySelector('.sc-card__score-line');
@@ -97,7 +97,7 @@ test('candidate rejects a mismatched current-source URL; Escape and modal backdr
 
 test('desktop uses a real non-modal aside, reserves its own column, and leaves the profile interactive', () => {
   const view = component({ width: 1280 }); const { root, record, instance } = scored(view);
-  assert.equal(view.frames(), 0); assert.equal(root.querySelector('.sc-card__score-value').textContent, String(record.score));
+  assert.ok(view.frames() > 0); assert.equal(root.querySelector('.sc-card__score-value').textContent, String(record.score));
   const triggers = root.querySelectorAll('.sc-card__dimension'); triggers[2].dispatch('click');
   const aside = panel(root);
   assert.equal(aside.tagName, 'ASIDE'); assert.equal(aside.dataset.presentation, 'side'); assert.equal(aside.getAttribute('role'), 'complementary');

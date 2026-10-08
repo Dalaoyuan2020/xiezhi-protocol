@@ -129,7 +129,7 @@ const manifest = await ScholarCheckupChain.loadJournals();
 const journal = ScholarCheckupChain.trustedJournal(record, manifest);
 ```
 
-`card.html?id=作者ID` 保持兼容；无评分候选使用 `checkup.html?case=作者ID&candidate=1`。未知 ID 明确提示不存在。雷达可键盘操作，证据弹窗支持左右翻页和 Esc；投影模式扩大主要信息，减少动态效果偏好也受到支持。
+`card.html?id=作者ID` 保持兼容；无评分候选使用 `checkup.html?case=作者ID&candidate=1`。未知 ID 明确提示不存在。雷达可键盘操作，证据弹窗支持左右翻页和 Esc；投影模式扩大主要信息。页面保留完整交互动画，包括系统开启减少动态效果时；手机端保留响应式布局与粒子数量限制。
 
 ## 检查
 

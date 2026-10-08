@@ -3,7 +3,6 @@
 //   Zhidian.rain(n, caption)：彩蛋：查到高分学者时，天上下一阵金币雨（纯动画，不额外发廌点）
 (function () {
   const COIN = "/brand/zhidian-coin-256.png";
-  const reduce = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let coinReady, coinLoaded = false, rainVersion = 0, currentRain;
   function loadCoin() {
     if (coinLoaded) return Promise.resolve(true);
@@ -61,7 +60,6 @@
     const r = target && target.getBoundingClientRect ? target.getBoundingClientRect() : null;
     const tx = r && r.width ? r.left + 30 : W / 2, ty = r && r.height && r.top > 0 && r.top < H ? r.top + r.height / 2 : H * 0.45;
     const text = amount ? `+${amount} 廌点` : "廌点 +";
-    if (reduce()) { label(text, tx, ty); return; }
     const c = coin(size); layer().appendChild(c);
     const x0 = W / 2 - size / 2, land = H * 0.42;
     c.animate([
@@ -84,11 +82,10 @@
     clearRain();
     const version = rainVersion, loaded = await loadCoin();
     if (version !== rainVersion) return;
-    const W = window.innerWidth, H = window.innerHeight, gentle = reduce();
+    const W = window.innerWidth, H = window.innerHeight;
     const requested = Number.isFinite(n) ? Math.max(1, Math.min(70, Math.round(n))) : 36;
-    // Reduced motion keeps a sparse, slow shower without spinning or flashing.
-    // It must not silently remove the entire visual effect while leaving its title.
-    const count = gentle ? Math.min(requested, W < 600 ? 6 : 10) : Math.min(requested, W < 600 ? 28 : 70);
+    // Bound the particle count on phones while keeping the complete shower.
+    const count = Math.min(requested, W < 600 ? 28 : 70);
     const L = document.createElement("div"); L.className = "zhidian-rain";
     Object.assign(L.style, { position: "absolute", inset: "0", pointerEvents: "none" });
     layer().appendChild(L);
@@ -100,18 +97,18 @@
       animate(b, [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1, offset: 0.8 }, { opacity: 0 }], { duration: 3800 });
     }
     for (let i = 0; i < count; i++) {
-      const size = gentle ? 36 + Math.random() * 14 : 40 + Math.random() * (W < 600 ? 26 : 42);
+      const size = 40 + Math.random() * (W < 600 ? 26 : 42);
       const c = coin(size, loaded), x = ((i + .25 + Math.random() * .5) / count) * (W - size);
-      const sway = gentle ? 0 : (Math.random() - .5) * Math.min(90, W * .12);
+      const sway = (Math.random() - .5) * Math.min(90, W * .12);
       const endX = Math.max(0, Math.min(W - size, x + sway));
-      const duration = gentle ? 3400 : 2400 + Math.random() * 700;
+      const duration = 2400 + Math.random() * 700;
       L.appendChild(c);
       // Use bounded 2D turns: coins stay visible instead of becoming edge-on.
-      const turn = gentle ? 0 : (Math.random() > .5 ? 1 : -1) * 100;
+      const turn = (Math.random() > .5 ? 1 : -1) * 100;
       animate(c, [
         { transform: `translate(${x}px, ${-size}px) rotate(0deg)`, opacity: 0 },
-        { transform: `translate(${x}px, ${H * .08}px) rotate(${turn * .12}deg)`, opacity: gentle ? .8 : 1, offset: .14 },
-        { transform: `translate(${endX}px, ${H * .78}px) rotate(${turn * .8}deg)`, opacity: gentle ? .8 : 1, offset: .82 },
+        { transform: `translate(${x}px, ${H * .08}px) rotate(${turn * .12}deg)`, opacity: 1, offset: .14 },
+        { transform: `translate(${endX}px, ${H * .78}px) rotate(${turn * .8}deg)`, opacity: 1, offset: .82 },
         { transform: `translate(${endX}px, ${H + size}px) rotate(${turn}deg)`, opacity: 0 },
       ], { duration, delay: (i / count) * 700, easing: "linear", fill: "both" });
     }

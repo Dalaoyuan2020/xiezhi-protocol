@@ -82,9 +82,7 @@
   .sc-actions__dialog-head > .sc-actions__button { grid-column: 2; grid-row: 1; padding: 9px 10px; }
   .sc-actions__dialog-footer .sc-actions__button { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .sc-actions *, .sc-actions *::before, .sc-actions *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
-}
+
 
 
 /* Workbench appearance belongs to this component. */

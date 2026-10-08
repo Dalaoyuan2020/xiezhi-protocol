@@ -4,9 +4,12 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const { scorePresentation } = require('../checkup-chain.js');
+const presentations = [
+  ['search UI', require('../checkup-chain.js').scorePresentation],
+  ['workbench', require('../../新ui/checkup-chain.js').scorePresentation]
+];
 
-test('v2 chain raw values use the declared 350–950 scale without changing v0 evidence snapshots', () => {
+for (const [edition, scorePresentation] of presentations) test(edition + ': v2 chain raw values use the declared 350–950 scale without changing v0 evidence snapshots', () => {
   for (const [raw, display] of [[0, 350], [51, 656], [59, 704], [73, 788], [100, 950]]) {
     assert.equal(scorePresentation({ kind: 'SCORE', value: raw, ruleName: 'checkup-v2' }).value, display);
   }

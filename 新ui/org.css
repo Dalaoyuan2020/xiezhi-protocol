@@ -853,13 +853,7 @@ body.org-page {
     font-size:21px;
   }
 }
-@media(prefers-reduced-motion:reduce) {
-  .org-page *, .org-page *::before, .org-page *::after {
-    animation:none!important;
-    transition:none!important;
-    scroll-behavior:auto!important;
-  }
-}
+
 .org-page .source-switch {
   display:flex;
   align-items:center;

@@ -133,9 +133,7 @@
   .sc-receipt-dialog { padding: 24px; }
   .sc-receipt-dialog h3 { font-size: 22px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .sc-receipt *, .sc-receipt-dialog * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
+
 
 
 /* Workbench appearance belongs to this component. */
@@ -186,4 +184,3 @@
 .wb-page .sc-receipt-dialog { color: var(--wb-ink); background: var(--wb-editor-paper); border-radius: 8px; box-shadow: 0 22px 90px #33221940; }
 .wb-page .sc-receipt-dialog::backdrop { background: var(--wb-backdrop); backdrop-filter: blur(5px); }
 @media (max-width: 520px) { .wb-page .sc-receipt :is(input, select, textarea), .wb-page .sc-receipt-dialog :is(input, select, textarea) { font-size: 16px; } }
-@media (prefers-reduced-motion: reduce) { .wb-page .sc-receipt *, .wb-page .sc-receipt *::before, .wb-page .sc-receipt *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

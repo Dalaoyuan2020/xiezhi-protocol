@@ -82,4 +82,3 @@
 @keyframes live-entry{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @keyframes live-stamp{from{opacity:0;transform:scale(2) rotate(-18deg)}to{opacity:1;transform:scale(1) rotate(-6deg)}}
 @media(max-width:680px){.live-page .live-context{align-items:flex-start;gap:5px;margin-bottom:16px}.live-page .net{flex-basis:100%}.live-page .panel h2{font-size:21px}.live-page .cands{grid-template-columns:minmax(0,1fr)}.live-page .score{gap:22px}.live-page .search input{padding-left:14px}.live-page .candidate-filter-row{gap:8px}.live-page .candidate-filter-clear{padding:9px 10px;font-size:12px}.live-page .cert #seal{position:static;display:block;width:96px;height:96px;margin:0 auto 12px}.live-page .cert #certbody{padding-right:0}}
-@media(prefers-reduced-motion:reduce){.live-page #log li,.live-page .log2 li,.live-page #seal.stamp{animation:none}.live-page .cand{transition:none}}

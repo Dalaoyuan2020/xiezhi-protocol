@@ -1,6 +1,6 @@
 # 灋廌覈鑒 · 獬豸协议 (Xiezhi Protocol) — AIA Commons
 
-> Academic reputation chain on BOT Chain. Public, read-only scholar lookup and cross-validation (OpenAlex × ORCID × Crossref), a public scoring rule (灋廌学术分, 350–950), and the 知行社 (AIA Commons) community with a scoped Agent API. Zhi Points (廌点) are non-transferable contribution records, not a currency.
+> Academic reputation chain on BOT Chain. Public, read-only scholar lookup and cross-validation (OpenAlex × ORCID × Crossref), a public scoring rule (灋廌学术分, 350–950, specification v2.1 / on-chain rule checkup-v2), and the 知行社 (AIA Commons) community with a scoped Agent API. Zhi Points (廌点) are non-transferable contribution records, not a currency.
 
 Agents are welcome. Public endpoints need no account. Please respect rate limits (HTTP 429 means slow down) and do not retry to farm rewards.
 
@@ -13,7 +13,12 @@ Agents are welcome. Public endpoints need no account. Please respect rate limits
 - GET /chain/deployments/botchain.json, /chain/deployments/points.json — BOT Chain mainnet contract addresses
 - GET /chain/artifacts/ActionRegistry.json, /chain/artifacts/PointsLedger.json — contract ABIs
 
-## Community Agent API (scoped token)
+## Deployment scope
+- Public site: https://aia.hai.college/ — currently read-only lookup, verification and scoring.
+- Full local/self-hosted service exposes the configurable workflows below; their presence in source does not mean they are enabled on the public site.
+- Submission deposits, lower submission barriers, community points synchronization to mainnet and public-site email sending are planned. SMTP already exists as a configurable local/self-hosted capability.
+
+## Community Agent API (scoped token; full local/self-hosted service)
 A human creates a 7-day, revocable token at /workspace/#profile ("我的 Agent") and chooses scopes. Send `Authorization: Bearer <token>` to /api/agent/* only. Agents can import research, request the two-model pre-review, answer Act check tasks and deliver assigned work; they cannot review, approve their own work, or issue tokens. Records name both the agent and its human sponsor.
 - Full guide: /agent-guide.md
 

@@ -19,6 +19,9 @@
 2. **稿件指纹登记与一稿多投提示**：两家期刊登记同一稿件指纹时提示疑似一稿多投；结案登记
 3. **知行社 · AIA Commons**：Idea / Attention / Act 三个区；双模型预评审（两个可配置模型逐项一致才给结论，分歧转人工）；审稿门槛（材料可检查度 ≥ 60、模型一致、非高风险）与审稿资格（身份核验 + 学术分 ≥ 750）；首批 10 道来自真实 OpenAlex 快照的核对题，三人作答 + 暗题；文献核对（Crossref 返回 404 才出题）；论文复现三人分离验收；7 天 Agent 授权（不能自验收、不能审稿，记录写明担保人）；廌点账本（社区内链下记账）
 4. **廌点**：链上 `PointsLedger` 只有发放与扣减，无转账；认领盖章时金币落下动画；学术分 ≥ 700 的学者有金币雨彩蛋（纯动画，不额外发放）
+5. **ARA 论文体检**（`/paper/`）：上传论文或研究材料，核对主张、方法与原始结果是否连得上，给出 0–100 的材料可检查度（不是科研真假裁定）
+6. **「獬豸三步走」动画引导**：首次访问自动弹出一次，11 幕演示搜索 → 机构邮箱验证 → 盖章；首页极简模式保留印章与查学者 / 查论文入口
+7. **Agent 接口**：`/llms.txt` 与 `/agent-guide.md`，说明公开只读接口与受限的 Agent 授权
 
 ### 比赛期间完成的工作（10-06 至 10-08，全部为新增）
 
@@ -28,8 +31,8 @@
 - Agent 实时检索 + 三方交叉验证；本人认领三步 + 认领凭证 + 本地模拟链 / 主网盖章 + 复核
 - 知行社社区（账号、研究材料、审阅、任务、三人验收、双模型评审、Agent 授权、廌点账本）
 - 前端：搜索首页、学术体检、机构查询、文献检索、工作台、实时核验页
-- 《AIA 社区白皮书》（28 页图文 PDF）、两支演示视频
-- 自动测试：`npm test` **237 / 237** 通过；前端测试 166 + 88 项通过
+- 《AIA 社区白皮书》（29 页图文 PDF）、两支演示视频、HTML 路演（17 页，视频内嵌）
+- 自动测试：`npm test` **243 / 243** 通过；前端测试 167 + 101 项通过（合计 511 项）
 
 ### 已实现 vs 规划中
 
@@ -63,6 +66,7 @@
 
 ## 3. 演示材料
 
+- **路演（HTML，17 页，两段视频已内嵌）**：在线播放 https://dalaoyuan2020.github.io/xiezhi-protocol/pitch/ · 源文件 [pitch/index.html](pitch/index.html)（下载后 Chrome 打开即可离线放映）· 讲稿 [pitch/PITCH.md](pitch/PITCH.md)
 - **视频 1 · 核心协议演示（85 秒）**：[media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4)
 - **视频 2 · AIA 社区（2 分 18 秒）**：[media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4)（每段标注已上线 / 规划中）
 - **《AIA 社区白皮书》**：[whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf)

@@ -143,7 +143,7 @@ function run(q, pick) {
     if (e.done || e.error || e.need_pick) { transportFinished = true; es.close(); }
     messages = messages.then(async () => {
     if (activeStream !== es) return;
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) await new Promise(resolve => setTimeout(resolve, e.card ? 360 : 180));
+    await new Promise(resolve => setTimeout(resolve, e.card ? 360 : 180));
     if (activeStream !== es) return;
     if (e.error) { failStream("⚠ " + esc(e.error)); return; }
     if (e.done) { es.close(); $("f").querySelector("button").disabled = false; return; }
@@ -294,7 +294,7 @@ function renderCard(c) {
     <div class="score"><div><div class="big">${c.score}</div><div class="tier">${esc(c.tier.name)}</div><div class="muted">${esc(c.tier.benefit)}</div></div>
     <div class="dims">${Object.entries(dims).map(([k, v]) => `<div class="dim"><div class="t"><span>${esc(k)}</span><span>${Math.round(v * 100)}</span></div><div class="bar"><i style="width:${v * 100}%"></i></div></div>`).join("")}</div></div>
     ${mis.length ? `<div class="mis"><b>⚠ 交叉验证发现 ${mis.length} 篇疑似问题论文</b>${mis.slice(0, 6).map((m) => `<div>· ${esc(m.year)} ${esc(m.title)}<br><span class="muted">${esc(m.kind || "疑似错挂")} · 现在 ${esc(m.in_profile_name)} ${esc(m.in_profile)} 名下 · 置信度 ${esc(m.confidence || "中")} · 证据：${esc((m.evidence || []).join("、"))}</span></div>`).join("")}${mis.length > 6 ? `<div class="muted">……共 ${mis.length} 篇</div>` : ""}</div>` : ""}
-    <div class="note">${esc(c.confidence)} · 共 ${c.works} 篇 · h 指数 ${c.h_index} · 规则 ${esc(c.rule)}（350–950）· 学术分 ≠ 人品分</div>`;
+    <div class="note">${esc(c.confidence)} · 共 ${c.works} 篇 · h 指数 ${c.h_index} · 规则 ${c.rule === 'checkup-v2' ? 'v2.1（链上标识 checkup-v2）' : esc(c.rule)}（350–950）· 学术分 ≠ 人品分</div>`;
   show("result"); show("claimbox");
   const paperLink = document.createElement('a');
   const paperUrl = new URL(uiBase + 'papers.html', location.origin);

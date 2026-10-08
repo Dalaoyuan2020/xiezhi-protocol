@@ -259,9 +259,7 @@
   .guanya-page #sc-local-receipt { padding: 18px !important; }
   .guanya-page #sc-receipt-panel > div:last-child { flex-direction: column; padding: 22px !important; align-items: stretch !important; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .guanya-page *, .guanya-page *::before, .guanya-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
+
 
 /* Search stays focused while long candidate lists flow above the footer. */
 .guanya-search-page { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }

@@ -77,4 +77,3 @@
 .wb-page .sc-chain__warning { padding: 11px 14px; border: 1px solid var(--wb-warning-line); border-left: 3px solid var(--wb-warning); border-radius: 4px; color: var(--wb-warning); background: var(--wb-warning-soft); }
 .wb-page .sc-chain__reload { min-height: 44px; border-radius: 4px; }
 @media (max-width: 520px) { .wb-page .sc-chain { padding: 19px 16px; } .wb-page .sc-chain select { font-size: 16px; } }
-@media (prefers-reduced-motion: reduce) { .wb-page .sc-chain *, .wb-page .sc-chain *::before, .wb-page .sc-chain *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

@@ -7,6 +7,7 @@
 
 | 先看这些 | |
 |---|---|
+| 🎤 路演（HTML，在线播放，视频已内嵌） | **https://dalaoyuan2020.github.io/xiezhi-protocol/pitch/** · 源文件 [pitch/index.html](pitch/index.html) · 讲稿 [pitch/PITCH.md](pitch/PITCH.md) |
 | 📄 白皮书 | [《AIA 社区白皮书》PDF](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf) |
 | 🎬 视频 1 · 核心协议（85 秒） | [media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4) |
 | 🎬 视频 2 · AIA 社区（2 分 18 秒） | [media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4) |

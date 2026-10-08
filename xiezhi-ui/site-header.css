@@ -69,4 +69,7 @@ body[data-site-presentation="true"] main h1 { font-size: clamp(36px, 4vw, 56px);
   .xz-page-tools .net { text-align: left; font-size: 12px; }
   body.wb-page .wb-topbar { padding: 10px 20px; }
 }
-@media (prefers-reduced-motion: reduce) { .xz-site-header * { transition: none !important; } }
+
+.xz-site-header .xz-guide-trigger { flex: 0 0 auto; margin-left: auto; min-height: 40px; padding: 8px 12px; border: 1px solid var(--xz-line); border-radius: 999px; color: var(--xz-muted); background: transparent; font: inherit; cursor: pointer; white-space: nowrap; }
+.xz-site-header .xz-guide-trigger:hover { background: var(--xz-elevated); color: var(--xz-red); }
+.xz-site-header .xz-guide-trigger + .xz-site-apps { margin-left: 0; }

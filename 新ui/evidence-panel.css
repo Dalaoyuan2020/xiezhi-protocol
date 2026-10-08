@@ -66,6 +66,3 @@
   .sc-evidence-panel .sc-card__dialog-body .sc-card__dialog-meta, .sc-evidence-panel .sc-card__dialog-body .sc-card__dialog-limit { font-size: 14px; }
   .sc-evidence-table th, .sc-evidence-table td { padding: 10px 8px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .sc-evidence-panel *, .sc-evidence-panel *::before, .sc-evidence-panel *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}

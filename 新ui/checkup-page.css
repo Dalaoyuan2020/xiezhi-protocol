@@ -127,7 +127,7 @@
   .sc-org-link { font-size: 12px; }
   .sc-local-receipt>summary>span { display: block; margin: 5px 0 0 18px; }
 }
-@media (prefers-reduced-motion: reduce) { .sc-page *, .sc-page *::before, .sc-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
 
 
 /* Workbench appearance belongs to this component. */
@@ -187,4 +187,5 @@
   .sc-page .sc-load-state { align-items: flex-start; padding: 20px 16px; }
   .sc-page .sc-footer { padding: 18px 16px; font-size: 11px; }
 }
-@media (prefers-reduced-motion: reduce) { .sc-page *, .sc-page *::before, .sc-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+.sc-version-note { margin: 0 0 18px; padding: 12px 16px; border-left: 3px solid #ad8a53; color: #695e52; background: #f4ead8; font-size: 13px; line-height: 1.7; }

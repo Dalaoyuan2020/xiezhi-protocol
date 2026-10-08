@@ -254,7 +254,7 @@
       timeline.append(item);
     }
   }
-  function motion() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'; }
+  function motion() { return 'smooth'; }
   function showEvidence(alert) {
     if (alert.type === 'frequency' && current.query.type === 'hash') search(alert.author);
     const ids = new Set(alert.evidenceIds);

@@ -7,6 +7,7 @@
   <meta name="description" content="检索研究主题、论文标题与 DOI，查看摘要及可获取的原文片段。">
   <title>文献检索 · 灋廌覈鑒 Xiezhi</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23a32727'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23fffdf8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/ui/claim-experience.css">
   <link rel="stylesheet" href="style-guanya.css">
   <link rel="stylesheet" href="guanya-components.css">
   <link rel="stylesheet" href="papers.css">
@@ -14,10 +15,12 @@
   <script defer src="papers.js"></script>
   <script defer src="network-nav.js"></script>
   <link rel="stylesheet" href="/ui/site-header.css">
+  <script defer src="/ui/claim-core.js"></script>
+  <script defer src="/ui/claim-experience.js"></script>
 </head>
 <body class="guanya-page papers-page">
   <a class="guanya-skip" href="#main">跳到文献检索</a>
-  <header data-site-header></header>
+  <header data-guide-enabled data-site-header></header>
   <main id="main" class="papers-main">
     <section class="papers-intro" aria-labelledby="papers-title">
       <p class="papers-eyebrow">从线索，回到文献</p>

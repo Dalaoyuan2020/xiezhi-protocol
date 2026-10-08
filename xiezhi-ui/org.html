@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#f5f0e8">
   <title>机构查询 · 灋廌覈鑒 Xiezhi</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c41e3a'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23f5f0e8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/ui/claim-experience.css">
   <link rel="stylesheet" href="style-guanya.css">
   <link rel="stylesheet" href="checkup-chain.css">
   <link rel="stylesheet" href="org.css">
@@ -16,10 +17,12 @@
   <script src="org.js" defer></script>
   <script src="network-nav.js" defer></script>
   <link rel="stylesheet" href="/ui/site-header.css">
+  <script defer src="/ui/claim-core.js"></script>
+  <script defer src="/ui/claim-experience.js"></script>
 </head>
 <body class="guanya-page">
   <a class="guanya-skip" href="#main" style="position: absolute; left: -9999px; z-index: 999;">跳到查询</a>
-  <header data-site-header data-projection-control="org-present"></header>
+  <header data-guide-enabled data-site-header data-projection-control="org-present"></header>
   <div class="xz-page-tools" aria-label="机构数据与网络状态"><span id="source-status" role="status">模拟数据 · 未连接链上行为</span><a id="sc-network-choice" href="org.html?network=testnet">查看测试网 968 ↗</a></div>
   <main id="main" style="max-width: 1400px; margin: 0 auto; padding: var(--space-xl) var(--space-lg);">
     <section style="margin-bottom: var(--space-2xl); text-align: center;">

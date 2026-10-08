@@ -133,6 +133,3 @@
   .sc-receipt-dialog { padding: 24px; }
   .sc-receipt-dialog h3 { font-size: 22px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .sc-receipt *, .sc-receipt-dialog * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}

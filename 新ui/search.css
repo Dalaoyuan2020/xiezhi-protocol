@@ -174,9 +174,7 @@
   .ss-page .ss-case-grid { grid-template-columns: minmax(0, 1fr); }
   .ss-page .ss-case { min-height: 196px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .ss-page *, .ss-page *::before, .ss-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-}
+
 
 /* Optional institution refinement follows the workbench's existing paper and ink palette. */
 .ss-page .ss-institution-guide { margin: 0 0 18px; padding: 18px 20px; border: 1px solid var(--wb-line); border-radius: 6px; background: var(--wb-support-paper); }

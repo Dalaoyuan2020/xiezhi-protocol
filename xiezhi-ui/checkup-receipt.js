@@ -38,7 +38,6 @@
     var statusKind = '';
     var verification = null;
     var block = 25592150;
-    var media = global.matchMedia ? global.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
 
     function core() {
       if (!global.ScholarCheckupCore) throw new Error('数据与收据模块尚未加载，请刷新页面。');
@@ -52,7 +51,6 @@
     function valid(token) { return !destroyed && token === epoch; }
 
     function delay(ms, token) {
-      if (media.matches) return Promise.resolve(valid(token));
       return new Promise(function (resolve) {
         var id = global.setTimeout(function () { timers.delete(id); resolve(valid(token)); }, ms);
         timers.set(id, resolve);
@@ -145,8 +143,8 @@
         if (hashOutput) {
           hashOutput.textContent = '';
           hashOutput.classList.add('sc-receipt-hash--typing');
-          for (var i = 0; i < generated.receiptHash.length; i += media.matches ? generated.receiptHash.length : 3) {
-            hashOutput.textContent = generated.receiptHash.slice(0, i + (media.matches ? generated.receiptHash.length : 3));
+          for (var i = 0; i < generated.receiptHash.length; i += 3) {
+            hashOutput.textContent = generated.receiptHash.slice(0, i + 3);
             if (!(await delay(24, token))) return;
           }
           hashOutput.classList.remove('sc-receipt-hash--typing');
@@ -223,7 +221,7 @@
       var chip = root.querySelector('[data-sc-receipt-paper]');
       var origin = root.querySelector('[data-sc-receipt-origin]');
       var destination = root.querySelector('[data-sc-receipt-destination]');
-      if (chip && origin && destination && !media.matches && typeof chip.animate === 'function') {
+      if (chip && origin && destination && typeof chip.animate === 'function') {
         var from = origin.getBoundingClientRect();
         var to = destination.getBoundingClientRect();
         var animation = chip.animate([

@@ -12,7 +12,7 @@
 .wb-page .checkup-entry { margin-left:0; }
 .wb-page .checkup-demo-entry { margin:16px 0; }
 @media(max-width:480px) { .checkup-entry a { padding:10px 17px; }.checkup-demo-entry { padding:12px; font-size:12px; } }
-@media(prefers-reduced-motion:reduce) { .checkup-entry a,.checkup-demo-entry { transition:none; } }
+
 
 /* The homepage keeps the search close to its identity, even on a tall screen. */
 .guanya-search-page #main { max-width:800px; margin:0 auto; padding:28px 32px 36px; display:flex; flex-direction:column; justify-content:flex-start; }
@@ -39,7 +39,9 @@
 .guanya-search-page #home-mode-exit:hover { color:#a32727; border-color:#b99a76; }
 .guanya-search-page[data-minimal=true] { min-height:100vh; min-height:var(--home-viewport-height,100svh); }
 .guanya-search-page[data-minimal=true] > :is([data-site-header],.guanya-footer) { display:none !important; }
-.guanya-search-page[data-minimal=true] .guanya-hero > :not(#ss-form) { display:none !important; }
+.guanya-search-page[data-minimal=true] .guanya-hero > :not(#ss-form):not(#brand-seal):not(.checkup-entry) { display:none !important; }
+.guanya-search-page[data-minimal=true] #brand-seal { width:84px; height:84px; margin-bottom:22px; }
+.guanya-search-page[data-minimal=true] .checkup-entry { margin-bottom:22px; }
 .guanya-search-page[data-minimal=true] #main { min-height:100vh; min-height:var(--home-viewport-height,100svh); justify-content:center; padding-top:76px; padding-bottom:76px; }
 .guanya-search-page[data-minimal=true][data-has-results=true] #main { justify-content:flex-start; }
 .guanya-search-page[data-minimal=true] #ss-status { font-size:13px; }

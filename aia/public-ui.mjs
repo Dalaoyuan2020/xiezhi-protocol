@@ -8,6 +8,7 @@ publicAssets.set('/ui/', 'xiezhi-ui/index.html');
 for (const name of ['cases.html', 'menu.js', 'menu.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 publicAssets.set('/ui/entry.css', 'xiezhi-ui/entry.css');
 for (const name of ['site-header.js', 'site-header.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
+for (const name of ['claim-experience.js', 'claim-experience.css', 'claim-core.js']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 publicAssets.set('/ui/home-mode.js', 'xiezhi-ui/home-mode.js');
 for (const name of ['papers.html', 'papers.js', 'papers.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 publicAssets.set('/product/mock_cases.json', 'aia/product/mock_cases.json');

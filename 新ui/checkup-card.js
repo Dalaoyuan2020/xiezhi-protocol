@@ -578,10 +578,6 @@
       }
       replayAnimation = function () {
         stopAnimation();
-        if (global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          paint(1200, true);
-          return;
-        }
         paint(0, false);
         let startTime;
         function tick(time) {

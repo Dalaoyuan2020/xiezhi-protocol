@@ -34,8 +34,11 @@
     ['paper', '/paper/', '论文体检']
   ];
   header.className = 'xz-site-header';
+  const guide = header.hasAttribute('data-guide-enabled')
+    ? '<button class="xz-guide-trigger" type="button" data-claim-demo aria-haspopup="dialog">怎么用？</button>' : '';
   header.innerHTML = '<a class="xz-site-brand" href="/ui/" aria-label="灋廌覈鑒 Xiezhi 首页，学术信誉链">' +
     '<span>灋廌覈鑒</span><small>学术信誉链 · Xiezhi</small></a>' +
+    guide +
     '<div class="xz-site-apps"><button type="button" id="menu-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="menu-panel">' +
     svg([6, 12, 18].flatMap(y => [6, 12, 18].map(x => '<circle cx="' + x + '" cy="' + y + '" r="1.5"/>')).join('')) +
     '</button><nav id="menu-panel" data-shared-navigation="true" aria-label="功能菜单" hidden></nav></div>';

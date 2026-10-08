@@ -129,4 +129,3 @@
   .sc-points__rules>summary>span { float: none; display: block; padding-left: 0; margin-top: 6px; }
   .sc-points__rules-body { padding-inline: 14px; }
 }
-@media(prefers-reduced-motion:reduce) { .sc-points *, .sc-points *::before, .sc-points *::after { animation: none!important; transition: none!important; scroll-behavior: auto!important; } }

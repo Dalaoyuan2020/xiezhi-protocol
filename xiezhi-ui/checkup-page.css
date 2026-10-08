@@ -129,4 +129,3 @@
   .sc-org-link { font-size: 12px; }
   .sc-local-receipt>summary>span { display: block; margin: 5px 0 0 18px; }
 }
-@media (prefers-reduced-motion: reduce) { .sc-page *, .sc-page *::before, .sc-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

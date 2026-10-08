@@ -33,12 +33,8 @@
   let sealTurn;
   seal?.addEventListener('click', () => {
     if (sealTurn?.playState === 'running') return;
-    // A deliberate click requests one full turn. Reduced motion removes the
-    // secondary zoom, rather than silently ignoring the user's interaction.
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const frames = reduced ? [
-      { transform: 'rotate(-3deg)' }, { transform: 'rotate(357deg)' }
-    ] : [
+    // A deliberate click requests the complete turn and scale animation.
+    const frames = [
       { transform: 'rotate(-3deg) scale(1)', offset: 0 },
       { transform: 'rotate(177deg) scale(1.04)', offset: .5 },
       { transform: 'rotate(357deg) scale(1)', offset: 1 }

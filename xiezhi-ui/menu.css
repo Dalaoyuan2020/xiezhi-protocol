@@ -92,6 +92,3 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-@media (prefers-reduced-motion: reduce) {
-  .guanya-page #menu-panel .guanya-app-tile { transition: none; }
-}

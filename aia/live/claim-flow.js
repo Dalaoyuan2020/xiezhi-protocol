@@ -3,16 +3,68 @@
   'use strict';
   const el = id => document.getElementById(id);
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-  const delay = ms => new Promise(resolve => setTimeout(resolve, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : ms));
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   const labels = { claim: '是我的', exclude: '不是我的', unsure: '不确定' };
   let epoch = 0, token = '', flow = null, mail = {}, chain = {}, step = 0, busy = false;
   let selections = new Map(), reviewed = new Set(), expanded = false, cooldownUntil = 0, cooldownTimer;
   let resetPending = Promise.resolve(), currentCertificate = null, pollingTimer;
   let emailValue = '', deliveryValue = 'preview', demoPreview = false;
   let anchorMode = 'local', pendingTxHash = '', submissionUncertain = false, restoredReceipt = false, draftView = '';
-  let reportSeen = false, challengeUntil = 0, walletRequestOpen = false;
+  let reportSeen = false, challengeUntil = 0, walletRequestOpen = false, stampEffect = null;
   const DRAFT_PREFIX = 'scholar-claim-draft/v2:';
   class StaleFlow extends Error {}
+
+  // A visual-only effect. Receipt creation and chain confirmation happen before
+  // this is mounted; replay never calls the claim API or a wallet.
+  function mountStamp(stage, { paper = stage?.closest('.cf-certificate'), replay, autoplay = false } = {}) {
+    if (!stage) return null;
+    const image = stage.querySelector('.cf-stamp');
+    const decoration = document.createElement('div');
+    decoration.className = 'cf-stamp-decoration'; decoration.setAttribute('aria-hidden', 'true');
+    decoration.innerHTML = '<span class="cf-stamp-shadow"></span><span class="cf-stamp-pressure"></span><span class="cf-stamp-tool"><i class="cf-stamp-handle"></i><i class="cf-stamp-neck"></i><i class="cf-stamp-plinth"></i><i class="cf-stamp-rubber"></i></span><span class="cf-stamp-grain"></span>';
+    stage.append(decoration);
+    let disposed = false, running = false, revision = 0, frame = 0, finishTimer = 0, imageTimer = 0, releaseImage;
+    const settle = () => {
+      running = false; stage.classList.remove('cf-stamping', 'cf-stamp-ready');
+      paper?.classList.remove('cf-paper-stamping');
+      if (replay) { replay.removeAttribute('aria-disabled'); replay.textContent = '重播盖章 ↻'; }
+    };
+    const stop = () => {
+      revision++; cancelAnimationFrame(frame); clearTimeout(finishTimer); clearTimeout(imageTimer);
+      releaseImage?.(); releaseImage = null; settle();
+    };
+    async function play({ bringIntoView = true } = {}) {
+      if (disposed || running || !stage.isConnected) return;
+      stop();
+      const current = revision; running = true;
+      stage.classList.add('cf-stamp-ready');
+      if (replay) { replay.setAttribute('aria-disabled', 'true'); replay.textContent = '正在落印…'; }
+      // Wait for the real seal asset, with a bound so a failed image cannot hang UI.
+      if (image && !image.complete) await Promise.race([
+        image.decode().catch(() => {}),
+        new Promise(resolve => { releaseImage = resolve; imageTimer = setTimeout(resolve, 1200); }),
+      ]);
+      clearTimeout(imageTimer); releaseImage = null;
+      if (disposed || current !== revision || !stage.isConnected) return;
+      frame = requestAnimationFrame(() => {
+        if (disposed || current !== revision || !stage.isConnected) return;
+        const bounds = stage.getBoundingClientRect();
+        if (bringIntoView && (bounds.top < 110 || bounds.bottom > innerHeight - 30)) {
+          stage.scrollIntoView({ block: 'center', behavior: 'instant' });
+        }
+        // Reflow resets every layer together when the user asks for another look.
+        void stage.offsetWidth;
+        stage.classList.add('cf-stamping'); paper?.classList.add('cf-paper-stamping');
+        finishTimer = setTimeout(() => {
+          if (!disposed && current === revision && stage.isConnected) settle();
+        }, 2100);
+      });
+    }
+    const replayClick = () => { void play(); };
+    replay?.addEventListener('click', replayClick);
+    if (autoplay) void play();
+    return { play, destroy() { disposed = true; stop(); replay?.removeEventListener('click', replayClick); decoration.remove(); } };
+  }
 
   async function raw(path, body) {
     const response = await fetch('/claim-api' + path, {
@@ -140,7 +192,7 @@
     notice('已从服务器恢复当前进度。');
   }
   function showRoot() { el('claimbox').classList.remove('hidden'); }
-  function focusHeading() { const heading = el('cf-title'); if (heading) { heading.focus({ preventScroll: true }); heading.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'nearest' }); } }
+  function focusHeading() { const heading = el('cf-title'); if (heading) { heading.focus({ preventScroll: true }); heading.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } }
   function notice(message, error = false) { const target = el('cf-status'); if (target) { target.textContent = message; target.classList.toggle('cf-error', error); } }
   function setBusy(value) {
     busy = value;
@@ -156,6 +208,7 @@
     finally { if (version === epoch) { setBusy(false); if (button?.isConnected) button.focus({ preventScroll: true }); } }
   }
   function shell(content, title, intro = '') {
+    stampEffect?.destroy(); stampEffect = null;
     showRoot();
     const active = Boolean(flow || demoPreview);
     document.body.classList.toggle('claim-active', active);
@@ -249,7 +302,9 @@
     pendingTxHash = certificate.receipt.transactionHash; submissionUncertain = false;
     if (flow) flow.certificate = certificate;
     draftView = 'certificate'; saveDraft();
-    renderCertificate(); focusHeading();
+    renderCertificate();
+    if (animate) el('cf-title')?.focus({ preventScroll: true });
+    else focusHeading();
   }
   async function recoverAfterFailure() {
     const expected = flow?.id, result = await session(true);
@@ -355,11 +410,12 @@
     step = 5; draftView = 'certificate'; saveDraft();
     const cert = currentCertificate, data = cert.payload, receipt = cert.receipt, mainnet = receipt.chainId === 677;
     const networkLabel = mainnet ? 'BOT Chain 主网' : '本地模拟链';
-    shell(`<article class="cf-certificate"><div class="cf-certificate-top"><span>学术信誉链 · 认领凭证</span><span>${data.mode === 'demo' ? '模拟案例' : '个人声明'} / ${mainnet ? 'BOT MAINNET' : 'LOCAL'}</span></div><div class="cf-certificate-main"><div class="cf-certificate-copy"><span class="cf-kicker">CLAIM RECEIPT</span><h3>${escape(data.author?.name)} 的论文认领声明</h3><p class="cf-certificate-state">✓ ${mainnet ? '主网' : '本地'}存证完成 · 作者归属待独立核查</p><p>${data.emailVerification?.mode === 'preview' ? '本地模拟邮件验证' : '邮箱控制权已验证'} · ${escape(data.emailVerification?.masked || '邮箱仅保留摘要')}</p></div><div class="cf-stamp-wrap"><img class="cf-stamp${restoredReceipt ? ' cf-stamp-restored' : ''}" src="/brand/seal.png" alt="${mainnet ? '主网' : '本地'}存证章，不代表作者身份认证"><span>${mainnet ? '主网' : '本地'}存证</span></div></div><div class="cf-summary">${summary()}</div><div class="cf-completion"><div><span>材料整理完成度</span><strong id="cf-completion-score">${escape(data.assessment?.score ?? '—')}</strong></div><p>表示这份声明的整理情况，与学术体检分不同。认领操作不自动增加学术信誉分。</p></div><dl class="cf-fingerprints"><div><dt>凭证指纹</dt><dd><code>${escape(cert.hash)}</code></dd></div><div><dt>${mainnet ? '真实主网交易' : '真实本地交易'}</dt><dd><code>${escape(receipt.transactionHash)}</code></dd></div><div><dt>记录位置</dt><dd>Chain ${escape(receipt.chainId)} · 区块 #${escape(receipt.blockNumber)} · ${escape(receipt.label || networkLabel)}</dd></div><div><dt>签发时间</dt><dd>${escape(new Date(data.issuedAt).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }))}（北京时间）</dd></div></dl><p class="cf-certificate-note">${escape(data.notice || '凭证记录了你的声明与验证方式；不代表已完成作者身份、论文归属或科研质量核验。')}</p></article>
+    shell(`<article class="cf-certificate"><div class="cf-certificate-top"><span>学术信誉链 · 认领凭证</span><span>${data.mode === 'demo' ? '模拟案例' : '个人声明'} / ${mainnet ? 'BOT MAINNET' : 'LOCAL'}</span></div><div class="cf-certificate-main"><div class="cf-certificate-copy"><span class="cf-kicker">CLAIM RECEIPT</span><h3>${escape(data.author?.name)} 的论文认领声明</h3><p class="cf-certificate-state">✓ ${mainnet ? '主网' : '本地'}存证完成 · 作者归属待独立核查</p><p>${data.emailVerification?.mode === 'preview' ? '本地模拟邮件验证' : '邮箱控制权已验证'} · ${escape(data.emailVerification?.masked || '邮箱仅保留摘要')}</p></div><div class="cf-stamp-wrap"><div id="cf-stamp-stage" class="cf-stamp-stage"><img class="cf-stamp cf-stamp-restored" src="/brand/seal.png" alt="${mainnet ? '主网' : '本地'}存证章，不代表作者身份认证"></div><span>${mainnet ? '主网' : '本地'}存证</span><button id="cf-stamp-replay" class="cf-stamp-replay" type="button" title="只重播盖章动画，不重复认领或发送交易">重播盖章 ↻</button></div></div><div class="cf-summary">${summary()}</div><div class="cf-completion"><div><span>材料整理完成度</span><strong id="cf-completion-score">${escape(data.assessment?.score ?? '—')}</strong></div><p>表示这份声明的整理情况，与学术体检分不同。认领操作不自动增加学术信誉分。</p></div><dl class="cf-fingerprints"><div><dt>凭证指纹</dt><dd><code>${escape(cert.hash)}</code></dd></div><div><dt>${mainnet ? '真实主网交易' : '真实本地交易'}</dt><dd><code>${escape(receipt.transactionHash)}</code></dd></div><div><dt>记录位置</dt><dd>Chain ${escape(receipt.chainId)} · 区块 #${escape(receipt.blockNumber)} · ${escape(receipt.label || networkLabel)}</dd></div><div><dt>签发时间</dt><dd>${escape(new Date(data.issuedAt).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }))}（北京时间）</dd></div></dl><p class="cf-certificate-note">${escape(data.notice || '凭证记录了你的声明与验证方式；不代表已完成作者身份、论文归属或科研质量核验。')}</p></article>
       <div class="cf-receipt-actions"><button id="cf-download" class="cf-primary" type="button">下载凭证 JSON ↓</button><button id="cf-recheck" class="cf-secondary" type="button">重算指纹 · 核对链上记录</button><button id="cf-tamper" class="cf-text-button" type="button">试试：改一个字再核对</button></div><p id="cf-recheck-result" class="cf-recheck-result" role="status" aria-live="polite"></p>${chainPanel(mainnet ? receipt : { ...chain, blockNumber: chain.blockNumber ?? receipt.blockNumber })}<p class="cf-finish-note">流程已完成。刷新后仍可查看、下载这份凭证，并重新核对${escape(networkLabel)}记录。</p>`, restoredReceipt ? '已找回你的存证凭证。' : '已盖章。现在，亲手验证它。', '刚刚的选择、邮箱验证和最后确认，都已经写进可下载的凭证。链上记录可以核对这份凭证有没有被改动。');
+    stampEffect = mountStamp(el('cf-stamp-stage'), { replay: el('cf-stamp-replay'), autoplay: !restoredReceipt });
     if (el('cf-blocks')) el('cf-blocks').scrollLeft = el('cf-blocks').scrollWidth;
     const target = el('cf-completion-score'), score = Number(data.assessment?.score);
-    if (!restoredReceipt && Number.isFinite(score) && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!restoredReceipt && Number.isFinite(score)) {
       const start = performance.now(); const version = epoch;
       const tick = time => { if (version !== epoch || !target.isConnected) return; const fraction = Math.min(1, (time - start) / 1100); target.textContent = Math.round(score * (1 - (1 - fraction) ** 3)); if (fraction < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
     }
@@ -430,6 +486,7 @@
     on('cf-tamper', 'click', event => action(event.currentTarget, () => recheck(true)));
   }
   function reset() {
+    stampEffect?.destroy(); stampEffect = null;
     epoch++; clearInterval(cooldownTimer); clearTimeout(pollingTimer);
     document.body.classList.remove('claim-active');
     const skip = document.querySelector('a.skip');
@@ -475,5 +532,5 @@
       await delay(240); if (version !== epoch) throw new StaleFlow(); renderDemoReport(); focusHeading();
     }));
   }
-  window.ClaimFlow = Object.freeze({ reset, offer, startDemo, restore, progress, canLeave: () => !walletRequestOpen });
+  window.ClaimFlow = Object.freeze({ reset, offer, startDemo, restore, progress, mountStamp, canLeave: () => !walletRequestOpen });
 })();

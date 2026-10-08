@@ -7,6 +7,7 @@
   <meta name="description" content="学术体检：五维评分证据、可核验快照收据和本人认领演示。">
   <title>灋廌覈鑒 · Xiezhi｜学术体检</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c41e3a'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23f5f0e8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/ui/claim-experience.css">
   <link rel="stylesheet" href="style-guanya.css">
   <link rel="stylesheet" href="checkup-page.css">
   <link rel="stylesheet" href="checkup-card.css">
@@ -27,10 +28,12 @@
   <script defer src="checkup.js"></script>
   <script defer src="network-nav.js"></script>
   <link rel="stylesheet" href="/ui/site-header.css">
+  <script defer src="/ui/claim-core.js"></script>
+  <script defer src="/ui/claim-experience.js"></script>
 </head>
 <body class="guanya-page">
   <a class="guanya-skip" href="#checkup-main" style="position: absolute; left: -9999px; z-index: 999;">跳到体检内容</a>
-  <header data-site-header data-projection-control="sc-present"></header>
+  <header data-guide-enabled data-site-header data-projection-control="sc-present"></header>
   <div class="xz-page-tools" aria-label="档案数据与网络状态"><span id="sc-chain-mode" role="status"><span>正在检查部署 · 快照演示</span></span><a id="sc-network-choice" href="checkup.html?network=testnet">查看测试网 968 ↗</a></div>
   <main id="checkup-main" class="guanya-main" style="max-width: 1400px; margin: 0 auto; padding: var(--space-xl) var(--space-lg);">
     <nav aria-label="演示路线" style="display: flex; gap: var(--space-md); margin-bottom: var(--space-xl); padding: var(--space-md); background: var(--guanya-bg-paper); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
@@ -62,7 +65,7 @@
         <button type="button" id="sc-tab-receipt" role="tab" aria-selected="false" aria-controls="sc-receipt-panel" tabindex="-1" style="flex: 1; padding: var(--space-md); background: transparent; border: none; border-bottom: 3px solid transparent; color: var(--guanya-text-secondary); font-family: var(--font-serif-cn); font-size: 1rem; cursor: pointer; transition: all 0.2s ease;"><span style="display: inline-block; margin-right: var(--space-xs); font-weight: 700;">03</span>评分收据 <small style="font-size: 0.75rem; color: var(--guanya-text-muted); margin-left: var(--space-xs);">RECEIPT</small></button>
         <p id="sc-record-label" style="margin-left: auto; padding: var(--space-md); color: var(--guanya-text-muted); font-size: 0.875rem;"></p>
       </div>
-      <section id="sc-card-panel" role="tabpanel" aria-labelledby="sc-tab-card" tabindex="0"><p class="sc-version-note">本卡是 checkup-v0 公开证据快照（0–100 分）。主网已登记的 checkup-v2 使用 350–950 分量尺；请在「评分收据」中按规则版本核对，两者不能直接比较。</p><div id="sc-card-root"></div><div id="sc-points-root"></div><div id="sc-actions-root"></div></section>
+      <section id="sc-card-panel" role="tabpanel" aria-labelledby="sc-tab-card" tabindex="0"><p class="sc-version-note">本卡是 checkup-v0 公开证据快照（0–100 分）。当前规范 v2.1（链上标识 checkup-v2）使用 350–950 分量尺；请在「评分收据」中按规则版本核对，两者不能直接比较。</p><div id="sc-card-root"></div><div id="sc-points-root"></div><div id="sc-actions-root"></div></section>
       <section id="sc-receipt-panel" role="tabpanel" aria-labelledby="sc-tab-receipt" tabindex="0" hidden>
         <div id="sc-chain-root"></div>
         <details id="sc-local-receipt" open style="margin-top: var(--space-lg); padding: var(--space-lg); background: var(--guanya-bg-paper); border: 2px solid var(--guanya-gold-accent); border-radius: var(--radius-lg);"><summary style="font-family: var(--font-serif-cn); font-size: 1.125rem; font-weight: 700; color: var(--guanya-text-primary); cursor: pointer; margin-bottom: var(--space-md);">本地快照与本人认领 <span style="font-size: 0.875rem; color: var(--guanya-text-muted); font-weight: normal;">演示 · 不广播交易</span></summary><div id="sc-receipt-root"></div></details>

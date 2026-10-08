@@ -857,13 +857,7 @@ footer i {
     font-size:21px;
   }
 }
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation:none!important;
-    transition:none!important;
-    scroll-behavior:auto!important;
-  }
-}
+
 .source-switch {
   display:flex;
   align-items:center;

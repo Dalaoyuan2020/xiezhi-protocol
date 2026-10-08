@@ -19,7 +19,10 @@ function reader({ failRendering = false, canLeave = true } = {}) {
     lastQuery: '', allCands: [], candidateNameVariants: [],
     window: { ClaimFlow: { reset() { resets++; }, canLeave: () => canLeave, progress: (step, message) => progress.push({ step, message }) } },
     location: { href: 'https://example.test/live/' }, history: { replaceState(...args) { historyChanges.push(args); } },
-    URL, encodeURIComponent, setTimeout, matchMedia: () => ({ matches: true }),
+    URL, encodeURIComponent,
+    // Advance presentation delays independently of the OS motion preference.
+    // Keep the async boundary so stale-stream cancellation is still exercised.
+    setTimeout: callback => queueMicrotask(callback),
     $: id => nodes.get(id), cancelCandidateFilter() {},
     cancelScholarRain() { rainCancellations++; },
     show: (id, on = true) => visible.set(id, on),
