@@ -31,7 +31,7 @@
 - Agent 实时检索 + 三方交叉验证；本人认领三步 + 认领凭证 + 本地模拟链 / 主网盖章 + 复核
 - 知行社社区（账号、研究材料、审阅、任务、三人验收、双模型评审、Agent 授权、廌点账本）
 - 前端：搜索首页、学术体检、机构查询、文献检索、工作台、实时核验页
-- 《AIA 社区白皮书》（29 页图文 PDF）、两支演示视频、HTML 路演（17 页，视频内嵌）
+- 《AIA 社区白皮书》（29 页图文 PDF）、两支演示视频、HTML 路演（16 页，视频内嵌，可全屏）
 - 自动测试：`npm test` **243 / 243** 通过；前端测试 167 + 101 项通过（合计 511 项）
 
 ### 已实现 vs 规划中
@@ -66,7 +66,7 @@
 
 ## 3. 演示材料
 
-- **路演（HTML，17 页，两段视频已内嵌）**：在线播放 https://dalaoyuan2020.github.io/xiezhi-protocol/pitch/ · 源文件 [pitch/index.html](pitch/index.html)（下载后 Chrome 打开即可离线放映）· 讲稿 [pitch/PITCH.md](pitch/PITCH.md)
+- **路演（HTML，16 页，两段视频已内嵌，可全屏播放）**：在线播放 https://dalaoyuan2020.github.io/xiezhi-protocol/pitch/ · 源文件 [pitch/index.html](pitch/index.html)（下载后 Chrome 打开即可离线放映）· 讲稿 [pitch/PITCH.md](pitch/PITCH.md)
 - **视频 1 · 核心协议演示（85 秒）**：[media/xiezhi-video1-core-protocol-v2-85s.mp4](media/xiezhi-video1-core-protocol-v2-85s.mp4)
 - **视频 2 · AIA 社区（2 分 18 秒）**：[media/xiezhi-video2-community-vision-v3-138s.mp4](media/xiezhi-video2-community-vision-v3-138s.mp4)（每段标注已上线 / 规划中）
 - **《AIA 社区白皮书》**：[whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf](whitepaper/AIA_COMMUNITY_WHITEPAPER.pdf)
