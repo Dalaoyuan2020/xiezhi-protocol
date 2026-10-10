@@ -73,3 +73,4 @@
   .guanya-search-page .guanya-examples > span { width:100%; text-align:center; }
   .guanya-search-page .checkup-entry a { padding:8px 16px; }
 }
+@media (max-width:440px) { .checkup-entry { gap:2px; } .checkup-entry a { padding:9px 11px; gap:5px; font-size:13px; } .checkup-entry a>span { display:none; } }

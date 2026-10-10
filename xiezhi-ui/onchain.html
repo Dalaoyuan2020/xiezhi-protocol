@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>钱包上链 · 灋廌覈鑒</title>
+  <meta name="description" content="连接钱包，在 BOT Chain 主网为一份学术材料登记指纹：文件不上传，交易由你自己的钱包签名。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c41e3a'/%3E%3Ctext x='8' y='24' font-family='serif' font-size='20' fill='%23f5f0e8'%3E灋%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style-guanya.css">
+  <link rel="stylesheet" href="/ui/site-header.css">
+  <link rel="stylesheet" href="onchain.css">
+  <script defer src="/ui/site-header.js"></script>
+  <script defer src="onchain.js"></script>
+</head>
+<body class="guanya-page oc-page">
+  <header data-site-header></header>
+  <main id="main" class="oc-main">
+    <section class="oc-hero" aria-labelledby="oc-title">
+      <p class="oc-kicker">BOT Chain · <span id="oc-net-label">BOT 主网 · 677</span></p>
+      <h1 id="oc-title">钱包上链</h1>
+      <p class="oc-lead">用你自己的钱包，把一份学术材料的指纹登记到 BOT Chain。<br>文件不上传，链上只留指纹、登记类型和你的钱包地址。</p>
+      <p class="oc-netswitch" id="oc-netswitch"></p>
+    </section>
+
+    <ol class="oc-steps">
+      <li class="oc-step">
+        <h2><span>1</span>连接钱包</h2>
+        <p class="oc-hint" id="oc-wallet-hint">支持 MetaMask、OKX 钱包等 EVM 钱包，会自动切到 BOT Chain。手机请在钱包 App 的内置浏览器里打开本页。</p>
+        <div class="oc-row"><button class="oc-btn" id="oc-connect" type="button">连接钱包</button></div>
+        <dl class="oc-facts" id="oc-wallet" hidden>
+          <div><dt>地址</dt><dd id="oc-address" class="oc-mono"></dd></div>
+          <div><dt>网络</dt><dd id="oc-chain"></dd></div>
+          <div><dt>余额</dt><dd id="oc-balance"></dd></div>
+        </dl>
+      </li>
+
+      <li class="oc-step">
+        <h2><span>2</span>选择材料，算出指纹</h2>
+        <p class="oc-hint">论文 PDF、体检报告、数据文件都可以；也可以粘贴一段文字（如 DOI 加标题）。指纹在你的浏览器里算，文件不会离开你的设备。算好后会自动查询链上已有的登记，这一步不需要钱包。</p>
+        <div class="oc-row">
+          <label class="oc-btn secondary oc-file"><input type="file" id="oc-file">选择文件</label>
+        </div>
+        <label class="oc-label" for="oc-text">或者粘贴一段文字</label>
+        <textarea id="oc-text" rows="3" maxlength="5000" placeholder="例如：10.1000/xyz123 论文标题"></textarea>
+        <div class="oc-row"><button class="oc-btn secondary" id="oc-hash-text" type="button">用这段文字算指纹</button></div>
+        <dl class="oc-facts" id="oc-material" hidden>
+          <div><dt>材料</dt><dd id="oc-material-name"></dd></div>
+          <div><dt>SHA-256 指纹</dt><dd id="oc-hash" class="oc-mono"></dd></div>
+        </dl>
+        <p class="oc-hint oc-demo">没有材料？<button type="button" class="oc-linkbtn" id="oc-demo" data-hash="0x0f623e8331763e63144e27379bab3f11cdb0de90c397e772253dcb0dc013d902">看一个示例：同一份稿件被两家期刊登记</button></p>
+        <div id="oc-records" class="oc-records" hidden></div>
+      </li>
+
+      <li class="oc-step">
+        <h2><span>3</span>用钱包签名，登记到链上</h2>
+        <label class="oc-label" for="oc-orcid">ORCID（选填，填了就把这条登记关联到你的 ORCID）</label>
+        <input id="oc-orcid" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="40" placeholder="0000-0000-0000-0000">
+        <p class="oc-hint">登记类型：认领（CLAIM），意思是“这份材料是我的”。交易由你的钱包签名并支付 gas，一笔约 0.005 BOT。</p>
+        <div class="oc-row"><button class="oc-btn" id="oc-send" type="button" disabled>签名并登记到链上</button></div>
+        <div id="oc-result" class="oc-result" hidden></div>
+      </li>
+    </ol>
+
+    <p id="oc-status" class="oc-status" role="status" aria-live="polite"></p>
+
+    <aside class="oc-notes" aria-labelledby="oc-notes-title">
+      <h2 id="oc-notes-title">说明</h2>
+      <ul>
+        <li>链上只存指纹（SHA-256）、登记类型、规则标识 wallet-web-v1 和你的钱包地址，不存文件本身。</li>
+        <li>登记只证明“这个地址在这个时间声明了这份材料”，不证明原创、学术身份或研究结论。</li>
+        <li>同一份材料被多个地址登记时会全部列出，方便发现冲突（例如一稿多投、成果被冒领）。</li>
+        <li>合约 ActionRegistry：<span id="oc-contract" class="oc-mono">读取中…</span></li>
+      </ul>
+    </aside>
+  </main>
+</body>
+</html>

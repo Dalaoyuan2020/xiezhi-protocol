@@ -10,6 +10,8 @@ publicAssets.set('/ui/entry.css', 'xiezhi-ui/entry.css');
 for (const name of ['site-header.js', 'site-header.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 for (const name of ['claim-experience.js', 'claim-experience.css', 'claim-core.js']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 publicAssets.set('/ui/home-mode.js', 'xiezhi-ui/home-mode.js');
+// 钱包上链：免登录，用户自己的钱包在 BOT Chain 登记材料指纹（BOT 赛道 C 端交互）
+for (const name of ['onchain.html', 'onchain.js', 'onchain.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 for (const name of ['papers.html', 'papers.js', 'papers.css']) publicAssets.set(`/ui/${name}`, `xiezhi-ui/${name}`);
 publicAssets.set('/product/mock_cases.json', 'aia/product/mock_cases.json');
 // 实时版：输入名字 → Agent 实时检索 → 评分 → 本人认领盖红章（Claude 维护）
